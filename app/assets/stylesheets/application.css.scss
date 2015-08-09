@@ -1,0 +1,179 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ * require select2
+ * require select2-bootstrap
+ *= require angular-date-picker-polyfill-basic.min
+ *= require animate.min
+ *= require select.min
+ *= require selectize.bootstrap3.min
+ */
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+@import 'font-awesome';
+@import 'variables';
+/*@import 'manager';*/
+
+html,body { height: 100%; margin: 0px; padding: 0px; }
+.main-cols, .main-cols > div { height: 100%; }
+pre hr {
+   border-top: 1px solid #cccccc;
+   margin-top: 10px;
+   margin-bottom: 10px;
+}
+.panel-body p.lead{
+  margin-bottom: 0px;
+}
+.projects-list{
+  width: 100%;
+  a.btn{
+    text-align: left!important;
+  }
+}
+a.navbar-brand{
+  padding-top: 2px;
+  padding-bottom: 2px;
+  img{
+    height: 100%;
+  }
+}
+.nav-container{
+  padding: 0 15px;
+}
+#svg-gantt {
+  font-size: 10px;
+  .chart {
+    margin-left: -40px;
+  }
+}
+.gantt-chart .task text{
+  font-size: 10px;
+}
+
+.no-padding {
+  padding: 0;
+}
+.no-margin {
+  margin: 0;
+}
+.no-margin-top {
+  margin-top: 0;
+}
+.axis path,.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+.margin-top{
+  margin-top: 15px;
+}
+.margin-bottom{
+  margin-bottom: 15px;
+}
+.right-panel {
+  & > .row{
+    margin-bottom: 15px;
+  }
+  .panel {
+    margin-bottom: 0;
+  }
+}
+a[disabled],a.disabled{
+  color: #B3B3B3 !important;
+}
+.nav-tabs, .btn-toolbar {
+  margin-bottom: 15px;
+}
+.dl-horizontal  dt{
+  width: 100px;
+}
+.dl-horizontal  dd{
+  margin-left: 120px;
+}
+.project-container > .col-md-9 > .panel {
+  min-height: 350px;
+  tabs > div {
+    margin-bottom: 15px;
+  }
+}
+
+
+table.resources{
+  border-collapse: collapse;
+  margin-bottom: 100px!important;
+  width: auto;
+  td, th {
+    text-align:center;
+    min-width: 85px;
+    width: 85px;
+  }
+  tr.adder td{
+    text-align: left;
+  }
+  tr:not(.adder) > td:first-child, tr:not(.adder) > th:first-child {
+    border: 1px solid #ccc;
+    border-width: 1px 1px 0 0;
+  }
+  tr:last-child:not(.adder) > td{
+    border: 1px solid #ccc;
+    border-width: 1px 0px 1px 0px;
+  }
+  tr:last-child:not(.adder) > td:first-child{
+    border-width: 1px 1px 1px 0px;
+  }
+  ul[dnd-list] {
+    min-height: 25px;
+    min-width: 60px;
+  }
+  ul[dnd-list], ul[dnd-list] > li{
+    position: relative;
+  }
+  ul[dnd-list] > li{
+    cursor: pointer;
+  }
+  ul[dnd-list] .dndPlaceholder {
+    display: block;
+    background-color: #ddd;
+    min-height: 25px;
+  }
+
+  span.label{
+    display:block;
+    position: absolute;
+    height: 30px;
+    font-size: 110%;
+    min-width: 60px;
+    margin-bottom: 5px;
+  }
+  span.label input {
+    width:60%;
+    color: black;
+    font-weight: normal;
+  }
+
+  .btn.adder{
+    left: 0;
+    position: absolute;
+  }
+
+  .dropdown-menu{
+    max-height: 100px;
+    overflow-y: scroll;
+  }
+}
+.statuses span:not(:last-child){
+  margin-right: 10px;
+}
+.day-off button span {
+  background-color: #32CD32;
+  border-radius: 32px;
+  color: #000;
+}

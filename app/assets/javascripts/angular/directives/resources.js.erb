@@ -1,0 +1,179 @@
+angular.module('app').directive('resources', ['$timeout', function($timeout) {
+    return {
+        restrict: 'E',
+        templateUrl: "<%= asset_path('angular/directives/resources.html') %>",
+        scope: {
+            //require lists
+            resoursable: '=',
+            ngModel: '=',
+            //require dates
+            startDate: '=',
+            endDate: '=',
+            //callbacks
+            ngChange: '&',
+            //flags
+            showAll: '=',
+            adderDisabled: '='
+
+        },
+        link: function (scope, element) {
+            function initResources (){
+                if(!scope.resoursable || !scope.resoursable.length)
+                    return;
+                if(!scope.ngModel && !scope.ngModel.length)
+                    return;
+
+                scope.list = scope.ngModel;
+
+                scope.resoursable.forEach(function(obj){
+                    obj.resAvaible = false;
+                });
+
+                scope.list.forEach(function(resource){
+                    if(!resource.$id)
+                        resource.$id = resource.id;
+
+                    if(!resource.time)
+                        resource.time = Math.abs(resource.end_date - resource.begin_date) / 36e5;
+
+                    //убираем ноль чтобы не мешал в инпуте
+                    if(!resource.time)
+                        resource.time = "";
+
+                    scope.resoursable.some(function(obj){
+                        var result = obj.id == resource.resoursable_id && obj.class == resource.resoursable_class;
+                        if(result){
+                            resource.resoursable = obj;
+                            obj.resAvaible = true;
+                        }
+                        return result;
+                    })
+                });
+                initCalendar();
+            }
+            function initCalendar(val){
+                if(!scope.startDate || !(scope.startDate instanceof Date) ||
+                        !scope.endDate || !(scope.endDate instanceof Date) ||
+                        !scope.list || !Array.isArray(scope.list))
+                    return val;
+
+                scope.calendar = [];
+
+                var interimDate = angular.copy(scope.startDate);
+                while(interimDate <= scope.endDate){
+                    var resources = scope.list.filter(function(obj){
+                        return obj.begin_date.getDate() == interimDate.getDate();
+                    });
+                    scope.calendar.push({'date': angular.copy(interimDate), resources: resources});
+                    interimDate.setDate(interimDate.getDate() + 1);
+                }
+            }
+            scope.$watchCollection('list', initResources);
+            scope.$watchCollection('resoursable', initResources);
+
+            scope.$watch('startDate', initCalendar);
+            scope.$watch('endDate', initCalendar);
+            initResources();
+
+            scope.getResStyle = function(resource){
+                var width = resource.time*10;
+                resource.style = {'width': (width ? width : 0) +'px'};
+                return resource.style;
+            };
+
+            scope.removeResIfEmpty = function(resources, index){
+                var res = resources[index];
+                if(res.time)
+                    return;
+
+                resources.splice(index, 1);
+
+                scope.list.some(function(obj, index){
+                    var result = obj == res;
+                    if(result)
+                        scope.list.splice(index, 1);
+
+                    return result;
+                });
+            };
+
+            scope.isEmptyDate = function(date, res) {
+                return !date.resources.some(function(obj){
+                    return obj.resoursable.id == res.id && obj.resoursable.class == res.class;
+                });
+            };
+
+            //deprecated
+            scope.isResAvaible = function(res) {
+                return scope.list.some(function(obj){
+                    return obj.resoursable.id == res.id && obj.resoursable.class == res.class;
+                });
+            };
+
+            scope.addResToList = function(res, date){
+                if(!date)
+                    date = scope.calendar[0];
+
+                var newId = 0;
+                scope.list.forEach(function(obj){
+                    if(obj.id > newId || obj.$id > newId)
+                        newId = obj.id || obj.$id;
+                });
+
+                var newRes = {
+                    $id: newId + 1,
+                    resoursable: res,
+                    resoursable_id: res.id,
+                    resoursable_class: res.class,
+                    begin_date: date.date,
+                    end_date: date.date,
+                    focus: true
+                };
+                scope.list.push(newRes);
+                date.resources.push(scope.list[scope.list.length - 1]);
+
+                $timeout(scope.ngChange, 0);
+            };
+
+            scope.resTimeChanged = function(resource, date){
+                resource.begin_date = date.date;
+                resource.end_date = angular.copy(date.date).addHours(resource.time);
+
+                $timeout(scope.ngChange, 0);
+            };
+            scope.resDropped = function(date, res, item){
+                scope.leaveAddButton(date, res);
+                item.begin_date = date.date;
+                item.end_date = angular.copy(date.date).addHours(item.time);
+
+                //востановить связь
+                scope.list.some(function(obj, index){
+                    var result = obj.$id == item.$id && obj.class == item.class;
+                    if(result)
+                        scope.list[index] = item;
+                    return result;
+                });
+
+                $timeout(scope.ngChange, 0);
+                return item;
+            };
+            var timer;
+            scope.enterAddButton = function(date, res) {
+                scope.calendar.forEach(function(_date){
+                    _date.hover = false;
+                });
+                date.timer = res.timer = $timeout(function(){
+                    date.hover = res.hover = true;
+                }, 400);
+            };
+            scope.leaveAddButton = function(date, res) {
+                $timeout.cancel(date.timer);
+                date.hover = res.hover = false;
+            };
+            Date.prototype.addHours= function(h){
+                this.setHours(this.getHours() + parseInt(h));
+                return this;
+            }
+        }
+    };
+}]);

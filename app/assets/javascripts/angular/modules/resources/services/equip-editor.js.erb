@@ -1,0 +1,30 @@
+'use strict';
+
+angular.module('app.resources')
+        .factory('EquipEditor', ['$modal', '$q', function($modal, $q) {
+            return function (inputs, equip){
+                if(equip)
+                    inputs.equip_id = equip.id;
+
+                return $q(function(resolve, reject) {
+                    var modalInstance = $modal.open({
+                        animation: true,
+                        templateUrl: '<%= asset_path('angular/modules/resources/templates/modals/equip-form.html') %>',
+                        controller: 'EquipsFormCtrl',
+                        //size: size,
+                        resolve: {
+                            inputs: function(){
+                                return inputs;
+                            }
+                        }
+                    });
+
+                    modalInstance.result.then(function (result) {
+                        result.is_new = inputs.equip_id ? false : true;
+                        resolve(result);
+                    }, function () {
+                        reject('Cancel');
+                    });
+                });
+            }
+        }]);

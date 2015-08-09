@@ -1,0 +1,14 @@
+<div ng-hide="resCtrl.contacts.length">
+    <hr/>
+    <h4>Здесь пока ничего нет...</h4>
+
+    <p>Попробуйте создать новый контакт</p>
+</div>
+<div class="btn-toolbar">
+    <a href ng-click="resCtrl.newOrEditResource({class:'Contact'})" class="btn btn-success">Создать контакт</a>
+</div>
+
+<resources resoursable="resCtrl.contacts" ng-model="resCtrl.list"
+           start-date="resCtrl.begin_date" end-date="resCtrl.end_date"
+           show-all="true" adder-disabled="true"
+           ng-change="resCtrl.resourcesChanged()"></resources>

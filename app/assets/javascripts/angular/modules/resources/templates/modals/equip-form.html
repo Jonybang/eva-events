@@ -1,0 +1,31 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">{{equip.id ? 'Редактировать' : 'Создать'}} оборудование</h4>
+</div>
+<form name="equipForm" ng-submit="save()" novalidate class="form-horizontal">
+    <div class="modal-body row">
+        <div class="form-group col-md-12" show-errors>
+            <div class="col-md-4 col-lg-3 text-right">
+                <label>Название</label>
+            </div>
+            <div class="col-md-6 col-lg-7">
+                <input type="text" ng-init="focusName = true;" focus-me="focusName" name="name" ng-model="equip.name" class="form-control" required >
+            </div>
+        </div>
+        <div ng-repeat="error in errors.name" class="alert alert-error"><strong>Название</strong> {{error}}</div>
+
+        <div class="form-group col-md-12" show-errors>
+            <div class="col-md-4 col-lg-3 text-right">
+                <label>Модель</label>
+            </div>
+            <div class="col-md-6 col-lg-7">
+                <input type="text" name="model" ng-model="equip.model" class="form-control" required >
+            </div>
+        </div>
+        <div ng-repeat="error in errors.model" class="alert alert-error"><strong>Модель</strong> {{error}}</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="$dismiss()">Закрыть</button>
+        <button type="submit" class="btn btn-primary">Сохранить оборудование</button>
+    </div>
+</form>

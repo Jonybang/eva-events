@@ -1,0 +1,87 @@
+/**
+ * Created by jonybang on 03.07.15.
+ */
+'use strict';
+
+angular.module('app', [
+    'app.tasks',
+    'app.gantt',
+    'app.projects',
+    'app.resources',
+
+    'selectize',
+    'ngAnimate',
+    'rails',
+    'dndLists',
+    'ngResource',
+    'ui.bootstrap',
+    'ui.bootstrap.showErrors',
+    //'angular-date-picker-polyfill',
+    'ng-rails-csrf',
+    'angularMoment',
+    'rt.debounce',
+    'noty',
+    'ui.router',
+    'ui.router.tabs',
+    'ui.select',
+    'ngSanitize'
+        ])
+        .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', 'showErrorsConfigProvider',
+            '$httpProvider', 'railsSerializerProvider', 'uiSelectConfig', function($urlRouterProvider, $stateProvider, $locationProvider, showErrorsConfigProvider, $httpProvider, railsSerializerProvider, uiSelectConfig) {
+
+            $urlRouterProvider.otherwise("/manager");
+
+            <% @templates_path = 'angular/templates/' %>
+            $stateProvider
+                    .state('app', {
+                        url: '/manager',
+                        controller: 'AppCtrl',
+                        templateUrl: '<%= asset_path(@templates_path + 'index.html') %>'
+                    });
+            $locationProvider.html5Mode(true);
+
+            showErrorsConfigProvider.showSuccess(true);
+
+            uiSelectConfig.theme = 'bootstrap';
+
+            $httpProvider.interceptors.push('loadingInterceptor');
+
+
+            $httpProvider.defaults.transformResponse.push(function(responseData){
+                if( Object.prototype.toString.call( responseData ) === '[object Array]' ) {
+                    responseData.forEach(function(item, i){
+                        convertDateStringsToDates(responseData[i], true);
+                    });
+                } else {
+                    convertDateStringsToDates(responseData, true);
+                }
+
+                return responseData;
+            });
+
+            railsSerializerProvider.underscore(angular.identity).camelize(angular.identity);
+        }]);
+
+angular.module('app').run(['amMoment', 'datepickerConfig', 'datepickerPopupConfig', '$rootScope', function(amMoment, datepickerConfig, datepickerPopupConfig, $rootScope) {
+    amMoment.changeLocale('ru');
+
+    $rootScope.getDayClass = function(obj) {
+        if (obj.mode === 'day') {
+            var day = new Date(obj.date).getDay();
+            if (day == 0 || day == 6) {
+                return 'day-off';
+            }
+        }
+    };
+
+    angular.extend(datepickerConfig, {
+        startingDay: 1,
+        customClass: $rootScope.getDayClass
+    });
+
+    angular.extend(datepickerPopupConfig, {
+        currentText:'Сегодня',
+        clearText:'Очистить',
+        closeText:'Закрыть'
+    });
+}]);

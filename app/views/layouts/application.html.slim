@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+html
+  head
+    title EvaEvents
+    base href="/"
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tag
+  body
+    nav.navbar.navbar-default style=("position:fixed; z-index:100;width: 100%;")
+      .container-fluid
+        .navbar-header
+          button.navbar-toggle.collapsed data-target="#bs-example-navbar-collapse-2" data-toggle="collapse" type="button"
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand href="/"
+            =image_tag "eva.png"
+        .collapse.navbar-collapse
+          ul.nav.navbar-nav
+            -if current_user
+              li
+                a href="#" class="disabled"
+                  =fa_icon 'info'
+                  | &nbsp; О компании
+              li
+                a href="#" class="disabled"
+                  =fa_icon 'line-chart'
+                  | &nbsp; Управленческий учет
+              li
+                =link_to rails_admin_path, target: "_blank" do
+                  =fa_icon 'database'
+                  | &nbsp; База данных
+              li
+                a href="#" class="disabled"
+                  =fa_icon 'skyatlas'
+                  | &nbsp; Файлы
+              li
+                a href="#" class="disabled"
+                  =fa_icon 'cogs'
+                  | &nbsp; Настройки
+            -else
+              li.first.dropdown
+                a href="/" title="Главная"
+                  | Главная
+            /li.last.dropdown
+            /  a.dropdown-toggle aria-expanded="false" data-toggle="dropdown" href="#" role="button"
+            /    | Связаться с нами
+            /    span.caret
+            /  ul.dropdown-menu
+            /    li.first
+            /      a href="http://rize.su/l/connect/gruppa-v-vk" title=("Группа в ВК")  Группа в ВК
+            /    li.last
+            /      a href="http://rize.su/l/connect/contacts" title="Контакты"  Контакты
+          ul.nav.navbar-nav.navbar-right
+            -if current_user
+              /li
+              /  =link_to "Личный кабинет #{current_user.email}", cabinet_path
+              li
+                =link_to 'Выйти', log_out_path
+            -else
+              li
+                =link_to 'Зарегистрироваться', sign_up_path
+              li
+                =link_to 'Войти', log_in_path
+    /ng-strict-di=''
+    div class="container" style="padding-top: 80px"
+      = yield

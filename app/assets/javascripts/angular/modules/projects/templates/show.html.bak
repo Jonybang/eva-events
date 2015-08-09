@@ -1,0 +1,51 @@
+<h2>Проект: {{project.name}}</h2>
+<hr/>
+
+<div ng-controller="ProjectTasksCtrl">
+
+    <!-- This will only show when there's no items to let the user know there's purposefully nothing there.. -->
+    <div ng-show="project_tasks.$resolved && project_tasks.length == 0">
+        <h4>Здесь пока ничего нет :(</h4>
+        <p>Создайте первую задачу в этом проекте!</p>
+    </div>
+
+    <!-- Iterate over the comments -->
+    <div class="row">
+        <div class="media col-md-12">
+            <div class="media" ng-repeat="task in project_tasks | orderBy : 'begin_date'" >
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a href ng-click="getSubTasks(task);showSubTasks=!showSubTasks">{{task.name}}: {{task.begin_date}} - {{task.end_date}}<span class="caret"></span></a>
+                        <div class="pull-right" style="font-size: 12px;">
+                            <button ng-click="newOrEdit(task)" type="button" class="btn btn-success btn-sm" aria-label="Edit">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                            </button>
+                            <button ng-click="destroy(task)" type="button" class="btn btn-danger btn-sm" aria-label="Remove">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </h4>
+                    <div class="panel panel-default" ng-show="showSubTasks">
+                        <div class="panel-heading">Подзадачи</div>
+                        <div class="panel-body">
+                            <ul>
+                                <li ng-repeat="child_task in task.child_tasks | orderBy : 'begin_date'">
+                                    {{child_task.name}}: {{child_task.begin_date}} - {{child_task.end_date}}
+                                </li>
+                            </ul>
+                            <button class="btn btn-success btn-sm" type="button" ng-click="newOrEdit('', task.id)">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Добавить подзадачу
+                            </button>
+                        </div>
+                    </div>
+                    <pre>{{task.description}}</pre>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success btn-large" ng-click="newOrEdit()">Добавить задачу проекта</button>
+        </div>
+        <div class="col-md-12" id="svg-gantt">
+        </div>
+    </div>
+
+    <hr/>
+</div>

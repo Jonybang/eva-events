@@ -1,0 +1,30 @@
+'use strict';
+
+angular.module('app.resources')
+        .factory('ContactEditor', ['$modal', '$q', function($modal, $q) {
+            return function (inputs, contact){
+                if(contact)
+                    inputs.contact_id = contact.id;
+
+                return $q(function(resolve, reject) {
+                    var modalInstance = $modal.open({
+                        animation: true,
+                        templateUrl: '<%= asset_path('angular/modules/resources/templates/modals/contact-form.html') %>',
+                        controller: 'ContactsFormCtrl',
+                        //size: size,
+                        resolve: {
+                            inputs: function(){
+                                return inputs;
+                            }
+                        }
+                    });
+
+                    modalInstance.result.then(function (result) {
+                        result.is_new = inputs.contact_id ? false : true;
+                        resolve(result);
+                    }, function () {
+                        reject('Cancel');
+                    });
+                });
+            }
+        }]);

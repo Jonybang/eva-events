@@ -1,0 +1,14 @@
+<div ng-hide="resCtrl.equips.length">
+    <hr/>
+    <h4>Здесь пока ничего нет...</h4>
+
+    <p>Попробуйте создать новое оборудование</p>
+</div>
+<div class="btn-toolbar">
+    <a href ng-click="resCtrl.newOrEditResource({class:'Equip'})" class="btn btn-success">Создать оборудование</a>
+</div>
+
+<resources resoursable="resCtrl.equips" ng-model="resCtrl.list"
+           start-date="resCtrl.begin_date" end-date="resCtrl.end_date"
+           show-all="true" adder-disabled="true"
+           ng-change="resCtrl.resourcesChanged()"></resources>

@@ -1,0 +1,28 @@
+<div ng-hide="projects.length">
+    <hr/>
+    <h4>Здесь пока ничего нет...</h4>
+
+    <p>Попробуйте создать новый проект</p>
+</div>
+<div class="btn-toolbar">
+    <a href="/projects/new" class="btn btn-success">Добавить проект</a>
+</div>
+
+<table class="table table-hover" ng-if="projects.length">
+    <tr>
+        <th>Название</th>
+        <th>Статус</th>
+        <th>Ресурсы</th>
+        <th>Сроки</th>
+        <th>Состояние</th>
+        <th></th>
+    </tr>
+    <tr ng-repeat="project in projects | orderBy:'name'">
+        <td><a ng-href="/projects/{{project.id}}/tasks">{{project.name}}</a></td>
+        <td>{{project.status}}</td>
+        <td></td>
+        <td>{{project.end_date}}</td>
+        <td></td>
+        <td><a class="btn btn-primary" ng-href="/projects/{{project.id}}">Описание</a></td>
+    </tr>
+</table>

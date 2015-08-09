@@ -1,0 +1,57 @@
+<div ng-show="!tasks.length">
+    <div>
+        <hr/>
+        <h4>Здесь пока ничего нет...</h4>
+
+        <p>Для того чтобы добавить задачи создайте новый проект</p>
+    </div>
+    <div class="btn-toolbar">
+        <a href="/projects/new" class="btn btn-success">Добавить проект</a>
+    </div>
+</div>
+<div class="btn-toolbar col-xs-12" ng-if="tasks.length">
+    <div class="btn-group pull-right" dropdown>
+        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle disabled>
+            Фильтр 4 <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Фильтр</a></li>
+        </ul>
+    </div>
+    <div class="btn-group pull-right" dropdown>
+        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle disabled>
+            Фильтр 3 <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Фильтр</a></li>
+        </ul>
+    </div>
+    <div class="btn-group pull-right" dropdown>
+        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle disabled>
+            Фильтр 2 <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Фильтр</a></li>
+        </ul>
+    </div>
+    <div class="btn-group pull-right" dropdown>
+        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle disabled>
+            Фильтр 1 <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Фильтр</a></li>
+        </ul>
+    </div>
+</div>
+<table class="table table-condensed col-xs-12" ng-if="tasks.length">
+    <tr>
+        <th>Задачи</th>
+        <th>Проект</th>
+        <th>Доп. инфо.</th>
+    </tr>
+    <tr ng-repeat="task in tasks | orderBy:['end_date', 'project.name']">
+        <td>{{task.name}}<span class="pull-right label label-default" am-time-ago="task.end_date"></span></td>
+        <td><a ng-href="/projects/{{task.project.id}}/tasks">{{task.project.name}}</a></td>
+        <td><pre>{{task.description}}</pre></td>
+    </tr>
+</table>

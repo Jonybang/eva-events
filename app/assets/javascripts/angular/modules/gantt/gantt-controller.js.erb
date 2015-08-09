@@ -1,0 +1,103 @@
+/**
+ * Created by jonybang on 11.07.15.
+ */
+'use strict';
+
+var app = angular.module('app.gantt');
+
+app.controller('GanttCtrl', ['$scope', '$state', '$timeout',
+    'Project', 'ProjectTask', 'ProjectTaskStatus', 'User', 'Gantt', 'Helpers', 'TaskEditor',
+        function($scope, $state, $timeout, Project, ProjectTask, ProjectTaskStatus, User, Gantt, Helpers, TaskEditor) {
+
+            ProjectTaskStatus.query().$promise.then(function(statuses){
+                $scope.project_task_statuses = statuses;
+            });
+
+            $scope.startDate = new Date();
+            $scope.endDate = new Date();
+            $scope.datesChanged = true;
+
+            function getStartAndEndDate(){
+                $scope.projects.forEach(function(proj){
+                    if(proj.tasks.length){
+                        if(proj.tasks[0].begin_date < $scope.startDate){
+                            $scope.startDate = proj.tasks[0].begin_date;
+                            $scope.datesChanged = true;
+                        }
+
+                        proj.tasks.forEach(function(task){
+                            if(task.end_date > $scope.endDate){
+                                $scope.endDate = task.end_date;
+                                $scope.datesChanged = true;
+                            }
+                        });
+                    }
+                });
+            }
+            function initProjectsGantts(){
+                getStartAndEndDate();
+                $scope.projects.forEach(function(proj){
+                    proj.gantt = new Gantt();
+                    proj.gantt.init(proj.tasks, 'svg-grantt-' + proj.id, [$scope.startDate, $scope.endDate]);
+                });
+                $scope.datesChanged = false;
+            }
+            function buildProjectsGrantt(contact_id){
+                Project.query({contact_id: contact_id, with_tasks: 1}).then(function(projects){
+                    $scope.projects = projects;
+                    if($scope.projects.length){
+                        $timeout(function(){
+                            getStartAndEndDate();
+                            initProjectsGantts();
+                        }, 100);
+                    }
+                });
+            }
+            function redrawProjectsGantts(project){
+                getStartAndEndDate();
+
+                //Если начальная или конечная дата не изменилась
+                if(!$scope.datesChanged && project){
+                    //Обновить только один проект
+                    project.gantt.redraw(project.tasks, [$scope.startDate, $scope.endDate]);
+                } else {
+                    //Иначе обновить все проекты
+                    $scope.projects.forEach(function(proj){
+                        proj.gantt.redraw(proj.tasks, [$scope.startDate, $scope.endDate]);
+                    });
+                }
+
+                //Сбросить переменную
+                $scope.datesChanged = false;
+            }
+            User.get_contact().then(function(result){
+                $scope.contact = result;
+                buildProjectsGrantt(result.id);
+            });
+
+            $scope.newOrEdit = function (project_id, task, parent_task_id){
+                //Добавляет или редактирует задачу или подзадачу
+                //Если задача передана(task) - то редактируем её
+                //Если нет - то создаем новую задачу в текущем проекте
+                //Если вместе с задачей(task) передан id родительской задачи(parent_task_id)
+                //то задача добавляется подзадачей в родительскую
+
+                TaskEditor({project_id: project_id, parent_task_id: parent_task_id}, task).then(function(result){
+                    if(result.is_new){
+                        $scope.projects.some(function(proj, index){
+                            var isCurProj = proj.id == result.project_id;
+                            if(isCurProj){
+                                Project.get({id: proj.id}).then(function(project){
+                                    angular.extend($scope.projects[index], project);
+                                    redrawProjectsGantts($scope.projects[index]);
+                                });
+                            }
+                            return isCurProj;
+                        });
+                    }
+                });
+            };
+            $scope.getSubTasks = function (parent_task){
+                parent_task.child_tasks = ProjectTask.query({project_id: project_id, parent_task_id: parent_task.id });
+            }
+}]);

@@ -1,0 +1,155 @@
+'use strict';
+
+var app = angular.module('app.tasks');
+
+app.controller('TasksCtrl', ['$scope', 'ProjectTask', 'User', 'Helpers', '$state', '$modal', function($scope, ProjectTask, User, Helpers, $state, $modal) {
+    var project_id = $state.id;
+    //TODO: Выводить только те задачи, к которым данный контакт имеет отношение
+    User.get_contact().then(function(result){
+        $scope.contact = result;
+        ProjectTask.query({sort: 'end_date DESC', limit: 50, contact_id: result.id}).then(function (tasks) {
+            $scope.tasks = tasks;
+        });
+    });
+
+
+    $scope.newOrEdit = function (task, parent_task_id){
+        //Добавляет или редактирует задачу или подзадачу
+        //Если задача передана(task) - то редактируем её
+        //Если нет - то создаем новую задачу в текущем проекте
+        //Если вместе с задачей(task) передан id родительской задачи(parent_task_id)
+        //то задача добавляется подзадачей в родительскую
+
+        var task_id;
+        if(task)
+            task_id = task.id;
+
+        var modalInstance = $modal.open({
+            animation: true,
+            templateUrl: '<%= asset_path('angular/templates/project/modals/project-task-form.html') %>',
+            controller: 'ProjectTaskFormCtrl',
+            //size: size,
+            resolve: {
+                inputs: function(){
+                    return {
+                        project_id: project_id,
+                        task_id: task_id,
+                        parent_task_id: parent_task_id
+                    };
+                }
+            }
+        });
+
+        modalInstance.result.then(function (result) {
+            //Если это задача не является подзадачей
+            if(!parent_task_id){
+                //добавляем её в проект
+                Helpers.addOrReplace($scope.project_tasks, result, task_id);
+            }
+            else{
+                //иначе, добавляем её в родительскую задачу
+                Helpers.addItemToParentObjectInArrayById($scope.project_tasks, result, parent_task_id, 'child_tasks');
+            }
+        }, function () {
+            //$log.info('Modal dismissed at: ' + new Date());
+        });
+    };
+    $scope.getSubTasks = function (parent_task){
+        parent_task.child_tasks = ProjectTask.query({project_id: project_id, parent_task_id: parent_task.id });
+    }
+}]);
+
+app.controller('TasksFormCtrl', ['$scope', 'ProjectTask', 'ProjectTaskStatus', 'ProjectResource', 'Contact', '$modalInstance', 'inputs', 'Helpers', function($scope, ProjectTask, ProjectTaskStatus, ProjectResource, Contact, $modalInstance, inputs, Helpers) {
+    $scope.task = {
+        project_id: inputs.project_id,
+        parent_task_id: inputs.parent_task_id,
+        resources: []
+    };
+    $scope.opened = {};
+    $scope.responsible = $scope.contacts = [];
+
+    if(inputs.task_id){
+        ProjectTask.get(inputs.task_id).then(function(task){
+            angular.extend($scope.task, task);
+        })
+    }
+
+    ProjectTaskStatus.query().$promise.then(function(statuses){
+        $scope.statuses = statuses;
+    });
+
+    Contact.query({limit:50}).then(function(contacts){
+        $scope.responsible = $scope.contacts = contacts;
+    });
+
+    $scope.refreshResponsible = function(q, selected) {
+        return Contact.query({q: q, limit:50}).then(function(contacts){
+            if(!selected || !selected.length)
+                $scope.responsible = contacts;
+            else
+                $scope.responsible = contacts.filter(function(contact){
+                    return selected.indexOf(contact.id) == -1;
+                });
+        });
+    };
+    $scope.$watch('task.status_id', function(new_id){
+        if(!$scope.statuses || !$scope.statuses.length)
+            return;
+
+        $scope.statuses.some(function(status){
+            var result = status.id == new_id;
+            if(result)
+                $scope.task.status = status;
+            return result;
+        });
+    });
+    $scope.$watch('task.begin_date', function(val){
+        if(!$scope.task.begin_date || ($scope.task.status && $scope.task.status.role != 'future' && $scope.task.status.role != 'active'))
+            return;
+
+        var role;
+        if($scope.task.begin_date > (new Date()))
+            role = 'future';
+        else
+            role = 'active';
+
+        $scope.statuses.some(function(status){
+            var result = status.role == role;
+            if(result)
+                $scope.task.status_id = status.id;
+            return result;
+        });
+    });
+
+    $scope.save = function() {
+        $scope.$broadcast('show-errors-check-validity');
+        if (!$scope.taskForm.$valid) {
+            return;
+        }
+
+        var obj;
+        //если id нет - значит это новая задача
+        if(!$scope.task.id)
+            obj = new ProjectTask($scope.task).create();
+        else
+            obj = new ProjectTask($scope.task).update();
+
+        obj.then(function success (result){
+                    var task = result.resource ? result.resource : result;
+                    $scope.task.resources.forEach(function(res){
+                        res.project_task_id = task.id;
+                        res.project_id = task.project_id;
+                        res.resoursable_type = res.resoursable.class;
+
+                        if(!res.id)
+                            obj = new ProjectResource(res).create();
+                        else
+                            obj = new ProjectResource(res).update();
+                    });
+                    $modalInstance.close(task);
+                },
+                function error (info){
+                    $scope.errors = info.data.errors;
+                });
+    }
+}]);

@@ -1,0 +1,53 @@
+<% unless @current_user%>
+    <div class="col-md-8">
+        <div class="jumbotron">
+            <h2>Добро пожаловать в <span class="label label-success">Eva Events</span></h2>
+            <p>
+              Приглашаем вас протестировать альфа версию системы для эффективного управления мероприятими в условиях
+              большого количества паралельно идущих выступлений.
+            </p>
+            <p><a class="btn btn-primary btn-lg" href="/register" role="button">Зарегистрироваться</a></p>
+        </div>
+          <div class="panel panel-default">
+            <div class="panel-body">
+                <%= render 'users/new' %>
+            </div>
+          </div>
+    </div>
+    <div class="col-md-4">
+
+          <div class="row">
+            <div class="thumbnail">
+              <img src="https://dummyimage.com/600x300/666566/030305&text=Управление" alt="...">
+              <div class="caption">
+                <h3>Управление мероприятием с мобильных устройств</h3>
+                <p>В любой момент можно изменить расписание или перенаправить волонтеров в нужное место.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="thumbnail">
+              <img src="https://dummyimage.com/600x300/666566/030305&text=Оповещения" alt="...">
+              <div class="caption">
+                <h3>Оповещения на устройства организаторов</h3>
+                <p>Волонтеры и организаторы смогут получать оперативную информацию об изменения в расписании или перепоручениях</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="thumbnail">
+              <img src="https://dummyimage.com/600x300/666566/030305&text=Работа+в+команде" alt="...">
+              <div class="caption">
+                <h3>Работа в команде</h3>
+                <p>Разделение прав и обязаностей, установка поручений.</p>
+              </div>
+            </div>
+      </div>
+    </div>
+<% else %>
+    <div ng-app="app">
+      <div ui-view></div>
+    </div>
+<% end %>

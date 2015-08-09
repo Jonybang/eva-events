@@ -1,0 +1,24 @@
+<tabs data="tabsData" type="pills" />
+<div class="panel panel-default margin-top">
+    <div class="panel-heading">Диапазон вывода</div>
+    <div class="panel-body">
+        <div class="col-md-6 controls">
+            <div class="input-group">
+                <span class="input-group-addon">от</span>
+                <!--<input type="date" name="begin_date" ng-model="task.begin_date" ng-change="autoStatus()" class="form-control" required/>-->
+                <input type="text" class="form-control" datepicker-popup="dd.MM.yyyy" ng-model="resCtrl.begin_date" is-open="opened.begin_date" ng-click="opened.begin_date=true" max-date="resCtrl.end_date"/>
+            </div>
+        </div>
+        <div class="col-md-6 controls">
+            <div class="input-group">
+                <span class="input-group-addon">до</span>
+                <!--<input type="date" name="end_date" ng-model="task.end_date" class="form-control" required/>-->
+                <input type="text" class="form-control" datepicker-popup="dd.MM.yyyy" ng-model="resCtrl.end_date" is-open="opened.end_date" ng-click="opened.end_date=true" min-date="resCtrl.begin_date" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<animated-button ng-model="resCtrl.toggleChanged" text="Сохранить изменения" classes="pull-right" hide-before-change="true" ng-click="resCtrl.saveChanges()"></animated-button>
+
+<ui-view></ui-view>

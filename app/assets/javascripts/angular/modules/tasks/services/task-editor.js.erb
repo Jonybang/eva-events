@@ -1,0 +1,30 @@
+'use strict';
+
+angular.module('app.tasks')
+    .factory('TaskEditor', ['$modal', '$q', function($modal, $q) {
+        return function (inputs, task){
+            if(task)
+                inputs.task_id = task.id;
+
+            return $q(function(resolve, reject) {
+                var modalInstance = $modal.open({
+                    animation: true,
+                    templateUrl: '<%= asset_path('angular/modules/tasks/templates/modals/form.html') %>',
+                    controller: 'TasksFormCtrl',
+                    //size: size,
+                    resolve: {
+                    inputs: function(){
+                        return inputs;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (result) {
+                result.is_new = inputs.task_id ? false : true;
+                resolve(result);
+            }, function () {
+                reject('Cancel');
+            });
+        });
+    }
+}]);

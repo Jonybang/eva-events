@@ -1,0 +1,24 @@
+<div ng-hide="resCtrl.resources.length">
+    <hr/>
+    <h4>Здесь пока ничего нет...</h4>
+
+    <p>Попробуйте создать новый ресурс</p>
+</div>
+<div class="btn-group btn-toolbar" dropdown>
+    <button type="button" class="btn btn-default" dropdown-toggle>
+        Создать Ресурс <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li role="menuitem">
+            <a href ng-click="resCtrl.newOrEditResource({class:'Contact'})">Человек</a>
+        </li>
+        <li role="menuitem">
+            <a href ng-click="resCtrl.newOrEditResource({class:'Equip'})">Оборудование</a>
+        </li>
+    </ul>
+</div>
+
+<resources resoursable="resCtrl.resources" ng-model="resCtrl.list"
+           start-date="resCtrl.begin_date" end-date="resCtrl.end_date"
+           show-all="true" adder-disabled="true"
+           ng-change="resCtrl.resourcesChanged()"></resources>

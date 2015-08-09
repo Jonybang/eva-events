@@ -1,0 +1,26 @@
+<div ng-show="!tasks.project_tasks.length">
+    <div>
+        <hr/>
+        <h4>Здесь пока ничего нет...</h4>
+
+        <p>Попробуйте добавить задачу</p>
+    </div>
+</div>
+<table class="table table-bordered table-condensed" ng-if="tasks.project_tasks.length">
+    <tr>
+        <th>Задача</th>
+        <th>Сроки</th>
+        <th>Ответственные</th>
+        <th>Ресурсы</th>
+        <th>Результаты</th>
+        <th>Прочее</th>
+    </tr>
+    <tr ng-repeat="task in tasks.project_tasks">
+        <td>{{$index+1}}. <a href ng-click="newOrEdit(task)">{{task.name}}</a></td>
+        <td><span class="label label-default">{{task.begin_date | amDateFormat:'D.M.YYYY'}}</span> - <span class="label label-default">{{task.end_date | amDateFormat:'D.M.YYYY'}}</span></td>
+        <td><div class="text-center" ng-repeat="responsible in task.responsible">{{responsible.name}}</div></td>
+        <td><div class="text-center" ng-repeat="resource in task.resources">{{resource.resoursable.name}} - {{resource.time}} ч.</div></td>
+        <td><div class="text-center"><unavailable/></div></td>
+        <td><div class="text-center"><unavailable/></div></td>
+    </tr>
+</table>

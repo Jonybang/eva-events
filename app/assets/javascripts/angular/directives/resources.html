@@ -1,0 +1,59 @@
+<div class="table-responsive">
+    <table class="table resources">
+        <tbody>
+        <tr>
+            <th></th>
+            <th colspan="{{calendar.length}}">Дата</th>
+        </tr>
+        <tr>
+            <th>Ресурсы</th>
+            <th ng-repeat="date in calendar">{{date.date | amDateFormat:'D MMM'}}.</th>
+        </tr>
+        <tr ng-if="res.resAvaible || showAll" ng-repeat="res in resoursable | orderBy: '-resAvaible'">
+            <td>{{res.name}}</td>
+            <td ng-repeat="date in calendar"
+                ng-mouseleave="leaveAddButton(date,res)"
+                ng-mouseenter="enterAddButton(date,res)">
+
+                <ul class="list-unstyled"
+                    dnd-list="date.resources"
+                    dnd-drop="resDropped(date,res,item)">
+                    <li ng-repeat="resource in date.resources"
+                        ng-if="res.id == resource.resoursable.id && res.class == resource.resoursable.class"
+                        dnd-draggable="resource"
+                        dnd-effect-allowed="move"
+                        dnd-moved="date.resources.splice($index, 1)">
+                
+                <span ng-style="getResStyle(resource)" class="label label-primary">
+                  <input ng-model="resource.time" ng-change="resTimeChanged(resource, date)" ng-blur="removeResIfEmpty(date.resources, $index)" />
+                    ч.
+                </span>
+                    </li>
+                    <button ng-click="addResToList(res, date)"
+                            ng-if="date.hover && res.hover && isEmptyDate(date, res)"
+                            ng-disabled="adderDisabled"
+                            class="btn btn-default btn-xs adder" type="button">
+
+                        <span aria-hidden="true" class="glyphicon glyphicon-plus"></span>
+                        Добавить
+                    </button>
+                </ul>
+            </td>
+        </tr>
+        <tr ng-if="!showAll" class="adder">
+            <td colspan="{{calendar.length+1}}">
+                <div class="btn-group" dropdown>
+                    <button type="button" class="btn btn-default" dropdown-toggle>
+                        Добавить <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="menuitem" ng-repeat="res in resoursable" ng-if="!isResAvaible(res)">
+                            <a href="#" ng-click="addResToList(res)">{{res.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
