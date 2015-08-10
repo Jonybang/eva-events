@@ -1,8 +1,8 @@
 /**
  * Created by jonybang on 10.07.15.
  */
-angular.module('app').controller('AppCtrl', ['$scope', '$location', 'User', 'Organization', 'Forum', 'Person', 'PersonEditor',
-    function($scope, $location, User, Organization, Forum, Person, PersonEditor) {
+angular.module('app').controller('AppCtrl', ['$scope', '$location', 'User', 'Organization', 'Forum', 'Person', 'PersonEditor', 'Helpers',
+    function($scope, $location, User, Organization, Forum, Person, PersonEditor, Helpers) {
         User.get_person().then(function(result){
             $scope.person = result;
             if(!result.organizations.length)
@@ -27,20 +27,18 @@ angular.module('app').controller('AppCtrl', ['$scope', '$location', 'User', 'Org
         $scope.setCurForum = function(forum){
             $scope.cur_forum = forum;
         };
-        $scope.newTeamMember = function(forum, role){
+        $scope.newOrEditTeamMember = function(forum, role, person){
             forum['expand_' + role + 's'] = true;
-            
+
             var inputs = {};
             inputs[role + '_forum_ids'] = [forum.id];
 
-            PersonEditor(inputs).then(function(result){
-                if(result.is_new){
-                    forum[role + 's'].push(result);
-                }
+            PersonEditor(inputs, person).then(function(result){
+                Helpers.addOrReplace(forum[role + 's'], result, result.id, true);
             });
         };
         $scope.tabsData = [
-            { route : 'app.events', heading : 'События' },
+            { route : 'app.events', heading : 'Выступления' },
             { route : '#', heading : 'Материалы', disabled: true },
             { route : '#', heading : 'Чат', disabled: true }
         ];

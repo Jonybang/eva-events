@@ -6,25 +6,16 @@
 var app = angular.module('app.events');
 
 app.controller('EventsCtrl', ['$scope', 'Event', 'EventEditor', 'Helpers', '$state', '$modal', function($scope, Event, EventEditor, Helpers, $state, $modal) {
-    $scope.newOrEdit = function (project_id, task, parent_task_id){
+    $scope.newOrEdit = function (forum_id, event){
         //Добавляет или редактирует задачу или подзадачу
         //Если задача передана(task) - то редактируем её
         //Если нет - то создаем новую задачу в текущем проекте
         //Если вместе с задачей(task) передан id родительской задачи(parent_task_id)
         //то задача добавляется подзадачей в родительскую
 
-        EventEditor({project_id: project_id, parent_task_id: parent_task_id}, task).then(function(result){
+        EventEditor({forum_id: forum_id}, event).then(function(result){
             if(result.is_new){
-                $scope.projects.some(function(proj, index){
-                    var isCurProj = proj.id == result.project_id;
-                    if(isCurProj){
-                        Project.get({id: proj.id}).then(function(project){
-                            angular.extend($scope.projects[index], project);
-                            redrawProjectsGantts($scope.projects[index]);
-                        });
-                    }
-                    return isCurProj;
-                });
+
             }
         });
     };
@@ -40,6 +31,8 @@ app.controller('EventsFormCtrl', ['$scope', 'ForumEvent', '$modalInstance', 'inp
         Event.get(inputs.event_id).then(function(event){
             angular.extend($scope.event, event);
         })
+    } else {
+        angular.extend($scope.event, inputs);
     }
 
     $scope.save = function() {

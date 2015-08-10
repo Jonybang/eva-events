@@ -16,6 +16,7 @@ angular.module('app', [
     'ngResource',
     'ui.bootstrap',
     'ui.bootstrap.showErrors',
+    'ui.bootstrap.datetimepicker',
     //'angular-date-picker-polyfill',
     'ng-rails-csrf',
     'angularMoment',
@@ -29,7 +30,7 @@ angular.module('app', [
         .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', 'showErrorsConfigProvider',
             '$httpProvider', 'railsSerializerProvider', 'uiSelectConfig', function($urlRouterProvider, $stateProvider, $locationProvider, showErrorsConfigProvider, $httpProvider, railsSerializerProvider, uiSelectConfig) {
 
-            $urlRouterProvider.otherwise("/manager");
+            $urlRouterProvider.otherwise("/manager/events");
 
             <% @templates_path = 'angular/templates/' %>
             $stateProvider

@@ -7,29 +7,31 @@
         a ng-class="['list-group-item', {'active': forum.id == cur_forum.id}]" ng-click="setCurForum(forum)" ng-bind="forum.name"
         ul.list-group.forum-objects ng-if="forum.id == cur_forum.id"
           li.list-group-item
-            h3: a Команда
+            h4: a Команда
             ul.list-unstyled
               li
-                a.btn.btn-default.btn-xs.pull-right ng-click="newTeamMember(forum, 'admin')"
+                a.btn.btn-default.btn-xs.pull-right ng-click="newOrEditTeamMember(forum, 'admin')"
                   span.glyphicon.glyphicon-plus
-                h4: a ng-click="forum.expand_admins = !forum.expand_admins"
+                h5: a ng-click="forum.expand_admins = !forum.expand_admins"
                   | Админы
                   span ng-class="['caret',{'inverse':forum.expand_admins}]"
                 ul ng-show="forum.admins.length && forum.expand_admins"
-                  li ng-repeat="admin in forum.admins": a ng-bind="admin.name"
+                  li ng-repeat="admin in forum.admins": a ng-bind="admin.name" ng-click="newOrEditTeamMember(forum, 'admin', admin)"
                 div.not_found ng-hide="forum.admins.length" Никого нет
 
               li
-                a.btn.btn-default.btn-xs.pull-right ng-click="newTeamMember(forum, 'volunteer')"
+                a.btn.btn-default.btn-xs.pull-right ng-click="newOrEditTeamMember(forum, 'volunteer')"
                   span.glyphicon.glyphicon-plus
 
-                h4: a ng-click="forum.expand_volunteers = !forum.expand_volunteers"
+                h5: a ng-click="forum.expand_volunteers = !forum.expand_volunteers"
                   | Волонтеры
                   span ng-class="['caret',{'inverse':forum.expand_volunteers}]"
 
                 ul ng-show="forum.volunteers.length && forum.expand_volunteers"
-                  li ng-repeat="volunteer in forum.volunteers": a ng-bind="volunteer.name"
+                  li ng-repeat="volunteer in forum.volunteers": a ng-bind="volunteer.name" ng-click="newOrEditTeamMember(forum, 'volunteer', volunteer)"
                 div.not_found ng-hide="forum.volunteers.length" Никого нет
+          li.list-group-item
+            h4: a Выступления
       a.btn.btn-success.btn-block ng-click="new_forum.add = new_forum.focus = true;" ng-hide="new_forum.add"
         span.glyphicon.glyphicon-plus
         | Добавить мероприятие

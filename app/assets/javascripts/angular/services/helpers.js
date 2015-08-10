@@ -10,21 +10,29 @@ angular.module('app')
             addOrReplace: function (array, object, id, isPush){
                 //Добавляет в массив или обновляет в нем объект, в зависимости от того:
                 //задано ли поле id(тоесть существует ли уже объект с таким id)
-                if(!id){
+                function add(){
                     if(isPush)
                         array.push(object);
                     else
                         array.unshift(object);
                 }
-
+                if(!id){
+                    add();
+                }
                 else {
-                    array.some(function(obj, index){
-                        var result = obj.id == id && obj.class == object.class;
+                    var extended = array.some(function(obj, index){
+                        var result = obj.id == id;
+
+                        if(obj.class && object.class)
+                            result = result && obj.class == object.class;
+
                         if(result){
                             angular.extend(array[index], object);
                         }
                         return result;
-                    })
+                    });
+                    if(!extended)
+                        add();
                 }
             },
             removeById: function(array, id){
