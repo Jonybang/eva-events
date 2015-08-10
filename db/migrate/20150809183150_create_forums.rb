@@ -7,6 +7,9 @@ class CreateForums < ActiveRecord::Migration
       t.datetime :begin_date
       t.datetime :end_date
 
+      t.belongs_to :organization, index: true
+      t.belongs_to :person, index: true
+
       t.timestamps null: false
     end
   end

@@ -8,6 +8,7 @@ class CreatePosts < ActiveRecord::Migration
       t.boolean :active
 
       t.belongs_to :forum, index: true
+      t.belongs_to :person, index: true
 
       #Event
       t.string :alias

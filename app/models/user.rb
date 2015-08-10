@@ -1,7 +1,4 @@
 class User < ActiveRecord::Base
-  has_one :contact
-  accepts_nested_attributes_for :contact
-
   def name
     self.email
   end
