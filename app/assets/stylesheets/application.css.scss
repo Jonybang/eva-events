@@ -39,7 +39,9 @@ ul.list-group.forum-objects {
     margin-left: 15px;
   }
 }
-
+a[tooltip]{
+  font-size: 12px;
+}
 div.list-group.forums a{
   cursor: pointer;
 }

@@ -5,7 +5,7 @@
     div.list-group.forums
       div ng-repeat="forum in organization.forums"
         a ng-class="['list-group-item', {'active': forum.id == cur_forum.id}]" ng-click="setCurForum(forum)" ng-bind="forum.name"
-        ul.list-group.forum-objects ng-if="forum.id == cur_forum.id"
+        ul.list-group.forum-objects collapse="forum.id != cur_forum.id"
           li.list-group-item
             h4: a Команда
             ul.list-unstyled
@@ -15,7 +15,7 @@
                 h5: a ng-click="forum.expand_admins = !forum.expand_admins"
                   | Админы
                   span ng-class="['caret',{'inverse':forum.expand_admins}]"
-                ul ng-show="forum.admins.length && forum.expand_admins"
+                ul collapse="!forum.admins.length || !forum.expand_admins"
                   li ng-repeat="admin in forum.admins": a ng-bind="admin.name" ng-click="newOrEditTeamMember(forum, 'admin', admin)"
                 div.not_found ng-hide="forum.admins.length" Никого нет
 
@@ -27,11 +27,14 @@
                   | Волонтеры
                   span ng-class="['caret',{'inverse':forum.expand_volunteers}]"
 
-                ul ng-show="forum.volunteers.length && forum.expand_volunteers"
+                ul collapse="!forum.volunteers.length || !forum.expand_volunteers"
                   li ng-repeat="volunteer in forum.volunteers": a ng-bind="volunteer.name" ng-click="newOrEditTeamMember(forum, 'volunteer', volunteer)"
                 div.not_found ng-hide="forum.volunteers.length" Никого нет
           li.list-group-item
-            h4: a События
+            h4
+              a События
+              a tooltip="Событиями могут быть выступления или перерывы" tooltip-placement="top" tooltip-trigger="mouseenter"
+                span.glyphicon.glyphicon-question-sign
             ul.list-unstyled ng-show="forum.events.length"
               li ng-repeat="event_group in forum.grouped_events"
                 a.btn.btn-default.btn-xs.pull-right ng-click="newOrEditEvent(forum, event_group)"
@@ -39,7 +42,7 @@
                 h5: a ng-click="event_group.expand = !event_group.expand"
                   | {{event_group.begin_date | amDateFormat:'DD MMM' }}
                   span ng-class="['caret',{'inverse':event_group.expand}]"
-                ul ng-show="event_group.events.length && event_group.expand"
+                ul collapse="!event_group.events.length || !event_group.expand"
                   li ng-repeat="event in event_group.events": a ng-bind="event.name" ng-click="newOrEditEvent(forum, event_group, event)"
             a.btn.btn-default.btn-sm ng-click="newOrEditEvent(forum)" ng-hide="forum.events.length"
               span.glyphicon.glyphicon-plus
