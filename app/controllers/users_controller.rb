@@ -19,8 +19,9 @@ class UsersController < InheritsController
       return
     end
 
-    @user = User.new(user_params)
+    @user = Person.new(email: user_params[:email], password: user_params[:password])
     if @user.save!
+      @user.organizations << Organization.new(name: user_params[:organization])
       #@user.contact = Contact.new({name:@user.email})
       #@user.contact.contact_data = ContactDatum.create({email:@user.email})
       session[:user_id] = @user.id
@@ -33,7 +34,7 @@ class UsersController < InheritsController
   private
 
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :salt, :encrypted_password)
+      params.require(:user).permit(:email, :organization, :password, :password_confirmation, :salt, :encrypted_password)
       #params.require(:user).permit(:email, :password_hash, :password_salt)
     end
 

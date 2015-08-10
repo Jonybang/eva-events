@@ -10,10 +10,10 @@ angular.module('app')
                         return service.user_id = response.data;
                     });
             },
-            get_contact: function() {
-                return $http.get('/current_contact')
+            get_person: function() {
+                return $http.get('/current_person')
                     .then(function(response) {
-                        return service.contact = response.data;
+                        return service.person = response.data;
                     });
             }
         };

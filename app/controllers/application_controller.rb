@@ -21,11 +21,11 @@ class ApplicationController < ActionController::Base
   # end
 
   def user_id
-    render plain: @current_user._id
+    render plain: @current_user.id
   end
 
-  def current_contact
-    @contact = @current_user.contact
+  def current_person
+    @person = Person.find @current_user.id
   end
   private
 

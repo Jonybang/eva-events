@@ -1,6 +1,5 @@
 class Person < User
-  # fullname:string registered_on:datetime registered_from:integer
-
+  # name:string registered_on:datetime registered_from:integer
 
   belongs_to :invited_by, class_name: 'Person', inverse_of: :invited, foreign_key: 'person_id'
 

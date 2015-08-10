@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :encrypted_password
 
       # Person
-      t.string :fullname
+      t.string :name
       t.datetime :registered_on
 
       t.belongs_to :person

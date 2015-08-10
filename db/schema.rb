@@ -134,7 +134,7 @@ ActiveRecord::Schema.define(version: 20150810043410) do
   create_table "users", force: :cascade do |t|
     t.string   "email",              null: false
     t.string   "encrypted_password"
-    t.string   "fullname"
+    t.string   "name"
     t.datetime "registered_on"
     t.integer  "person_id"
     t.datetime "created_at",         null: false

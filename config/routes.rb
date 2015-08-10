@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   post 'register' => 'users#create'
 
   get 'user_id' => 'application#user_id'
-  get 'current_contact' => 'application#current_contact', :defaults => {format: :json}
+  get 'current_person' => 'application#current_person', :defaults => {format: :json}
 
   resources :users, :except => :new
   resources :sessions, :except => :new
