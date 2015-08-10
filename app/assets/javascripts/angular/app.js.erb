@@ -85,4 +85,17 @@ angular.module('app').run(['amMoment', 'datepickerConfig', 'datepickerPopupConfi
         clearText:'Очистить',
         closeText:'Закрыть'
     });
-}]);
+}]).constant('uiDatetimePickerConfig', {
+    dateFormat: 'dd.MM.yyyy H:mm',
+    enableDate: true,
+    enableTime: true,
+    todayText: 'Сегодня',
+    nowText: 'Сейчас',
+    clearText: 'Очистить',
+    closeText: 'Закрыть',
+    dateText: 'Дата',
+    timeText: 'Время',
+    closeOnDateSelection: true,
+    appendToBody: false,
+    showButtonBar: true
+});

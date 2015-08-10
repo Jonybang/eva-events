@@ -87,6 +87,29 @@ angular.module('app')
                 newDate.setHours(hours - offset);
 
                 return newDate;
+            },
+            groupByDate: function(array, dateField, arrField) {
+                var grouped = [];
+                array.forEach(function(obj){
+                    obj[dateField].setHours(0,0,0,0);
+
+                    var exist = grouped.some(function(_group){
+                        var result = obj[dateField].getDate() == _group[dateField].getDate() &&
+                            obj[dateField].getMonth() == _group[dateField].getMonth() &&
+                            obj[dateField].getYear() == _group[dateField].getYear();
+                        if(result)
+                            _group[arrField].push(obj);
+                        return result;
+                    });
+                    if(!exist){
+                        var group = {};
+                        group[dateField] = obj[dateField];
+                        group[arrField] = [];
+                        group[arrField].push(obj);
+                        grouped.push(group);
+                    }
+                });
+                return grouped;
             }
         };
         return service;

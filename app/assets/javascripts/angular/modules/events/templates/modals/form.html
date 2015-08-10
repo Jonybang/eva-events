@@ -18,28 +18,18 @@
 
                 <div class="form-group col-md-12" show-errors>
                     <div class="col-md-4 col-lg-3 text-right">
-                        <label>Email</label>
-                    </div>
-                    <div class="col-md-6 col-lg-7">
-                        <input type="email" name="email" ng-model="event.email" class="form-control" required >
-                    </div>
-                </div>
-                <div ng-repeat="error in errors.email" class="alert alert-error"><strong>Email</strong> {{error}}</div>
-
-                <div class="form-group col-md-12" show-errors>
-                    <div class="col-md-4 col-lg-3 text-right">
                         <label>Сроки</label>
                     </div>
                     <div class="col-md-6 col-lg-7 controls">
                         <div class="input-group">
                             <span class="input-group-addon">от</span>
-                            <!--<input type="date" name="begin_date" ng-model="task.begin_date" ng-change="autoStatus()" class="form-control" required/>-->
-                            <input type="text" class="form-control" name="begin_date" datetime-picker="dd.MM.yyyy HH:mm" ng-model="task.begin_date" is-open="opened.begin_date" ng-click="opened.begin_date=true" max-date="task.end_date"/>
+                            <!--<input type="date" name="begin_date" ng-model="event.begin_date" ng-change="autoStatus()" class="form-control" required/>-->
+                            <input type="text" class="form-control" name="begin_date" datetime-picker ng-model="event.begin_date" is-open="opened.begin_date" ng-click="opened.begin_date=true" max-date="event.end_date"/>
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon">до</span>
-                            <!--<input type="date" name="end_date" ng-model="task.end_date" class="form-control" required/>-->
-                            <input type="text" class="form-control" name="end_date" datetime-picker="dd.MM.yyyy HH:mm" ng-model="task.end_date" is-open="opened.end_date" ng-click="opened.end_date=true" min-date="task.begin_date" />
+                            <!--<input type="date" name="end_date" ng-model="event.end_date" class="form-control" required/>-->
+                            <input type="text" class="form-control" name="end_date" datetime-picker ng-model="event.end_date" is-open="opened.end_date" ng-click="opened.end_date=true" min-date="event.begin_date" />
                         </div>
                     </div>
                 </div>

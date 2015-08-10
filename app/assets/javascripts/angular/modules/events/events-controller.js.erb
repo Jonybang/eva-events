@@ -24,11 +24,10 @@ app.controller('EventsCtrl', ['$scope', 'Event', 'EventEditor', 'Helpers', '$sta
 
 app.controller('EventsFormCtrl', ['$scope', 'ForumEvent', '$modalInstance', 'inputs', function($scope, ForumEvent, $modalInstance, inputs) {
     $scope.event = {
-        event_data : {}
     };
 
     if(inputs.event_id){
-        Event.get(inputs.event_id).then(function(event){
+        ForumEvent.get(inputs.event_id).then(function(event){
             angular.extend($scope.event, event);
         })
     } else {

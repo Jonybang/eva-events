@@ -4,7 +4,7 @@ class Forum < Base
   belongs_to :organization, class_name: 'Organization'
   belongs_to :creator, class_name: 'Person', foreign_key: 'person_id'
 
-  has_and_belongs_to_many :posts, class_name: 'Post'
+  has_many :posts, class_name: 'Post'
 
   has_and_belongs_to_many :admins, class_name: 'Person', :join_table => 'forums_admins'
   has_and_belongs_to_many :volunteers, class_name: 'Person', :join_table => 'forums_volunteers'

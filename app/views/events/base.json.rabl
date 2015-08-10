@@ -1,0 +1,1 @@
+attributes :begin_date, :end_date
