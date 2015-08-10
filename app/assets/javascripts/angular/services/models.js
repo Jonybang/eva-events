@@ -36,6 +36,15 @@ app.factory('ForumEvent', ['railsResourceFactory', 'railsSerializer', function (
         })
     });
 }]);
+app.factory('EventType', ['railsResourceFactory', 'railsSerializer', function (railsResourceFactory, railsSerializer) {
+    return railsResourceFactory({
+        url: '/api/event_types',
+        name: 'event_type',
+        serializer: railsSerializer(function () {
+            this.exclude('class');
+        })
+    });
+}]);
 app.factory('Person', ['railsResourceFactory', 'railsSerializer', function (railsResourceFactory, railsSerializer) {
     return railsResourceFactory({
         url: '/api/persons',

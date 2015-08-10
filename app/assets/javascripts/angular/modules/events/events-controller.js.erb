@@ -22,7 +22,7 @@ app.controller('EventsCtrl', ['$scope', 'Event', 'EventEditor', 'Helpers', '$sta
 }]);
 
 
-app.controller('EventsFormCtrl', ['$scope', 'ForumEvent', '$modalInstance', 'inputs', function($scope, ForumEvent, $modalInstance, inputs) {
+app.controller('EventsFormCtrl', ['$scope', 'ForumEvent', 'EventType', '$modalInstance', 'inputs', function($scope, ForumEvent, EventType, $modalInstance, inputs) {
     $scope.event = {
     };
 
@@ -33,6 +33,10 @@ app.controller('EventsFormCtrl', ['$scope', 'ForumEvent', '$modalInstance', 'inp
     } else {
         angular.extend($scope.event, inputs);
     }
+
+    EventType.query().then(function(types){
+        $scope.event_types = types;
+    });
 
     $scope.save = function() {
         $scope.$broadcast('show-errors-check-validity');

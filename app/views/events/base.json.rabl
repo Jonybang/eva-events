@@ -1,1 +1,1 @@
-attributes :begin_date, :end_date
+attributes :begin_date, :end_date, :event_type, :event_type_id
