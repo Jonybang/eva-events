@@ -13,6 +13,12 @@
 
 ActiveRecord::Schema.define(version: 20150810043410) do
 
+  create_table "event_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "events_admins", id: false, force: :cascade do |t|
     t.integer "person_id"
     t.integer "event_id"
@@ -124,8 +130,9 @@ ActiveRecord::Schema.define(version: 20150810043410) do
     t.integer  "forum_id"
     t.integer  "person_id"
     t.string   "alias"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "event_type_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   add_index "posts", ["forum_id"], name: "index_posts_on_forum_id"

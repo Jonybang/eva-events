@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :organizations, :defaults => {format: :json}
     resources :forums, :defaults => {format: :json}
     resources :events, :defaults => {format: :json}
+    resources :event_types, :defaults => {format: :json}
     resources :persons, :defaults => {format: :json}
   end
   # The priority is based upon order of creation: first created -> highest priority.
