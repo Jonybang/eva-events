@@ -11,7 +11,7 @@ angular.module('app.events', ['ui.router'])
             $stateProvider
                     .state('app.events', {
                         url: '/events',
-                        templateUrl: '<%= asset_path(@templates_path + 'index.html') %>',
+                        templateUrl: '<%= asset_path('angular/modules/events/templates/index.html') %>',
                         controller: 'EventsCtrl'
                     });
         }]);

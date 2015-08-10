@@ -3,6 +3,7 @@
  */
 angular.module('app').controller('AppCtrl', ['$scope', '$location', 'User', 'Organization', 'Forum', 'Person', 'PersonEditor', 'EventEditor', 'Helpers',
     function($scope, $location, User, Organization, Forum, Person, PersonEditor, EventEditor, Helpers) {
+        var self = this;
         User.get_person().then(function(result){
             $scope.person = result;
             if(!result.organizations.length)
@@ -12,7 +13,7 @@ angular.module('app').controller('AppCtrl', ['$scope', '$location', 'User', 'Org
                 $scope.organization = organization;
 
                 if(organization.forums && organization.forums.length){
-                    $scope.cur_forum = organization.forums[organization.forums.length - 1];
+                    $scope.setCurForum(organization.forums[organization.forums.length - 1]);
 
                     organization.forums.forEach(function(forum){
                         forum.grouped_events = Helpers.groupByDate(forum.events, 'begin_date', 'events');
@@ -31,7 +32,7 @@ angular.module('app').controller('AppCtrl', ['$scope', '$location', 'User', 'Org
             });
         };
         $scope.setCurForum = function(forum){
-            $scope.cur_forum = forum;
+            self.cur_forum = $scope.cur_forum = forum;
         };
         $scope.newOrEditTeamMember = function(forum, role, person){
             forum['expand_' + role + 's'] = true;
@@ -62,7 +63,7 @@ angular.module('app').controller('AppCtrl', ['$scope', '$location', 'User', 'Org
             });
         };
         $scope.tabsData = [
-            { route : 'app.events', heading : 'Выступления' },
+            { route : 'app.events', heading : 'События' },
             { route : '#', heading : 'Материалы', disabled: true },
             { route : '#', heading : 'Чат', disabled: true }
         ];

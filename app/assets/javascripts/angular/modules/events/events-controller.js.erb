@@ -5,7 +5,7 @@
 
 var app = angular.module('app.events');
 
-app.controller('EventsCtrl', ['$scope', 'Event', 'EventEditor', 'Helpers', '$state', '$modal', function($scope, Event, EventEditor, Helpers, $state, $modal) {
+app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'EventEditor', 'Helpers', '$state', '$modal', function($scope, ForumEvent, EventEditor, Helpers, $state, $modal) {
     $scope.newOrEdit = function (forum_id, event){
         //Добавляет или редактирует задачу или подзадачу
         //Если задача передана(task) - то редактируем её

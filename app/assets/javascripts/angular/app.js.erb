@@ -36,7 +36,7 @@ angular.module('app', [
             $stateProvider
                     .state('app', {
                         url: '/manager',
-                        controller: 'AppCtrl',
+                        controller: 'AppCtrl as app',
                         templateUrl: '<%= asset_path(@templates_path + 'index.html') %>'
                     });
             $locationProvider.html5Mode(true);

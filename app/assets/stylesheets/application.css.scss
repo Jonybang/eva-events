@@ -42,6 +42,24 @@ ul.list-group.forum-objects {
 a[tooltip]{
   font-size: 12px;
 }
+.event-groups{
+  margin-top: 20px;
+  .panel-default{
+    margin: 0 50px;
+  }
+  .carousel-control{
+    left: -20px;
+    cursor: pointer;
+    background: none !important;
+  }
+  .carousel-control.right{
+    left: auto;
+    right: -20px;
+  }
+  .carousel-indicators {
+    display: none !important;
+  }
+}
 div.list-group.forums a{
   cursor: pointer;
 }

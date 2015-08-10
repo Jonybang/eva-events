@@ -33,6 +33,7 @@ app.factory('ForumEvent', ['railsResourceFactory', 'railsSerializer', function (
         name: 'event',
         serializer: railsSerializer(function () {
             this.exclude('class');
+            this.exclude('event_type');
         })
     });
 }]);
