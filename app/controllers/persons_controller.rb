@@ -1,5 +1,10 @@
 class PersonsController < InheritsController
 
+  def create
+    person_params[:password] = 123 unless person_params[:password]
+    create!
+  end
+
   private
 
   def person_params

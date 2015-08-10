@@ -1,7 +1,4 @@
 class User < ActiveRecord::Base
-  def name
-    self.email
-  end
 
   attr_accessor :password
   validates_confirmation_of :password

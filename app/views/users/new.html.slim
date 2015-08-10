@@ -1,6 +1,7 @@
-- if current_user
-  h1
-    | Вы вошли в систему под email:
-    = current_user.email
--else
-  = render 'new'
+div.container style="padding-top: 80px"
+  - if current_user
+    h1
+      | Вы вошли в систему под email:
+      = current_user.email
+  -else
+    = render 'new'

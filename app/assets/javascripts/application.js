@@ -53,8 +53,8 @@
 
 // require ./angular/modules/projects/projects.js.erb
 // require ./angular/modules/gantt/gantt.js.erb
-// require ./angular/modules/tasks/tasks.js.erb
-// require ./angular/modules/resources/resources.js.erb
+//= require ./angular/modules/events/events.js.erb
+//= require ./angular/modules/persons/persons.js.erb
 //= require angular/app.js.erb
 //= require_tree ./angular
 

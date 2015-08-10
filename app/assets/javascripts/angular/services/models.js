@@ -15,7 +15,7 @@ app.factory('Organization', ['railsResourceFactory', 'railsSerializer', function
 app.factory('Forum', ['railsResourceFactory', 'railsSerializer', function (railsResourceFactory, railsSerializer) {
     return railsResourceFactory({
         url: '/api/forums',
-        name: 'forums',
+        name: 'forum',
         serializer: railsSerializer(function () {
             this.exclude('class');
 //            this.exclude('performers');
@@ -27,7 +27,7 @@ app.factory('Forum', ['railsResourceFactory', 'railsSerializer', function (rails
         })
     });
 }]);
-app.factory('Event', ['railsResourceFactory', 'railsSerializer', function (railsResourceFactory, railsSerializer) {
+app.factory('ForumEvent', ['railsResourceFactory', 'railsSerializer', function (railsResourceFactory, railsSerializer) {
     return railsResourceFactory({
         url: '/api/events',
         name: 'event',

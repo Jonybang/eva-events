@@ -1,32 +1,50 @@
 .row.main-cols
-  .col-md-2
-    a.btn.btn-default Робомех 2014
-    a.btn.btn-primary Робомех 2015
-    ul.list-unstyled
-      li
-        h3
-          a Команда
-        ul.list-unstyled
-          li
-            h4
-              a Админы
-            ul
+  h1
+    | {{organization.name}}
+  .col-md-3
+    div.list-group.forums
+      div ng-repeat="forum in organization.forums"
+        a ng-class="['list-group-item', {'active': forum.id == cur_forum.id}]" ng-click="setCurForum(forum)" ng-bind="forum.name"
+        ul.list-group.forum-objects ng-if="forum.id == cur_forum.id"
+          li.list-group-item
+            h3: a Команда
+            ul.list-unstyled
               li
-                a Паничев Евгений
-                a Ледков Евгений
-                a Безручко Федор
-          li
-            h4
-              a Волонтеры
-            ul
+                a.btn.btn-default.btn-xs.pull-right ng-click="newTeamMember(forum, 'admin')"
+                  span.glyphicon.glyphicon-plus
+                h4: a ng-click="forum.expand_admins = !forum.expand_admins"
+                  | Админы
+                  span ng-class="['caret',{'inverse':forum.expand_admins}]"
+                ul ng-show="forum.admins.length && forum.expand_admins"
+                  li ng-repeat="admin in forum.admins": a ng-bind="admin.name"
+                div.not_found ng-hide="forum.admins.length" Никого нет
+
               li
-                a Волонтер 1
-                a Волонтер 2
-                a Волонтер 3
-  .col-md-8
-    h1
-      | {{organization.name}}
-    tabs data="tabsData" type="pills"
+                a.btn.btn-default.btn-xs.pull-right ng-click="newTeamMember(forum, 'volunteer')"
+                  span.glyphicon.glyphicon-plus
+
+                h4: a ng-click="forum.expand_volunteers = !forum.expand_volunteers"
+                  | Волонтеры
+                  span ng-class="['caret',{'inverse':forum.expand_volunteers}]"
+
+                ul ng-show="forum.volunteers.length && forum.expand_volunteers"
+                  li ng-repeat="volunteer in forum.volunteers": a ng-bind="volunteer.name"
+                div.not_found ng-hide="forum.volunteers.length" Никого нет
+      a.btn.btn-success.btn-block ng-click="new_forum.add = new_forum.focus = true;" ng-hide="new_forum.add"
+        span.glyphicon.glyphicon-plus
+        | Добавить мероприятие
+      div.input-group ng-show="new_forum.add"
+        input.form-control type="text" placeholder="Введите название" ng-model="new_forum.name" key-enter="saveNewForum()" focus-me="new_forum.focus" ng-blur="new_forum = {}"
+        span.input-group-btn
+          button.btn.btn-default ng-disabled="!new_forum.name" ng-click="saveNewEvent()" type="button": span.glyphicon.glyphicon-floppy-save
+
+  .col-md-7
+    .content ng-show="cur_forum"
+      h2
+        | {{cur_forum.name}}
+      tabs data="tabsData" type="pills"
+    .nothing-to-show ng-hide="cur_forum"
+      | Мероприятие не выбрано
   .col-md-2
     .panel.panel-default
       .panel-heading Центр уведомлений

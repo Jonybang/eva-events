@@ -23,7 +23,31 @@
 /*@import 'manager';*/
 
 html,body { height: 100%; margin: 0px; padding: 0px; }
+body > .container.app, body > .container.app > div, body > .container.app > div > div {
+  height: 100%;
+}
 .main-cols, .main-cols > div { height: 100%; }
+.main-cols > div:not(:last-child) { border-right: 1px solid #DDD; }
+ul.list-group.forum-objects {
+  h3{
+    margin-top: 0px;
+  }
+  li .not_found{
+    margin-left: 25px;
+  }
+  & > li > ul {
+    margin-left: 15px;
+  }
+}
+
+div.list-group.forums a{
+  cursor: pointer;
+}
+span.caret.inverse {
+  content: "";
+  border-top: 0px none;
+  border-bottom: 4px dashed;
+}
 pre hr {
    border-top: 1px solid #cccccc;
    margin-top: 10px;

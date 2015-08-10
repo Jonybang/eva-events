@@ -11,6 +11,10 @@ class Person < User
   has_and_belongs_to_many :organizations, class_name: 'Organization', inverse_of: :team, :join_table => 'organizations_teams'
 
   has_and_belongs_to_many :admin_forums, class_name: 'Forum', inverse_of: :admins, :join_table => 'forums_admins'
+  # def admin_forums_ids=(ids)
+  #   self.admin_forums.clear
+  #   self.admin_forums << Forum.find(ids)
+  # end
   has_and_belongs_to_many :volunteer_forums, class_name: 'Forum', inverse_of: :volunteers, :join_table => 'forums_volunteers'
   has_and_belongs_to_many :member_forums, class_name: 'Forum', inverse_of: :members, :join_table => 'forums_members'
   has_and_belongs_to_many :visitor_forums, class_name: 'Forum', inverse_of: :visitors, :join_table => 'forums_visitors'

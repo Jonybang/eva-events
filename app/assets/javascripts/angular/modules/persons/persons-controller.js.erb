@@ -1,0 +1,67 @@
+/**
+ * Created by jonybang on 10.08.15.
+ */
+'use strict';
+
+var app = angular.module('app.persons');
+
+app.controller('PersonsCtrl', ['$scope', 'Person', 'PersonEditor', 'Helpers', '$state', '$modal', function($scope, Person, PersonEditor, Helpers, $state, $modal) {
+    $scope.newOrEdit = function (project_id, task, parent_task_id){
+        //Добавляет или редактирует задачу или подзадачу
+        //Если задача передана(task) - то редактируем её
+        //Если нет - то создаем новую задачу в текущем проекте
+        //Если вместе с задачей(task) передан id родительской задачи(parent_task_id)
+        //то задача добавляется подзадачей в родительскую
+
+        PersonEditor({project_id: project_id, parent_task_id: parent_task_id}, task).then(function(result){
+            if(result.is_new){
+                $scope.projects.some(function(proj, index){
+                    var isCurProj = proj.id == result.project_id;
+                    if(isCurProj){
+                        Project.get({id: proj.id}).then(function(project){
+                            angular.extend($scope.projects[index], project);
+                            redrawProjectsGantts($scope.projects[index]);
+                        });
+                    }
+                    return isCurProj;
+                });
+            }
+        });
+    };
+}]);
+
+
+app.controller('PersonsFormCtrl', ['$scope', 'Person', '$modalInstance', 'inputs', function($scope, Person, $modalInstance, inputs) {
+    $scope.person = {
+    };
+
+    if(inputs.person_id){
+        Person.get(inputs.person_id).then(function(person){
+            angular.extend($scope.person, person);
+        })
+    } else {
+        angular.extend($scope.person, inputs);
+    }
+
+    $scope.save = function() {
+        $scope.$broadcast('show-errors-check-validity');
+        if (!$scope.personForm.$valid) {
+            return;
+        }
+
+        var obj;
+        //если id нет - значит это новый контакт
+        if(!$scope.person.id)
+            obj = new Person($scope.person).create();
+        else
+            obj = new Person($scope.person).update();
+
+        obj.then(function success (result){
+                    var person = result.resource ? result.resource : result;
+                    $modalInstance.close(person);
+                },
+                function error (info){
+                    $scope.errors = info.data.errors;
+                });
+    }
+}]);
