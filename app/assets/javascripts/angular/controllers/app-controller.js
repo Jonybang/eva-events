@@ -1,8 +1,8 @@
 /**
  * Created by jonybang on 10.07.15.
  */
-angular.module('app').controller('AppCtrl', ['$scope', '$location', 'User', 'Organization', 'Forum', 'Person', 'PersonEditor', 'EventEditor', 'Helpers',
-    function($scope, $location, User, Organization, Forum, Person, PersonEditor, EventEditor, Helpers) {
+angular.module('app').controller('AppCtrl', ['$scope', 'User', 'Organization', 'Forum', 'Person', 'PersonEditor', 'EventEditor', 'Helpers',
+    function($scope, User, Organization, Forum, Person, PersonEditor, EventEditor, Helpers) {
         var self = this;
         User.get_person().then(function(result){
             $scope.person = result;

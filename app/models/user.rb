@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   end
   def organization
-    
+
   end
   # Password and auth stuff.
   def saved_password
