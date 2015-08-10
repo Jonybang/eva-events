@@ -8,6 +8,12 @@ class User < ActiveRecord::Base
 
   before_create :encrypt_password
 
+  def organization=(value)
+
+  end
+  def organization
+    
+  end
   # Password and auth stuff.
   def saved_password
     @saved_password ||= BCrypt::Password.new(encrypted_password)
