@@ -1,0 +1,89 @@
+/**
+ * Created by jonybang on 12.08.15.
+ */
+'use strict';
+
+var app = angular.module('app.forums');
+
+app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', 'Forum', 'ForumEvent', 'EventEditor', 'PersonEditor', 'Helpers', '$modal', function($scope, $state, $timeout, Forum, ForumEvent, EventEditor, PersonEditor, Helpers, $modal) {
+    var self = this;
+    //self.cur_forum = $scope.cur_forum = {};
+    Forum.query({organization_id: $state.params.organizationId}).then(function(forums) {
+        $scope.forums = forums;
+        if(!forums.length)
+            return;
+
+        $scope.setCurForum(forums[forums.length - 1]);
+
+        $scope.forums.forEach(function(forum){
+            forum.grouped_events = Helpers.groupByDate(forum.events, 'begin_date', 'events');
+        });
+    });
+
+    $scope.setCurForum = function(forum){
+        self.cur_forum = $scope.cur_forum = forum;
+        $state.go('app.organizations.show.forums.show', {forumId: forum.id});
+    };
+
+    $scope.new_forum = {};
+    $scope.blurForumInput = function(){
+        $timeout(function(){
+            $scope.new_forum = {};
+        }, 100);
+    };
+    $scope.saveNewForum = function(){
+        var forum = new Forum({name: $scope.new_forum.name, organization_id: $state.params.organizationId }).create();
+        forum.then(function(result){
+            $scope.forums.push(result);
+
+            $scope.setCurForum(result);
+            $scope.new_forum = {};
+        });
+    };
+    this.newOrEditTeamMember = $scope.newOrEditTeamMember = function(forum, role, person){
+        forum['expand_' + role + 's'] = true;
+
+        var inputs = {};
+        inputs[role + '_forum_ids'] = [forum.id];
+
+        PersonEditor(inputs, person).then(function(result){
+            Helpers.addOrReplace(forum[role + 's'], result, result.id, true);
+        });
+    };
+    this.newOrEditEvent = $scope.newOrEditEvent = function(forum, event_group, event){
+        var begin_date;
+        if(event_group)
+            begin_date = event_group.begin_date;
+
+        EventEditor({forum_id: forum.id, begin_date: begin_date}, event).then(function(result){
+            if(!forum.events)
+                forum.events = [];
+
+            Helpers.addOrReplace(forum.events, result, result.id, true);
+            forum.grouped_events = Helpers.groupByDate(forum.events, 'begin_date', 'events');
+
+            forum.grouped_events.forEach(function(obj){
+                var exist = obj.events.some(function(_event){
+                    return _event.id == result.id;
+                });
+                if(exist)
+                    obj.expand = true;
+            });
+        });
+    };
+}]);
+
+app.controller('ForumsShowCtrl', ['$scope', '$state', '$timeout', 'Forum', function($scope, $state, $timeout, Forum) {
+    $scope.tabsData = [
+        { route : 'app.organizations.show.forums.show.events', heading : 'События' },
+        { route : '#', heading : 'Материалы', disabled: true },
+        { route : '#', heading : 'Чат', disabled: true }
+    ];
+    var self = this;
+    self.current = {
+        events: []
+    };
+    Forum.get($state.params.forumId).then(function(forum){
+        angular.extend(self.current, forum);
+    });
+}]);

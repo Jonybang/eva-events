@@ -1,0 +1,29 @@
+/**
+ * Created by jonybang on 12.08.15.
+ */
+'use strict';
+
+angular.module('app.forums', ['ui.router'])
+        .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', function($urlRouterProvider, $stateProvider, $locationProvider) {
+
+            <% @templates_path = 'angular/modules/forums/templates/' %>
+
+            $stateProvider
+                    .state('app.organizations.show.forums', {
+                        url: '/forums',
+                        templateUrl: '<%= asset_path('angular/modules/forums/templates/index.html') %>',
+                        controller: 'ForumsCtrl as forumsCtrl'
+                    })
+                    .state('app.organizations.show.forums.show', {
+                        url: '/:forumId',
+                        templateUrl: '<%= asset_path('angular/modules/forums/templates/show.html') %>',
+                        controller: 'ForumsShowCtrl as forum',
+                        redirectTo: 'app.organizations.show.forums.show.events'
+                    })
+                    .state('app.organizations.show.forums.show.events', {
+                        url: '/events',
+                        templateUrl: '<%= asset_path('angular/modules/events/templates/index.html') %>',
+                        controller: 'EventsCtrl'
+                    });
+
+        }]);

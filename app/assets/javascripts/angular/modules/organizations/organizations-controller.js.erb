@@ -1,0 +1,10 @@
+/**
+ * Created by jonybang on 12.08.15.
+ */
+'use strict';
+
+var app = angular.module('app.organizations');
+
+app.controller('OrganizationsShowCtrl', ['$scope', '$state', 'Forum', function($scope, $state, Forum) {
+    $state.go('app.organizations.show.forums');
+}]);

@@ -32,7 +32,7 @@
 
 //= require ui-bootstrap-tpls
 //= require showErrors.min
-//= require datetime-picker
+//= require datetime-picker.min
 //= require angular-ui-router.min
 //= require ui-router-tabs
 
@@ -56,6 +56,8 @@
 
 // require ./angular/modules/projects/projects.js.erb
 // require ./angular/modules/gantt/gantt.js.erb
+//= require ./angular/modules/organizations/organizations.js.erb
+//= require ./angular/modules/forums/forums.js.erb
 //= require ./angular/modules/events/events.js.erb
 //= require ./angular/modules/persons/persons.js.erb
 //= require angular/app.js.erb

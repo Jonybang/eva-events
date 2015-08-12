@@ -6,6 +6,17 @@
 var app = angular.module('app.events');
 
 app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'EventEditor', 'Helpers', '$state', '$modal', function($scope, ForumEvent, EventEditor, Helpers, $state, $modal) {
+    function getEvents(){
+        ForumEvent.query({forum_id: $state.params.forumId}).then(function(events){
+            $scope.events = events;
+            $scope.grouped_events = Helpers.groupByDate(events, 'begin_date', 'events');
+        });
+    }
+
+    $scope.$watchCollection('forumsCtrl.cur_forum.events', function(){
+        getEvents();
+    });
+
     $scope.newOrEdit = function (forum_id, event){
         //Добавляет или редактирует задачу или подзадачу
         //Если задача передана(task) - то редактируем её

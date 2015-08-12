@@ -1,0 +1,22 @@
+/**
+ * Created by jonybang on 12.08.15.
+ */
+'use strict';
+
+angular.module('app.organizations', ['ui.router'])
+        .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', function($urlRouterProvider, $stateProvider, $locationProvider) {
+
+            <% @templates_path = 'angular/modules/organizations/templates/' %>
+
+            $stateProvider
+                    .state('app.organizations', {
+                        url: '',
+                        abstract: true,
+                        template: '<ui-view></ui-view>'
+                    })
+                    .state('app.organizations.show', {
+                        url: '/:organizationId',
+                        templateUrl: '<%= asset_path('angular/modules/organizations/templates/show.html') %>',
+                        controller: 'OrganizationsShowCtrl'
+                    });
+        }]);

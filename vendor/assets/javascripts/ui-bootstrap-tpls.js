@@ -3957,7 +3957,9 @@ angular.module('ui.bootstrap.timepicker', [])
 
 .constant('timepickerConfig', {
   hourStep: 1,
+  initHours: 0,
   minuteStep: 1,
+  initMinutes: 0,
   showMeridian: true,
   meridians: null,
   readonlyInput: false,
@@ -3994,6 +3996,10 @@ angular.module('ui.bootstrap.timepicker', [])
 
     $scope.readonlyInput = angular.isDefined($attrs.readonlyInput) ? $scope.$parent.$eval($attrs.readonlyInput) : timepickerConfig.readonlyInput;
     this.setupInputEvents( hoursInputEl, minutesInputEl );
+
+    selected.setHours(angular.isDefined($attrs.initHours) ? $scope.$parent.$eval($attrs.initHours) : timepickerConfig.initHours);
+    selected.setMinutes(angular.isDefined($attrs.initMinutes) ? $scope.$parent.$eval($attrs.initMinutes) : timepickerConfig.initMinutes);
+    ngModelCtrl.$setViewValue( new Date(selected) );
   };
 
   var hourStep = timepickerConfig.hourStep;

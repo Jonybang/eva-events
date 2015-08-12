@@ -6,6 +6,8 @@
 angular.module('app', [
 //    'app.tasks',
 //    'app.gantt',
+    'app.organizations',
+    'app.forums',
     'app.events',
     'app.persons',
 
@@ -30,7 +32,7 @@ angular.module('app', [
         .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', 'showErrorsConfigProvider',
             '$httpProvider', 'railsSerializerProvider', 'uiSelectConfig', function($urlRouterProvider, $stateProvider, $locationProvider, showErrorsConfigProvider, $httpProvider, railsSerializerProvider, uiSelectConfig) {
 
-            $urlRouterProvider.otherwise("/manager/events");
+            $urlRouterProvider.otherwise("/manager");
 
             <% @templates_path = 'angular/templates/' %>
             $stateProvider
@@ -63,7 +65,7 @@ angular.module('app', [
             railsSerializerProvider.underscore(angular.identity).camelize(angular.identity);
         }]);
 
-angular.module('app').run(['amMoment', 'datepickerConfig', 'datepickerPopupConfig', '$rootScope', function(amMoment, datepickerConfig, datepickerPopupConfig, $rootScope) {
+angular.module('app').run(['amMoment', 'datepickerConfig', 'timepickerConfig', 'datepickerPopupConfig', '$rootScope', '$state', function(amMoment, datepickerConfig, timepickerConfig, datepickerPopupConfig, $rootScope, $state) {
     amMoment.changeLocale('ru');
 
     $rootScope.getDayClass = function(obj) {
@@ -80,10 +82,23 @@ angular.module('app').run(['amMoment', 'datepickerConfig', 'datepickerPopupConfi
         customClass: $rootScope.getDayClass
     });
 
+    angular.extend(timepickerConfig, {
+        showMeridian: false,
+        initHours: 10,
+        minuteStep: 10
+    });
+
     angular.extend(datepickerPopupConfig, {
         currentText:'Сегодня',
         clearText:'Очистить',
         closeText:'Закрыть'
+    });
+
+    $rootScope.$on('$stateChangeStart', function(evt, to, params) {
+        if (to.redirectTo) {
+            evt.preventDefault();
+            $state.go(to.redirectTo, params)
+        }
     });
 }]).constant('uiDatetimePickerConfig', {
     dateFormat: 'dd.MM.yyyy H:mm',
