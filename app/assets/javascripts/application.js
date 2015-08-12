@@ -32,7 +32,7 @@
 
 //= require ui-bootstrap-tpls
 //= require showErrors.min
-//= require datetime-picker.min
+//= require datetime-picker
 //= require angular-ui-router.min
 //= require ui-router-tabs
 

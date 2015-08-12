@@ -1,8 +1,8 @@
 /**
  * Created by jonybang on 10.07.15.
  */
-angular.module('app').controller('AppCtrl', ['$scope', 'User', 'Organization', 'Forum', 'Person', 'PersonEditor', 'EventEditor', 'Helpers',
-    function($scope, User, Organization, Forum, Person, PersonEditor, EventEditor, Helpers) {
+angular.module('app').controller('AppCtrl', ['$scope', 'User', 'Organization', 'Forum', 'Person', 'PersonEditor', 'EventEditor', 'Helpers', '$state', '$timeout',
+    function($scope, User, Organization, Forum, Person, PersonEditor, EventEditor, Helpers, $state, $timeout) {
         var self = this;
         User.get_person().then(function(result){
             $scope.person = result;
@@ -23,6 +23,11 @@ angular.module('app').controller('AppCtrl', ['$scope', 'User', 'Organization', '
             });
         });
         $scope.new_forum = {};
+        $scope.blurForumInput = function(){
+            $timeout(function(){
+                $scope.new_forum = {};
+            }, 100);
+        };
         $scope.saveNewForum = function(){
             var forum = new Forum({name: $scope.new_forum.name, organization_id: $scope.organization.id }).create();
             forum.then(function(result){
@@ -50,6 +55,9 @@ angular.module('app').controller('AppCtrl', ['$scope', 'User', 'Organization', '
                 begin_date = event_group.begin_date;
 
             EventEditor({forum_id: forum.id, begin_date: begin_date}, event).then(function(result){
+                if(!forum.events)
+                    forum.events = [];
+
                 Helpers.addOrReplace(forum.events, result, result.id, true);
                 forum.grouped_events = Helpers.groupByDate(forum.events, 'begin_date', 'events');
 

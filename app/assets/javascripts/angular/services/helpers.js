@@ -89,6 +89,9 @@ angular.module('app')
                 return newDate;
             },
             groupByDate: function(array, dateField, arrField) {
+                if(!array)
+                    array = [];
+
                 var grouped = [];
                 array.forEach(function(obj){
                     var date = angular.copy(obj[dateField]);

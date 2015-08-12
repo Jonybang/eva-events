@@ -51,9 +51,9 @@
         span.glyphicon.glyphicon-plus
         | Добавить мероприятие
       div.input-group ng-show="new_forum.add"
-        input.form-control type="text" placeholder="Введите название" ng-model="new_forum.name" key-enter="saveNewForum()" focus-me="new_forum.focus" ng-blur="new_forum = {}"
+        input.form-control type="text" placeholder="Введите название" ng-model="new_forum.name" key-enter="saveNewForum()" focus-me="new_forum.focus" ng-blur="blurForumInput()"
         span.input-group-btn
-          button.btn.btn-default ng-disabled="!new_forum.name" ng-click="saveNewEvent()" type="button": span.glyphicon.glyphicon-floppy-save
+          button.btn.btn-default ng-disabled="!new_forum.name" ng-click="saveNewForum()" type="button": span.glyphicon.glyphicon-floppy-save
 
   .col-md-7
     .content ng-show="cur_forum"
