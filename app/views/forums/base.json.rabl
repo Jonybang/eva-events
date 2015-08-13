@@ -1,8 +1,8 @@
 child :admins, :root => "admins", :object_root => false  do
-    attributes :id, :name
+    attributes :id, :name, :email
 end
 child :volunteers, :root => "volunteers", :object_root => false  do
-    attributes :id, :name
+    attributes :id, :name, :email
 end
 child :posts, :root => "events", :object_root => false  do
     attributes :id, :name, :begin_date, :end_date

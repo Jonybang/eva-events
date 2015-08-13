@@ -32,8 +32,9 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', 'Forum', 'ForumEve
         }, 100);
     };
     $scope.saveNewForum = function(){
-        var forum = new Forum({name: $scope.new_forum.name, organization_id: $state.params.organizationId }).create();
+        var forum = new Forum({name: $scope.new_forum.name, organization_id: $state.params.organizationId, admin_ids:[$scope.app.person.id] }).create();
         forum.then(function(result){
+            result.expand_admins = true;
             $scope.forums.push(result);
 
             $scope.setCurForum(result);

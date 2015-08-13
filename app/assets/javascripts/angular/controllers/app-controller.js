@@ -6,7 +6,7 @@ angular.module('app').controller('AppCtrl', ['$scope', 'User', 'Organization', '
         var self = this;
 
         User.get_person().then(function(result){
-            $scope.person = result;
+            self.person = $scope.person = result;
 
             if($state.params.organizationId){
                 Organization.get($state.params.organizationId).then(function(organization){

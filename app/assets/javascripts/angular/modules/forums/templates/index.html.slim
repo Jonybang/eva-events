@@ -13,7 +13,7 @@
                 | Админы
                 span ng-class="['caret',{'inverse':forum.expand_admins}]"
               ul collapse="!forum.admins.length || !forum.expand_admins"
-                li ng-repeat="admin in forum.admins": a ng-bind="admin.name" ng-click="newOrEditTeamMember(forum, 'admin', admin)"
+                li ng-repeat="admin in forum.admins": a ng-bind="admin.name || admin.email" ng-click="newOrEditTeamMember(forum, 'admin', admin)"
               div.not_found ng-hide="forum.admins.length" Никого нет
 
             li
@@ -25,7 +25,7 @@
                 span ng-class="['caret',{'inverse':forum.expand_volunteers}]"
 
               ul collapse="!forum.volunteers.length || !forum.expand_volunteers"
-                li ng-repeat="volunteer in forum.volunteers": a ng-bind="volunteer.name" ng-click="newOrEditTeamMember(forum, 'volunteer', volunteer)"
+                li ng-repeat="volunteer in forum.volunteers": a ng-bind="volunteer.name || volunteer.email" ng-click="newOrEditTeamMember(forum, 'volunteer', volunteer)"
               div.not_found ng-hide="forum.volunteers.length" Никого нет
         li.list-group-item
           h4
