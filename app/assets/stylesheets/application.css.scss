@@ -42,6 +42,16 @@ ul.list-group.forum-objects {
 a[tooltip]{
   font-size: 12px;
 }
+.btn-group.member-adder{
+  width: 260px;
+}
+.btn-group.member-adder .ui-select-container{
+  width: 220px !important;
+  display: inline-block;
+}
+.btn-group.member-adder .btn-success{
+  float: right;
+}
 .event-groups{
   margin-top: 20px;
   .panel-default{

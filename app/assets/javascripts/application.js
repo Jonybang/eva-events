@@ -109,3 +109,25 @@ var d3RU = {
     "months": ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
     "shortMonths": ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"]
 };
+$(function(){
+
+
+    angular.element(document.body).bind('click', function (e) {
+        if(angular.element(e.target).attr('popover-template'))
+            return;
+        var popups = document.querySelectorAll('.popover');
+        if(popups) {
+            for(var i=0; i<popups.length; i++) {
+                var popup = popups[i];
+                var popupElement = angular.element(popup);
+
+                if(popupElement[0].previousSibling != e.target && popupElement[0].previousSibling != e.target.parentElement){
+                    popupElement.scope().$parent.isOpen=false;
+                    popupElement.remove();
+                }
+            }
+        }
+    });
+
+
+});

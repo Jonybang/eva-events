@@ -45,6 +45,14 @@ angular.module('app')
                     return obj.id == id;
                 });
             },
+            pushIdIfNotExist: function(array, id){
+                var exist = array.some(function(_id){
+                    return id == _id;
+                });
+                if(!exist){
+                    array.push(id);
+                }
+            },
             addItemToParentObjectInArrayById: function(array, item, id, fieldInObj){
                 //Ищет объект в массиве по id и добавляет в массив найденного объекта
                 //параметр item в поле объекта fieldInObj, которое должно являться массивом

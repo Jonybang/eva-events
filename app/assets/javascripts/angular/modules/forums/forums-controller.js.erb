@@ -5,9 +5,33 @@
 
 var app = angular.module('app.forums');
 
-app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', 'Forum', 'ForumEvent', 'EventEditor', 'PersonEditor', 'Helpers', '$modal', function($scope, $state, $timeout, Forum, ForumEvent, EventEditor, PersonEditor, Helpers, $modal) {
+app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', 'Forum', 'ForumEvent', 'EventEditor', 'Person', 'PersonEditor', 'Helpers', '$modal', function($scope, $state, $timeout, Forum, ForumEvent, EventEditor, Person, PersonEditor, Helpers, $modal) {
     var self = this;
-    //self.cur_forum = $scope.cur_forum = {};
+    $scope.popover = {
+        adminsOpen: false,
+        volunteersOpen: false,
+        adminsTemplate:'<%= asset_path('angular/modules/forums/templates/popoverAdmin.html') %>'
+    };
+    $scope.preparePopover = function(forum, role){
+        forum['expand_' + role + 's'] = true;
+
+        var options = {};
+        options['exclude_forum_' + role + 's'] = forum.id;
+        Person.query(options).then(function(persons){
+            $scope.persons = persons;
+        })
+    };
+    $scope.popoverContentClick = function($event){
+        if(!angular.element($event.target).hasClass('btn-success'))
+            $event.stopPropagation();
+    };
+    $scope.addMemberToForum = function(member, forum, role){
+        Helpers.addOrReplace(forum[role + 's'], member, member.id, true);
+
+        Helpers.pushIdIfNotExist(forum.admin_ids, member.id);
+        var forum_promise = new Forum(forum).update();
+    };
+
     Forum.query({organization_id: $state.params.organizationId}).then(function(forums) {
         $scope.forums = forums;
         if(!forums.length)
@@ -49,6 +73,7 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', 'Forum', 'ForumEve
 
         PersonEditor(inputs, person).then(function(result){
             Helpers.addOrReplace(forum[role + 's'], result, result.id, true);
+            Helpers.pushIdIfNotExist(forum[role + '_ids'], result.id);
         });
     };
     this.newOrEditEvent = $scope.newOrEditEvent = function(forum, event_group, event){
@@ -61,6 +86,7 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', 'Forum', 'ForumEve
                 forum.events = [];
 
             Helpers.addOrReplace(forum.events, result, result.id, true);
+
             forum.grouped_events = Helpers.groupByDate(forum.events, 'begin_date', 'events');
 
             forum.grouped_events.forEach(function(obj){

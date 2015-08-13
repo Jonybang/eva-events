@@ -1,0 +1,10 @@
+<div class="btn-group member-adder" dropdown ng-click="$parent.popoverContentClick($event)">
+    <ui-select ng-model="cur_admin_id" style="width:200px" on-select="$parent.addMemberToForum($item, $parent.forum, 'admin')">
+        <ui-select-match placeholder="Выберите администратора" allow-clear="true">{{$select.selected.name || $select.selected.email}}</ui-select-match>
+        <ui-select-choices repeat="admin.id as admin in $parent.persons | filter: {$: $select.search}">
+            <div ng-bind-html="admin.name | highlight: $select.search"></div>
+            <small ng-bind-html="admin.email | highlight: $select.search"></small>
+        </ui-select-choices>
+    </ui-select>
+    <button type="button" class="btn btn-success" ng-click="$parent.newOrEditTeamMember($parent.forum, 'admin')"><span class="glyphicon glyphicon-plus"></span></button>
+</div>

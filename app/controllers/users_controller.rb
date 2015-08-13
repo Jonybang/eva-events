@@ -21,7 +21,9 @@ class UsersController < InheritsController
 
     @user = Person.new(email: user_params[:email], password: user_params[:password])
     if @user.save!
-      @user.organizations << Organization.new(name: user_params[:organization])
+      organization = Organization.new(name: user_params[:organization]);
+      @user.creator_organizations << organization
+      @user.organizations << organization
       #@user.contact = Contact.new({name:@user.email})
       #@user.contact.contact_data = ContactDatum.create({email:@user.email})
       session[:user_id] = @user.id

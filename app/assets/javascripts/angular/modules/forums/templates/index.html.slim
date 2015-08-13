@@ -1,64 +1,65 @@
-.col-md-3
-  div.list-group.forums
-    div ng-repeat="forum in forums"
-      a ng-class="['list-group-item', {'active': forum.id == cur_forum.id}]" ng-click="setCurForum(forum)" ng-bind="forum.name"
-      ul.list-group.forum-objects collapse="forum.id != cur_forum.id"
-        li.list-group-item
-          h4: a Команда
-          ul.list-unstyled
-            li
-              a.btn.btn-default.btn-xs.pull-right ng-click="newOrEditTeamMember(forum, 'admin')"
-                span.glyphicon.glyphicon-plus
-              h5: a ng-click="forum.expand_admins = !forum.expand_admins"
-                | Админы
-                span ng-class="['caret',{'inverse':forum.expand_admins}]"
-              ul collapse="!forum.admins.length || !forum.expand_admins"
-                li ng-repeat="admin in forum.admins": a ng-bind="admin.name || admin.email" ng-click="newOrEditTeamMember(forum, 'admin', admin)"
-              div.not_found ng-hide="forum.admins.length" Никого нет
+.row
+  .col-md-3
+    div.list-group.forums
+      div ng-repeat="forum in forums"
+        a ng-class="['list-group-item', {'active': forum.id == cur_forum.id}]" ng-click="setCurForum(forum)" ng-bind="forum.name"
+        ul.list-group.forum-objects collapse="forum.id != cur_forum.id"
+          li.list-group-item
+            h4: a Команда
+            ul.list-unstyled
+              li
+                a.btn.btn-default.btn-xs.pull-right popover-template="popover.adminsTemplate" popover-title="Добавить администратора" ng-click="preparePopover(forum, 'admin')"
+                  span.glyphicon.glyphicon-plus
+                h5: a ng-click="forum.expand_admins = !forum.expand_admins"
+                  | Администраторы
+                  span ng-class="['caret',{'inverse':forum.expand_admins}]"
+                ul collapse="!forum.admins.length || !forum.expand_admins"
+                  li ng-repeat="admin in forum.admins": a ng-bind="admin.name || admin.email" ng-click="newOrEditTeamMember(forum, 'admin', admin)"
+                div.not_found ng-hide="forum.admins.length" Никого нет
 
-            li
-              a.btn.btn-default.btn-xs.pull-right ng-click="newOrEditTeamMember(forum, 'volunteer')"
-                span.glyphicon.glyphicon-plus
+              li
+                a.btn.btn-default.btn-xs.pull-right ng-click="newOrEditTeamMember(forum, 'volunteer')"
+                  span.glyphicon.glyphicon-plus
 
-              h5: a ng-click="forum.expand_volunteers = !forum.expand_volunteers"
-                | Волонтеры
-                span ng-class="['caret',{'inverse':forum.expand_volunteers}]"
+                h5: a ng-click="forum.expand_volunteers = !forum.expand_volunteers"
+                  | Волонтеры
+                  span ng-class="['caret',{'inverse':forum.expand_volunteers}]"
 
-              ul collapse="!forum.volunteers.length || !forum.expand_volunteers"
-                li ng-repeat="volunteer in forum.volunteers": a ng-bind="volunteer.name || volunteer.email" ng-click="newOrEditTeamMember(forum, 'volunteer', volunteer)"
-              div.not_found ng-hide="forum.volunteers.length" Никого нет
-        li.list-group-item
-          h4
-            a События&nbsp;
-            a tooltip="Событиями могут быть выступления или перерывы" tooltip-placement="top" tooltip-trigger="mouseenter"
-              span.glyphicon.glyphicon-question-sign
-          ul.list-unstyled ng-show="forum.events.length"
-            li ng-repeat="event_group in forum.grouped_events"
-              a.btn.btn-default.btn-xs.pull-right ng-click="newOrEditEvent(forum, event_group)"
-                span.glyphicon.glyphicon-plus
-              h5: a ng-click="event_group.expand = !event_group.expand"
-                | {{event_group.begin_date | amDateFormat:'DD MMMM' }}
-                span ng-class="['caret',{'inverse':event_group.expand}]"
-              ul collapse="!event_group.events.length || !event_group.expand"
-                li ng-repeat="event in event_group.events": a ng-bind="event.name" ng-click="newOrEditEvent(forum, event_group, event)"
-          a.btn.btn-default.btn-sm ng-click="newOrEditEvent(forum)" ng-hide="forum.events.length"
-            span.glyphicon.glyphicon-plus
-            | Добавить событие
-    a.btn.btn-success.btn-block ng-click="new_forum.add = new_forum.focus = true;" ng-hide="new_forum.add"
-      span.glyphicon.glyphicon-plus
-      | Добавить мероприятие
-    div.input-group ng-show="new_forum.add"
-      input.form-control type="text" placeholder="Введите название" ng-model="new_forum.name" key-enter="saveNewForum()" focus-me="new_forum.focus" ng-blur="blurForumInput()"
-      span.input-group-btn
-        button.btn.btn-default ng-disabled="!new_forum.name" ng-click="saveNewForum()" type="button": span.glyphicon.glyphicon-floppy-save
+                ul collapse="!forum.volunteers.length || !forum.expand_volunteers"
+                  li ng-repeat="volunteer in forum.volunteers": a ng-bind="volunteer.name || volunteer.email" ng-click="newOrEditTeamMember(forum, 'volunteer', volunteer)"
+                div.not_found ng-hide="forum.volunteers.length" Никого нет
+          li.list-group-item
+            h4
+              a События&nbsp;
+              a tooltip="Событиями могут быть выступления или перерывы" tooltip-placement="top" tooltip-trigger="mouseenter"
+                span.glyphicon.glyphicon-question-sign
+            ul.list-unstyled ng-show="forum.events.length"
+              li ng-repeat="event_group in forum.grouped_events"
+                a.btn.btn-default.btn-xs.pull-right ng-click="newOrEditEvent(forum, event_group)"
+                  span.glyphicon.glyphicon-plus
+                h5: a ng-click="event_group.expand = !event_group.expand"
+                  | {{event_group.begin_date | amDateFormat:'DD MMMM' }}
+                  span ng-class="['caret',{'inverse':event_group.expand}]"
+                ul collapse="!event_group.events.length || !event_group.expand"
+                  li ng-repeat="event in event_group.events": a ng-bind="event.name" ng-click="newOrEditEvent(forum, event_group, event)"
+            a.btn.btn-default.btn-sm ng-click="newOrEditEvent(forum)" ng-hide="forum.events.length"
+              span.glyphicon.glyphicon-plus
+              | Добавить событие
+      a.btn.btn-success.btn-block ng-click="new_forum.add = new_forum.focus = true;" ng-hide="new_forum.add"
+        span.glyphicon.glyphicon-plus
+        | Добавить мероприятие
+      div.input-group ng-show="new_forum.add"
+        input.form-control type="text" placeholder="Введите название" ng-model="new_forum.name" key-enter="saveNewForum()" focus-me="new_forum.focus" ng-blur="blurForumInput()"
+        span.input-group-btn
+          button.btn.btn-default ng-disabled="!new_forum.name" ng-click="saveNewForum()" type="button": span.glyphicon.glyphicon-floppy-save
 
-.col-md-7
-  .content ng-show="cur_forum"
-    ui-view
-  .nothing-to-show ng-hide="cur_forum"
-    | Мероприятие не выбрано
-.col-md-2
-  .panel.panel-default
-    .panel-heading Центр уведомлений
-    ul.list-group
-      li.list-group-item Закончилось событие "Вводная лекция
+  .col-md-7
+    .content ng-show="cur_forum"
+      ui-view
+    .nothing-to-show ng-hide="cur_forum"
+      | Мероприятие не выбрано
+  .col-md-2
+    .panel.panel-default
+      .panel-heading Центр уведомлений
+      ul.list-group
+        li.list-group-item Закончилось событие "Вводная лекция

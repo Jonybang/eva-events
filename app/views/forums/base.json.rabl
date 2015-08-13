@@ -10,3 +10,5 @@ child :posts, :root => "events", :object_root => false  do
         attributes :id, :name
     end
 end
+
+attributes :admin_ids

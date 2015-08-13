@@ -15,3 +15,16 @@ event_types_list = [
 event_types_list.each do |name|
   EventType.create( name: name )
 end
+
+users_list = [
+    [ 'jonybang@mail.ru', 'Jb192837', 'Паничев Евгений', 'Организация 1' ],
+    [ 'ger2001a@mail.ru', '12345', 'Ледков Евгений', 'Бизнес инкубатор Ева' ],
+    [ 'test@mail.ru', 'test', 'Тестовый Пользователь', 'Организация 2' ]
+]
+
+users_list.each do |email, pass, name, organization_name|
+  user = Person.create(name: name, email: email, password: pass)
+  organization = Organization.new(name: organization_name)
+  user.creator_organizations << organization
+  user.organizations << organization
+end
