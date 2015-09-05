@@ -1,20 +1,18 @@
 <div ng-hide="events.length" class="margin-top">
     В мероприятие пока не добавлено ни одного события
 </div>
-<carousel ng-show="events.length" interval="false" no-wrap="true" class="event-groups">
-    <slide ng-repeat="event_group in grouped_events" active="event_group.active">
-        <div class="panel panel-default">
-            <!-- Default panel contents -->
-            <div class="panel-heading">{{event_group.begin_date | amDateFormat:'DD MMMM'}}</div>
+<div ng-show="events.length"  class="event-groups">
+    <div ng-repeat="event_group in grouped_events" class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">{{event_group.begin_date | amDateFormat:'DD MMMM'}}</div>
 
-            <!-- List group -->
-            <ul class="list-group">
-                <li class="list-group-item" ng-repeat="event in event_group.events">
-                    {{event.name}}<br>
-                    {{event.begin_date | amDateFormat:'H:mm'}} - {{event.end_date | amDateFormat:'H:mm'}}
-                </li>
-            </ul>
-        </div>
-    </slide>
-</carousel>
+        <!-- List group -->
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="event in event_group.events">
+                {{event.name}}<br>
+                {{event.begin_date | amDateFormat:'H:mm'}} - {{event.end_date | amDateFormat:'H:mm'}}
+            </li>
+        </ul>
+    </div>
+</div>
 

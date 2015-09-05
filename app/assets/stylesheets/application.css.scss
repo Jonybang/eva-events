@@ -55,19 +55,7 @@ a[tooltip]{
 .event-groups{
   margin-top: 20px;
   .panel-default{
-    margin: 0 50px;
-  }
-  .carousel-control{
-    left: -20px;
-    cursor: pointer;
-    background: none !important;
-  }
-  .carousel-control.right{
-    left: auto;
-    right: -20px;
-  }
-  .carousel-indicators {
-    display: none !important;
+    margin: 0 50px 10px;
   }
 }
 div.list-group.forums a{
