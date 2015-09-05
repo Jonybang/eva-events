@@ -11,4 +11,4 @@ child :posts, :root => "events", :object_root => false  do
     end
 end
 
-attributes :admin_ids
+attributes :admin_ids, :volunteer_ids

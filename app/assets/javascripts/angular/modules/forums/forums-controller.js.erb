@@ -10,7 +10,7 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', 'Forum', 'ForumEve
     $scope.popover = {
         adminsOpen: false,
         volunteersOpen: false,
-        adminsTemplate:'<%= asset_path('angular/modules/forums/templates/popoverAdmin.html') %>'
+        memberTemplate:'<%= asset_path('angular/modules/forums/templates/popoverTeamMember.html') %>'
     };
     $scope.preparePopover = function(forum, role){
         forum['expand_' + role + 's'] = true;
@@ -30,7 +30,7 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', 'Forum', 'ForumEve
     $scope.addMemberToForum = function(member, forum, role){
         Helpers.addOrReplace(forum[role + 's'], member, member.id, true);
 
-        Helpers.pushIdIfNotExist(forum.admin_ids, member.id);
+        Helpers.pushIdIfNotExist(forum[role + '_ids'], member.id);
         var forum_promise = new Forum(forum).update();
     };
 

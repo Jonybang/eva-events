@@ -11,9 +11,9 @@ class PersonsController < InheritsController
     if params[:exclude_forum_admins]
       @collection = Person.all - Person.joins(:admin_forums).where('forum_id = ?', params[:exclude_forum_admins])
     elsif params[:exclude_forum_volunteers]
-      #@collection = Person.joins(:volunteer_forums).where('forum_id != ?', params[:exclude_forum_volunteers])
+      @collection = Person.all - Person.joins(:volunteer_forums).where('forum_id = ?', params[:exclude_forum_volunteers])
     else
-      @collection = Forum.all
+      @collection = Person.all
     end
   end
 
