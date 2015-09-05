@@ -15,10 +15,12 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', 'Forum', 'ForumEve
     $scope.preparePopover = function(forum, role){
         forum['expand_' + role + 's'] = true;
 
+        $scope.popover.role = role;
+
         var options = {};
         options['exclude_forum_' + role + 's'] = forum.id;
         Person.query(options).then(function(persons){
-            $scope.persons = persons;
+            $scope.popover.persons = persons;
         })
     };
     $scope.popoverContentClick = function($event){

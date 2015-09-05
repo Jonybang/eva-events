@@ -18,7 +18,7 @@
                 div.not_found ng-hide="forum.admins.length" Никого нет
 
               li
-                a.btn.btn-default.btn-xs.pull-right ng-click="newOrEditTeamMember(forum, 'volunteer')"
+                a.btn.btn-default.btn-xs.pull-right popover-template="popover.adminsTemplate" popover-title="Добавить администратора" ng-click="preparePopover(forum, 'admin')"
                   span.glyphicon.glyphicon-plus
 
                 h5: a ng-click="forum.expand_volunteers = !forum.expand_volunteers"
