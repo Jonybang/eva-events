@@ -5,7 +5,7 @@
 
 var app = angular.module('app.events');
 
-app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'EventEditor', 'Helpers', '$state', '$modal', function($scope, ForumEvent, EventEditor, Helpers, $state, $modal) {
+app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'ForumEventEditor', 'Helpers', '$state', '$modal', function($scope, ForumEvent, ForumEventEditor, Helpers, $state, $modal) {
     function getEvents(){
         ForumEvent.query({forum_id: $state.params.forumId}).then(function(events){
             $scope.events = events;
@@ -24,7 +24,7 @@ app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'EventEditor', 'Helpers', 
         //Если вместе с задачей(task) передан id родительской задачи(parent_task_id)
         //то задача добавляется подзадачей в родительскую
 
-        EventEditor({forum_id: forum_id}, event).then(function(result){
+        ForumEventEditor({forum_id: forum_id}, event).then(function(result){
             if(result.is_new){
 
             }
@@ -33,17 +33,10 @@ app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'EventEditor', 'Helpers', 
 }]);
 
 
-app.controller('EventsFormCtrl', ['$scope', 'ForumEvent', 'EventType', '$modalInstance', 'inputs', function($scope, ForumEvent, EventType, $modalInstance, inputs) {
-    $scope.event = {
-    };
-
-    if(inputs.event_id){
-        ForumEvent.get(inputs.event_id).then(function(event){
-            angular.extend($scope.event, event);
-        })
-    } else {
-        angular.extend($scope.event, inputs);
-    }
+app.controller('EventsFormCtrl', ['$scope', '$timeout', 'ForumEvent', 'EventType', '$modalInstance', 'object', function($scope, $timeout, ForumEvent, EventType, $modalInstance, object) {
+    $timeout(function(){
+        $scope.event = object;
+    });
 
     EventType.query().then(function(types){
         $scope.event_types = types;
@@ -54,20 +47,6 @@ app.controller('EventsFormCtrl', ['$scope', 'ForumEvent', 'EventType', '$modalIn
         if (!$scope.eventForm.$valid) {
             return;
         }
-
-        var obj;
-        //если id нет - значит это новый контакт
-        if(!$scope.event.id)
-            obj = new ForumEvent($scope.event).create();
-        else
-            obj = new ForumEvent($scope.event).update();
-
-        obj.then(function success (result){
-                    var event = result.resource ? result.resource : result;
-                    $modalInstance.close(event);
-                },
-                function error (info){
-                    $scope.errors = info.data.errors;
-                });
+        $modalInstance.close($scope.event);
     }
 }]);

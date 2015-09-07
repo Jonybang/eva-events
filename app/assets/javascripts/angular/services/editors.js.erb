@@ -1,0 +1,73 @@
+/**
+ * Created by jonybang on 06.09.15.
+ */
+'use strict';
+
+var defaultController = ['$scope', '$timeout', '$modalInstance', 'object', function($scope, $timeout, $modalInstance, object) {
+    $timeout(function(){
+        $scope.object = object;
+    });
+
+    $scope.save = function() {
+        $scope.$broadcast('show-errors-check-validity');
+        if (!$scope.Form.$valid) {
+            return;
+        }
+        $modalInstance.close($scope.object);
+    }
+}];
+
+var editors = [
+    {
+        module: 'persons',
+        class: 'Person',
+        controller: defaultController,
+        template:'<%= asset_path('angular/modules/persons/templates/modals/form.html') %>'
+    },
+    {
+        module: 'events',
+        class: 'ForumEvent',
+        controller: 'EventsFormCtrl',
+        template:'<%= asset_path('angular/modules/events/templates/modals/form.html') %>'
+    }
+];
+editors.forEach(function(editor){
+    angular.module('app.' + editor.module)
+        .factory(editor.class + 'Editor', ['$modal', '$q', editor.class, function($modal, $q, Model) {
+            return function (inputs, object){
+                return $q(function(resolve, reject) {
+                    var modalInstance = $modal.open({
+                        animation: true,
+                        templateUrl: editor.template,
+                        controller: editor.controller,
+                        //size: size,
+                        resolve: {
+                            object: function(){
+                                return $q(function(resolve, reject) {
+                                    if(object && object.id)
+                                        Model.get(object.id).then(function(new_object){
+                                            resolve(new_object);
+                                        });
+                                    else
+                                        resolve(inputs);
+                                });
+                            }
+                        }
+                    });
+
+                    modalInstance.result.then(function (new_object) {
+                        var obj = new Model(new_object).save().then(function success (result){
+                            result.is_new = object && object.id ? false : true;
+                            resolve(result);
+                        },
+                        function error (info){
+                            reject(info.data.errors);
+                        });
+
+                    }, function () {
+                        reject('Cancel');
+                    });
+                });
+            }
+        }]);
+});

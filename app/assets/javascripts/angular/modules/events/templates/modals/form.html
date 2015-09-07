@@ -21,6 +21,7 @@
                         <label>Тип</label>
                     </div>
                     <div class="col-md-6 col-lg-7">
+                        <input type="hidden" name="event_type" ng-model="event.event_type_id" class="form-control" required/>
                         <ui-select ng-model="event.event_type_id">
                             <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="type.id as type in event_types track by $index">

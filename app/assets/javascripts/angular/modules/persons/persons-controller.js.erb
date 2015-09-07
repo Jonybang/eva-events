@@ -29,39 +29,3 @@ app.controller('PersonsCtrl', ['$scope', 'Person', 'PersonEditor', 'Helpers', '$
         });
     };
 }]);
-
-
-app.controller('PersonsFormCtrl', ['$scope', 'Person', '$modalInstance', 'inputs', function($scope, Person, $modalInstance, inputs) {
-    $scope.person = {
-    };
-
-    if(inputs.person_id){
-        Person.get(inputs.person_id).then(function(person){
-            angular.extend($scope.person, person);
-        })
-    } else {
-        angular.extend($scope.person, inputs);
-    }
-
-    $scope.save = function() {
-        $scope.$broadcast('show-errors-check-validity');
-        if (!$scope.personForm.$valid) {
-            return;
-        }
-
-        var obj;
-        //если id нет - значит это новый контакт
-        if(!$scope.person.id)
-            obj = new Person($scope.person).create();
-        else
-            obj = new Person($scope.person).update();
-
-        obj.then(function success (result){
-                    var person = result.resource ? result.resource : result;
-                    $modalInstance.close(person);
-                },
-                function error (info){
-                    $scope.errors = info.data.errors;
-                });
-    }
-}]);

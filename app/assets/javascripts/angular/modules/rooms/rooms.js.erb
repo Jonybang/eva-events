@@ -1,0 +1,17 @@
+/**
+ * Created by jonybang on 06.09.15.
+ */
+'use strict';
+
+angular.module('app.rooms', ['ui.router'])
+        .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', function($urlRouterProvider, $stateProvider, $locationProvider) {
+
+            <% @templates_path = 'angular/modules/rooms/templates/' %>
+
+            $stateProvider
+                    .state('app.rooms', {
+                        url: '/rooms',
+                        templateUrl: '<%= asset_path(@templates_path + 'index.html') %>',
+                        controller: 'RoomsCtrl'
+                    });
+        }]);

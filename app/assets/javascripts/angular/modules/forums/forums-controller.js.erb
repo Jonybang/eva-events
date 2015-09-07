@@ -5,7 +5,7 @@
 
 var app = angular.module('app.forums');
 
-app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', 'Forum', 'ForumEvent', 'EventEditor', 'Person', 'PersonEditor', 'Helpers', '$modal', function($scope, $state, $timeout, Forum, ForumEvent, EventEditor, Person, PersonEditor, Helpers, $modal) {
+app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', 'Forum', 'ForumEvent', 'ForumEventEditor', 'Person', 'PersonEditor', 'Helpers', '$modal', function($scope, $state, $timeout, Forum, ForumEvent, ForumEventEditor, Person, PersonEditor, Helpers, $modal) {
     var self = this;
     $scope.popover = {
         adminsOpen: false,
@@ -78,12 +78,21 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', 'Forum', 'ForumEve
             Helpers.pushIdIfNotExist(forum[role + '_ids'], result.id);
         });
     };
+    this.newOrEditRoom = $scope.newOrEditRoom = function(forum, room){
+        RoomEditor({forum_id: forum.id}, room).then(function(result){
+            Helpers.addOrReplace(forum.rooms, result, result.id, true);
+        });
+    };
     this.newOrEditEvent = $scope.newOrEditEvent = function(forum, event_group, event){
         var begin_date;
-        if(event_group)
+        if(event_group && event_group.begin_date)
             begin_date = event_group.begin_date;
 
-        EventEditor({forum_id: forum.id, begin_date: begin_date}, event).then(function(result){
+        var room_id;
+        if(event_group && event_group.class == 'Room')
+            room_id = event_group.id;
+
+        ForumEventEditor({forum_id: forum.id, begin_date: begin_date, room_id: room_id}, event).then(function(result){
             if(!forum.events)
                 forum.events = [];
 
