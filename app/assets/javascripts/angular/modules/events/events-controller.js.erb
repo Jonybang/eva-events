@@ -33,13 +33,16 @@ app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'ForumEventEditor', 'Helpe
 }]);
 
 
-app.controller('EventsFormCtrl', ['$scope', '$timeout', 'ForumEvent', 'EventType', '$modalInstance', 'object', function($scope, $timeout, ForumEvent, EventType, $modalInstance, object) {
+app.controller('EventsFormCtrl', ['$scope', '$timeout', 'ForumEvent', 'EventType', 'Room', '$modalInstance', 'object', function($scope, $timeout, ForumEvent, EventType, Room, $modalInstance, object) {
     $timeout(function(){
         $scope.event = object;
     });
 
     EventType.query().then(function(types){
         $scope.event_types = types;
+    });
+    Room.query({forum_id: object.forum_id}).then(function(rooms){
+        $scope.rooms = rooms;
     });
 
     $scope.save = function() {

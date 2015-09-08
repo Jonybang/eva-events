@@ -4,6 +4,7 @@
       div ng-repeat="forum in forums"
         a ng-class="['list-group-item', {'active': forum.id == cur_forum.id}]" ng-click="setCurForum(forum)" ng-bind="forum.name"
         ul.list-group.forum-objects collapse="forum.id != cur_forum.id"
+
           li.list-group-item
             h4: a Команда
             ul.list-unstyled
@@ -28,6 +29,7 @@
                 ul collapse="!forum.volunteers.length || !forum.expand_volunteers"
                   li ng-repeat="volunteer in forum.volunteers": a ng-bind="volunteer.name || volunteer.email" ng-click="newOrEditTeamMember(forum, 'volunteer', volunteer)"
                 div.not_found ng-hide="forum.volunteers.length" Никого нет
+
           li.list-group-item
             h4
               a События&nbsp;
@@ -45,6 +47,7 @@
             a.btn.btn-default.btn-sm ng-click="newOrEditEvent(forum)" ng-hide="forum.events.length"
               span.glyphicon.glyphicon-plus
               | Добавить событие
+
           li.list-group-item
             h4
               a Помещения&nbsp;
@@ -52,16 +55,18 @@
                 span.glyphicon.glyphicon-question-sign
             ul.list-unstyled ng-show="forum.rooms.length"
               li ng-repeat="room in forum.rooms"
-                a.btn.btn-default.btn-xs.pull-right ng-click="newOrEditRoom(forum)"
+                a.btn.btn-default.btn-xs.pull-right ng-click="newOrEditEvent(forum, room)"
                   span.glyphicon.glyphicon-plus
                 h5: a ng-click="room.expand = !room.expand"
                   | {{room.name}}
                   span ng-class="['caret',{'inverse':room.expand}]"
                 ul collapse="!room.events.length || !room.expand"
-                  li ng-repeat="event in room.events": a ng-bind="event.name" ng-click="newOrEditEvent(forum, event_group, event)"
-            a.btn.btn-default.btn-sm ng-click="newOrEditEvent(forum)" ng-hide="forum.events.length"
+                  li ng-repeat="event in room.events": a ng-bind="event.name" ng-click="newOrEditEvent(forum, room, event)"
+                div.not_found ng-hide="room.events.length" Ничего нет
+            a.btn.btn-default.btn-sm ng-click="newOrEditRoom(forum)"
               span.glyphicon.glyphicon-plus
-              | Добавить событие
+              | Добавить помещение
+
       a.btn.btn-success.btn-block ng-click="new_forum.add = new_forum.focus = true;" ng-hide="new_forum.add"
         span.glyphicon.glyphicon-plus
         | Добавить мероприятие

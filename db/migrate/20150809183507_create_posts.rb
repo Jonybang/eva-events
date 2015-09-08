@@ -13,6 +13,7 @@ class CreatePosts < ActiveRecord::Migration
       #Event
       t.string :alias
       t.belongs_to :event_type
+      t.belongs_to :room
 
       t.timestamps null: false
     end

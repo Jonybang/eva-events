@@ -5,6 +5,7 @@ class Forum < Base
   belongs_to :creator, class_name: 'Person', foreign_key: 'person_id'
 
   has_many :posts, class_name: 'Post'
+  has_many :rooms, class_name: 'Room'
 
   has_and_belongs_to_many :admins, class_name: 'Person', :join_table => 'forums_admins'
   has_and_belongs_to_many :volunteers, class_name: 'Person', :join_table => 'forums_volunteers'

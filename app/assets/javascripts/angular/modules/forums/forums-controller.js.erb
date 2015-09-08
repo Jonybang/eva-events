@@ -4,8 +4,10 @@
 'use strict';
 
 var app = angular.module('app.forums');
+console.log('forumsCtrl');
 
-app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', 'Forum', 'ForumEvent', 'ForumEventEditor', 'Person', 'PersonEditor', 'Helpers', '$modal', function($scope, $state, $timeout, Forum, ForumEvent, ForumEventEditor, Person, PersonEditor, Helpers, $modal) {
+app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum', 'ForumEvent', 'ForumEventEditor', 'Person', 'PersonEditor', 'RoomEditor', 'Helpers', function($scope, $state, $timeout, $modal, Forum, ForumEvent, ForumEventEditor, Person, PersonEditor, RoomEditor, Helpers) {
+    console.log('init forumsCtrl');
     var self = this;
     $scope.popover = {
         adminsOpen: false,
@@ -84,19 +86,29 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', 'Forum', 'ForumEve
         });
     };
     this.newOrEditEvent = $scope.newOrEditEvent = function(forum, event_group, event){
-        var begin_date;
-        if(event_group && event_group.begin_date)
-            begin_date = event_group.begin_date;
 
-        var room_id;
-        if(event_group && event_group.class == 'Room')
-            room_id = event_group.id;
+        if(event_group){
+            event_group.expand = true;
+
+            var begin_date;
+            if(event_group.begin_date)
+                begin_date = event_group.begin_date;
+
+            var room_id;
+            if(event_group.class == 'Room')
+                room_id = event_group.id;
+        }
 
         ForumEventEditor({forum_id: forum.id, begin_date: begin_date, room_id: room_id}, event).then(function(result){
             if(!forum.events)
                 forum.events = [];
 
             Helpers.addOrReplace(forum.events, result, result.id, true);
+
+            if(event_group && event_group.class == 'Room')
+                Helpers.addOrReplace(event_group, result, result.id, true);
+            else
+                Helpers.addItemToParentObjectInArrayById(forum.rooms, result, result.room_id, 'events');
 
             forum.grouped_events = Helpers.groupByDate(forum.events, 'begin_date', 'events');
 
@@ -111,7 +123,7 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', 'Forum', 'ForumEve
     };
 }]);
 
-app.controller('ForumsShowCtrl', ['$scope', '$state', '$timeout', 'Forum', function($scope, $state, $timeout, Forum) {
+app.controller('ForumsShowCtrl', ['$scope', '$state', '$timeout', 'Forum', 'Helpers', function($scope, $state, $timeout, Forum, Helpers) {
     $scope.tabsData = [
         { route : 'app.organizations.show.forums.show.events', heading : 'События' },
         { route : '#', heading : 'Материалы', disabled: true },
@@ -122,6 +134,8 @@ app.controller('ForumsShowCtrl', ['$scope', '$state', '$timeout', 'Forum', funct
         events: []
     };
     Forum.get($state.params.forumId).then(function(forum){
-        angular.extend(self.current, forum);
+        angular.extend($scope.forumsCtrl.cur_forum, forum);
+        self.current = $scope.forumsCtrl.cur_forum;
+        $scope.forumsCtrl.cur_forum.grouped_events = Helpers.groupByDate($scope.forumsCtrl.cur_forum.events, 'begin_date', 'events');
     });
 }]);

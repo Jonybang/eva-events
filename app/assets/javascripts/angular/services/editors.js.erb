@@ -2,7 +2,7 @@
  * Created by jonybang on 06.09.15.
  */
 'use strict';
-
+console.log('editors');
 var defaultController = ['$scope', '$timeout', '$modalInstance', 'object', function($scope, $timeout, $modalInstance, object) {
     $timeout(function(){
         $scope.object = object;
@@ -29,9 +29,16 @@ var editors = [
         class: 'ForumEvent',
         controller: 'EventsFormCtrl',
         template:'<%= asset_path('angular/modules/events/templates/modals/form.html') %>'
+    },
+    {
+        module: 'rooms',
+        class: 'Room',
+        controller: defaultController,
+        template:'<%= asset_path('angular/modules/rooms/templates/modals/form.html') %>'
     }
 ];
 editors.forEach(function(editor){
+    console.log('define ' + editor.class + 'Editor' + ' for ' + 'app.' + editor.module);
     angular.module('app.' + editor.module)
         .factory(editor.class + 'Editor', ['$modal', '$q', editor.class, function($modal, $q, Model) {
             return function (inputs, object){

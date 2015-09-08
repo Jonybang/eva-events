@@ -56,11 +56,14 @@
 
 // require ./angular/modules/projects/projects.js.erb
 // require ./angular/modules/gantt/gantt.js.erb
+//= require ./angular/modules/rooms/rooms.js.erb
 //= require ./angular/modules/organizations/organizations.js.erb
 //= require ./angular/modules/forums/forums.js.erb
 //= require ./angular/modules/events/events.js.erb
 //= require ./angular/modules/persons/persons.js.erb
 //= require angular/app.js.erb
+//= require angular/services/models.js
+//= require angular/services/editors.js.erb
 //= require_tree ./angular
 
 // require manager

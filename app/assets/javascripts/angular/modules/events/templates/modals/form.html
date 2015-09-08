@@ -51,6 +51,22 @@
                 </div>
                 <div ng-repeat="error in errors.begin_date" class="alert alert-error"><strong>Название</strong> {{error}}</div>
                 <div ng-repeat="error in errors.end_date" class="alert alert-error"><strong>Название</strong> {{error}}</div>
+
+                <div class="form-group col-md-12" show-errors>
+                    <div class="col-md-4 col-lg-3 text-right">
+                        <label>Помещение</label>
+                    </div>
+                    <div class="col-md-6 col-lg-7">
+                        <input type="hidden" name="room" ng-model="event.room_id" class="form-control" required/>
+                        <ui-select ng-model="event.room_id">
+                            <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="room.id as room in rooms track by $index">
+                                <div ng-bind-html="room.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div ng-repeat="error in errors.room" class="alert alert-error"><strong>Помещение</strong> {{error}}</div>
             </tab>
         </tabset>
     </div>

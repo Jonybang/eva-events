@@ -2,7 +2,7 @@
  * Created by jonybang on 06.09.15.
  */
 'use strict';
-
+console.log('rooms');
 angular.module('app.rooms', ['ui.router'])
         .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', function($urlRouterProvider, $stateProvider, $locationProvider) {
 
@@ -11,7 +11,7 @@ angular.module('app.rooms', ['ui.router'])
             $stateProvider
                     .state('app.rooms', {
                         url: '/rooms',
-                        templateUrl: '<%= asset_path(@templates_path + 'index.html') %>',
-                        controller: 'RoomsCtrl'
+                        templateUrl: '<%= asset_path(@templates_path + 'index.html') %>'
+                        //controller: 'RoomsCtrl'
                     });
         }]);

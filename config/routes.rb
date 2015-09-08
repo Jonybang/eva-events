@@ -15,12 +15,13 @@ Rails.application.routes.draw do
   resources :users, :except => :new
   resources :sessions, :except => :new
 
-  scope '/api' do
-    resources :organizations, :defaults => {format: :json}
-    resources :forums, :defaults => {format: :json}
-    resources :events, :defaults => {format: :json}
-    resources :event_types, :defaults => {format: :json}
-    resources :persons, :defaults => {format: :json}
+  scope '/api', :defaults => {format: :json} do
+    resources :organizations
+    resources :forums
+    resources :events
+    resources :event_types
+    resources :persons
+    resources :rooms
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

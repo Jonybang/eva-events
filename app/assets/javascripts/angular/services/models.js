@@ -56,3 +56,13 @@ app.factory('Person', ['railsResourceFactory', 'railsSerializer', function (rail
         })
     });
 }]);
+app.factory('Room', ['railsResourceFactory', 'railsSerializer', function (railsResourceFactory, railsSerializer) {
+    return railsResourceFactory({
+        url: '/api/rooms',
+        name: 'room',
+        serializer: railsSerializer(function () {
+            this.exclude('class');
+            //this.nestedAttribute('contact_data');
+        })
+    });
+}]);

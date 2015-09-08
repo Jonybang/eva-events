@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150810043410) do
+ActiveRecord::Schema.define(version: 20150907035456) do
 
   create_table "event_types", force: :cascade do |t|
     t.string   "name"
@@ -131,12 +131,21 @@ ActiveRecord::Schema.define(version: 20150810043410) do
     t.integer  "person_id"
     t.string   "alias"
     t.integer  "event_type_id"
+    t.integer  "room_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
 
   add_index "posts", ["forum_id"], name: "index_posts_on_forum_id"
   add_index "posts", ["person_id"], name: "index_posts_on_person_id"
+
+  create_table "rooms", force: :cascade do |t|
+    t.string  "name"
+    t.string  "number"
+    t.integer "forum_id"
+  end
+
+  add_index "rooms", ["forum_id"], name: "index_rooms_on_forum_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",              null: false

@@ -62,7 +62,7 @@ angular.module('app')
                         if(!obj[fieldInObj] || !obj[fieldInObj].length)
                             obj[fieldInObj] = [];
 
-                        obj[fieldInObj].push(item);
+                        service.addOrReplace(obj[fieldInObj], item, item.id, true);
                     }
                     return obj.id == id;
                 });

@@ -2,6 +2,7 @@ class Event < Post
   # name:string alias:string active:boolean description:string begin_date:datetime end_date:datetime
 
   belongs_to :event_type
+  belongs_to :room
 
   has_and_belongs_to_many :admins, class_name: 'Person', :join_table => 'events_admins'
   has_and_belongs_to_many :volunteers, class_name: 'Person', :join_table => 'events_volunteers'
