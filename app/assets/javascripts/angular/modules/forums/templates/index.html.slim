@@ -36,7 +36,7 @@
               a tooltip="Событиями могут быть выступления или перерывы" tooltip-placement="top" tooltip-trigger="mouseenter"
                 span.glyphicon.glyphicon-question-sign
             ul.list-unstyled ng-show="forum.events.length"
-              li ng-repeat="event_group in forum.grouped_events"
+              li ng-repeat="event_group in forum.grouped_events | orderBy: 'begin_date'"
                 a.btn.btn-default.btn-xs.pull-right ng-click="newOrEditEvent(forum, event_group)"
                   span.glyphicon.glyphicon-plus
                 h5: a ng-click="event_group.expand = !event_group.expand"

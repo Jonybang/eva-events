@@ -219,3 +219,34 @@ table.resources{
   border-radius: 32px;
   color: #000;
 }
+
+.events-table{
+  table-layout: fixed;
+  position: relative;
+  th, td {
+    /*table-layout: auto;*/
+    /*white-space: nowrap;*/
+    position: relative;
+    overflow-x:hidden !important;
+    text-overflow: ellipsis;
+  }
+  .name {
+    width: 23%;
+  }
+  .type, .room {
+    width: 18%;
+  }
+  .date {
+    width: 15%;
+  }
+  input, .ui-select-match, .ui-select-toggle {
+    height: 30px;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+  }
+  .ui-select-match {
+    padding: 0;
+  }
+}

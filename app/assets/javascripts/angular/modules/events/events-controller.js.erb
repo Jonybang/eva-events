@@ -5,7 +5,7 @@
 
 var app = angular.module('app.events');
 
-app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'ForumEventEditor', 'Helpers', '$state', '$modal', function($scope, ForumEvent, ForumEventEditor, Helpers, $state, $modal) {
+app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'ForumEventEditor', 'EventType', 'Room', 'Helpers', '$state', '$modal', function($scope, ForumEvent, ForumEventEditor, EventType, Room, Helpers, $state, $modal) {
     function getEvents(){
         ForumEvent.query({forum_id: $state.params.forumId}).then(function(events){
             $scope.events = events;
@@ -17,17 +17,24 @@ app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'ForumEventEditor', 'Helpe
         getEvents();
     });
 
-    $scope.newOrEdit = function (forum_id, event){
-        //Добавляет или редактирует задачу или подзадачу
-        //Если задача передана(task) - то редактируем её
-        //Если нет - то создаем новую задачу в текущем проекте
-        //Если вместе с задачей(task) передан id родительской задачи(parent_task_id)
-        //то задача добавляется подзадачей в родительскую
-
-        ForumEventEditor({forum_id: forum_id}, event).then(function(result){
-            if(result.is_new){
-
-            }
+    EventType.query().then(function(types){
+        $scope.event_types = types;
+    });
+    Room.query().then(function(rooms){
+        $scope.rooms = rooms;
+    });
+    $scope.saveEvent = function (event){
+        var obj = new ForumEvent(event).save().then(function success (result){
+            angular.extend(event, result);
+            event.edit = false;
+        });
+    };
+    $scope.newOrEditEvent = function(forum, event){
+        $scope.events.unshift({edit:true, forum_id: forum.id});
+    };
+    $scope.newOrEditEvent1 = function(forum, event){
+        ForumEventEditor({forum_id: forum.id}, event).then(function(result){
+            Helpers.addOrReplace($scope.events, result, result.id, true);
         });
     };
 }]);

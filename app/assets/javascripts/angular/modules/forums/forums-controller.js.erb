@@ -125,7 +125,8 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
 
 app.controller('ForumsShowCtrl', ['$scope', '$state', '$timeout', 'Forum', 'Helpers', function($scope, $state, $timeout, Forum, Helpers) {
     $scope.tabsData = [
-        { route : 'app.organizations.show.forums.show.events', heading : 'События' },
+        { route : 'app.organizations.show.forums.show.events', heading : 'Расписание' },
+        { route : 'app.organizations.show.forums.show.table_events', heading : 'События' },
         { route : '#', heading : 'Материалы', disabled: true },
         { route : '#', heading : 'Чат', disabled: true }
     ];

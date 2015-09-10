@@ -8,6 +8,9 @@ class InheritsController < ApplicationController
   def create
     create! { redirect_to resource_url and return }
   end
+  def update
+    update! { get_resource and render :show and return }
+  end
   protected
     def get_resource
       @resource = resource

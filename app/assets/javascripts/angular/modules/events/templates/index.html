@@ -2,13 +2,13 @@
     В мероприятие пока не добавлено ни одного события
 </div>
 <div ng-show="events.length"  class="event-groups">
-    <div ng-repeat="event_group in grouped_events" class="panel panel-default">
+    <div ng-repeat="event_group in grouped_events | orderBy: 'begin_date'" class="panel panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading">{{event_group.begin_date | amDateFormat:'DD MMMM'}}</div>
 
         <!-- List group -->
         <ul class="list-group">
-            <li class="list-group-item" ng-repeat="event in event_group.events">
+            <li class="list-group-item" ng-repeat="event in event_group.events | orderBy: 'begin_date'">
                 {{event.name}}<br>
                 {{event.begin_date | amDateFormat:'H:mm'}} - {{event.end_date | amDateFormat:'H:mm'}}
             </li>
