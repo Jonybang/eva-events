@@ -1,0 +1,30 @@
+<div class="table-responsive">
+    <table class="table rooms-events">
+        <tbody>
+        <tr>
+            <th ng-repeat="room in ngModel">{{room.name}}</th>
+        </tr>
+        <tr class="content">
+            <td ng-repeat="room in ngModel"
+                dnd-list="room.events"
+                dnd-drop="eventDropped(room.events, item, index)">
+                <div class="list-group"
+                     ng-repeat="event in room.events"
+                     dnd-draggable="event"
+                     dnd-effect-allowed="move"
+                     dnd-moved="room.events.splice($index, 1)"
+                     ng-style="getEventStyle(room.events, $index)">
+                    <a href="#" class="list-group-item active">
+                        <h5 class="list-group-item-heading">{{event.name}} - {{getDuration(event)}} час.</h5>
+                        <p class="list-group-item-text">
+                            Начало в: {{event.begin_date | amDateFormat:'D MMM. H:mm'}}
+                            <br/>
+                            Окончание в: {{event.end_date | amDateFormat:'D MMM. H:mm'}}
+                        </p>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

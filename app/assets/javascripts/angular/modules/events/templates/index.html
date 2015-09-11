@@ -6,13 +6,14 @@
         <!-- Default panel contents -->
         <div class="panel-heading">{{event_group.begin_date | amDateFormat:'DD MMMM'}}</div>
 
-        <!-- List group -->
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="event in event_group.events | orderBy: 'begin_date'">
-                {{event.name}}<br>
-                {{event.begin_date | amDateFormat:'H:mm'}} - {{event.end_date | amDateFormat:'H:mm'}}
-            </li>
-        </ul>
+        <!-- Panel body -->
+        <div class="panel-body">
+            <rooms-events
+                ng-model="rooms"
+                events="event_group.events"
+
+                ng-change="changed()"></rooms-events>
+        </div>
     </div>
 </div>
 
