@@ -24,7 +24,7 @@ class InheritsController < ApplicationController
     end
     def sort_and_paging(collection)
       if params[:sort]
-        collection = collection.sorted(order: params[:sort])
+        collection = collection.sorted(sort: params[:sort])
       end
       if params[:limit]
         collection = collection.limit(params[:limit])

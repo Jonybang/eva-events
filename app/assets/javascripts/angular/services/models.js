@@ -62,7 +62,7 @@ app.factory('Room', ['railsResourceFactory', 'railsSerializer', function (railsR
         name: 'room',
         serializer: railsSerializer(function () {
             this.exclude('class');
-            //this.nestedAttribute('contact_data');
+            this.nestedAttribute('events');
         })
     });
 }]);

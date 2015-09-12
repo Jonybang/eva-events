@@ -22,7 +22,7 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
             var initEvents = $debounce(500, function (){
                 if(!scope.events || !scope.events.length ||
                     !scope.ngModel || !scope.ngModel.length)
-                        return;
+                    return;
 
                 var eventsLength = 0;
                 var roomsIdxs = {};
@@ -116,7 +116,7 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                 });
                 if(prevIndex == destIndex)
                     return;
-                
+
                 var duration = scope.getDuration(item);
 
                 logHours(item);
@@ -146,6 +146,7 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                 // var nextIndex = prevIndex < destIndex ? destIndex : destIndex + 1;
                 // checkAndMoveNextEvent(newArr, destIndex, item, nextIndex);
                 checkAndMoveNextEvent(newArr, 0, item, 1);
+                $timeout(scope.ngChange);
                 return item;
             };
 

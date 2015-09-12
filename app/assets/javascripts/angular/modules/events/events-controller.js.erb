@@ -7,11 +7,15 @@ var app = angular.module('app.events');
 
 app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'ForumEventEditor', 'EventType', 'Room', 'Helpers', '$state', '$modal', function($scope, ForumEvent, ForumEventEditor, EventType, Room, Helpers, $state, $modal) {
     function getEvents(){
-        ForumEvent.query({forum_id: $state.params.forumId}).then(function(events){
+        ForumEvent.query({forum_id: $state.params.forumId, sort:'begin_date_ASC'}).then(function(events){
             $scope.events = events;
             $scope.grouped_events = Helpers.groupByDate(events, 'begin_date', 'events');
         });
     }
+
+    $scope.roomsEventsChanged = function(){
+        $scope.toggleChanged = !$scope.toggleChanged;
+    };
 
     $scope.$watchCollection('forumsCtrl.cur_forum.events', function(){
         getEvents();
@@ -23,6 +27,13 @@ app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'ForumEventEditor', 'Event
     Room.query().then(function(rooms){
         $scope.rooms = rooms;
     });
+    $scope.saveRooms = function(){
+        $scope.rooms.forEach(function(room){
+            var obj = new Room(room).save().then(function success (result){
+                //nothing
+            });
+        });
+    };
     $scope.saveEvent = function (event){
         var obj = new ForumEvent(event).save().then(function success (result){
             angular.extend(event, result);

@@ -1,6 +1,8 @@
 <div ng-hide="events.length" class="margin-top">
     В мероприятие пока не добавлено ни одного события
 </div>
+<animated-button ng-model="toggleChanged" text="Сохранить изменения" classes="pull-right" hide-before-change="true" ng-click="saveRooms()"></animated-button>
+
 <div ng-show="events.length"  class="event-groups">
     <div ng-repeat="event_group in grouped_events | orderBy: 'begin_date'" class="panel panel-default">
         <!-- Default panel contents -->
@@ -12,7 +14,7 @@
                 ng-model="rooms"
                 events="event_group.events"
 
-                ng-change="changed()"></rooms-events>
+                ng-change="roomsEventsChanged()"></rooms-events>
         </div>
     </div>
 </div>

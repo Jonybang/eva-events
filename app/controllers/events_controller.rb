@@ -3,10 +3,11 @@ class EventsController < InheritsController
   private
 
   def get_collection
+    collection = InheritsController.instance_method(:get_collection).bind(self).call
     if params[:forum_id]
-      @collection = Event.where(:forum_id => params[:forum_id])
+      @collection = collection.where(:forum_id => params[:forum_id])
     else
-      @collection = Event.all
+      @collection = collection
     end
   end
 

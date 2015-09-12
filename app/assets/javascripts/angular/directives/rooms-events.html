@@ -9,7 +9,7 @@
                 dnd-list="room.events"
                 dnd-drop="eventDropped(room.events, item, index)">
                 <div class="list-group"
-                     ng-repeat="event in room.events"
+                     ng-repeat="event in room.events | orderBy: 'begin_date'"
                      dnd-draggable="event"
                      dnd-effect-allowed="move"
                      dnd-moved="room.events.splice($index, 1)"
