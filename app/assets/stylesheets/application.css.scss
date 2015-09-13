@@ -234,6 +234,34 @@ table.rooms-events{
     background-color: #ddd;
     min-height: 25px;
   }
+  div[resizer="vertical"] {
+    background-color: #666;
+    position: absolute;
+    top: 35px;
+    bottom: 0;
+    left: 200px;
+    width: 6px;
+    cursor: e-resize;
+  }
+  div[resizer="horizontal"] {
+    position: absolute;
+    height: 6px;
+    left: 0;
+    right: 0;
+    background-color: #666;
+    cursor: n-resize;
+    z-index: 100;
+  }
+  div[resizer="horizontal"].top{
+    top:0px;
+  }
+  div[resizer="horizontal"].bottom{
+    bottom:0px;
+  }
+
+  div[resizer] {
+    background-color: #AAA;
+  }
 }
 
 .statuses span:not(:last-child){

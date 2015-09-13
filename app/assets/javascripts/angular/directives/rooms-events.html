@@ -1,3 +1,4 @@
+{{resizerStatus.stepY}}
 <div class="table-responsive">
     <table class="table rooms-events">
         <tbody>
@@ -9,19 +10,31 @@
                 dnd-list="room.events"
                 dnd-drop="eventDropped(room.events, item, index)">
                 <div class="list-group"
-                     ng-repeat="event in room.events | orderBy: 'begin_date'"
+                     ng-repeat="event in room.events"
                      dnd-draggable="event"
                      dnd-effect-allowed="move"
                      dnd-moved="room.events.splice($index, 1)"
-                     ng-style="getEventStyle(room.events, $index)">
+                     dnd-disable-if="event.resizer.active"
+                     ng-init="setEventStyle(room.events, $index)"
+                     ng-style="event.style">
+                    <div class="top"
+                         resizer="horizontal"
+                         ng-model="event.resizer"
+                         ng-change="resizeEvent(room.events, $index)">
+                    </div>
                     <a href="#" class="list-group-item active">
-                        <h5 class="list-group-item-heading">{{event.name}} - {{getDuration(event)}} час.</h5>
+                        <h5 class="list-group-item-heading">{{event.name}} - {{+getDuration(event).toFixed(1)}} час.</h5>
                         <p class="list-group-item-text">
                             Начало в: {{event.begin_date | amDateFormat:'D MMM. H:mm'}}
                             <br/>
                             Окончание в: {{event.end_date | amDateFormat:'D MMM. H:mm'}}
                         </p>
                     </a>
+                    <div class="bottom"
+                         resizer="horizontal"
+                         ng-model="event.resizer"
+                         ng-change="resizeEvent(room.events, $index)">
+                    </div>
                 </div>
             </td>
         </tr>
