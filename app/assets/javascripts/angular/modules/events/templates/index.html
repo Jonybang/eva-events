@@ -11,10 +11,11 @@
         <!-- Panel body -->
         <div class="panel-body">
             <rooms-events
-                ng-model="rooms"
+                ng-model="event_group.rooms"
                 events="event_group.events"
 
-                ng-change="roomsEventsChanged()"></rooms-events>
+                ng-change="roomsEventsChanged()"
+                ng-click="newOrEditEvent(forumsCtrl.cur_forum, event_obj, true)"></rooms-events>
         </div>
     </div>
 </div>

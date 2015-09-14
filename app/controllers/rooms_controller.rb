@@ -1,5 +1,17 @@
 class RoomsController < InheritsController
 
+  def update
+    if params[:room][:events_attributes]
+      params[:room][:events_attributes].each do |obj|
+        event = Event.find(obj[:id])
+        obj[:room_id] = params[:room][:id]
+        event.room_id = params[:room][:id]
+        event.save
+      end
+    end
+    InheritsController.instance_method(:update).bind(self).call
+  end
+
   private
   def get_collection
     if params[:forum_id]

@@ -15,6 +15,7 @@
                      dnd-effect-allowed="move"
                      dnd-moved="room.events.splice($index, 1)"
                      dnd-disable-if="event.resizer.active"
+
                      ng-init="setEventStyle(room.events, $index)"
                      ng-style="event.style">
                     <div class="top"
@@ -22,7 +23,7 @@
                          ng-model="event.resizer"
                          ng-change="resizeEvent(room.events, $index)">
                     </div>
-                    <a href="#" class="list-group-item active">
+                    <a href ng-click="clickEvent(event)" class="list-group-item active">
                         <h5 class="list-group-item-heading">{{event.name}} - {{+getDuration(event).toFixed(1)}} час.</h5>
                         <p class="list-group-item-text">
                             Начало в: {{event.begin_date | amDateFormat:'D MMM. H:mm'}}

@@ -9,6 +9,7 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
             events: '=',
             //callbacks
             ngChange: '&',
+            ngClick: '&',
             resoursableAdded: '&',
             //flags
             showAll: '=',
@@ -209,6 +210,8 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                 testEvent[date].setMinutes(newMinutes);
                 var newDuration = scope.getDuration(testEvent);
 
+                $timeout(scope.ngChange);
+
                 if(newDuration < minimum_hours && newDuration < duration){
                     event.end_date.setHours(event.begin_date.getHours() + minimum_hours);
                     return;
@@ -228,6 +231,10 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                 });
 
                 scope.setEventStyle(events, index);
+            };
+            scope.clickEvent = function(event){
+                if(scope.ngClick)
+                    scope.ngClick({event_obj: event});
             };
 
             var timer;

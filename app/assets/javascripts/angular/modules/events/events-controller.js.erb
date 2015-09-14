@@ -9,7 +9,18 @@ app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'ForumEventEditor', 'Event
     function getEvents(){
         ForumEvent.query({forum_id: $state.params.forumId, sort:'begin_date_ASC'}).then(function(events){
             $scope.events = events;
-            $scope.grouped_events = Helpers.groupByDate(events, 'begin_date', 'events');
+            getRoomsAndGroupEvents();
+        });
+    }
+    function getRoomsAndGroupEvents(){
+        Room.query().then(function(rooms){
+            $scope.rooms = rooms;
+            $scope.grouped_events = Helpers.groupByDate($scope.events, 'begin_date', 'events');
+            if($scope.grouped_events && $scope.grouped_events.length){
+                $scope.grouped_events.forEach(function(obj){
+                    obj.rooms = angular.copy(rooms);
+                })
+            }
         });
     }
 
@@ -24,15 +35,17 @@ app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'ForumEventEditor', 'Event
     EventType.query().then(function(types){
         $scope.event_types = types;
     });
-    Room.query().then(function(rooms){
-        $scope.rooms = rooms;
-    });
+
     $scope.saveRooms = function(){
-        $scope.rooms.forEach(function(room){
-            var obj = new Room(room).save().then(function success (result){
-                //nothing
-            });
-        });
+        if($scope.grouped_events && $scope.grouped_events.length){
+            $scope.grouped_events.forEach(function(obj){
+                obj.rooms.forEach(function(room){
+                    var obj = new Room(room).save().then(function success (result){
+                        //nothing
+                    });
+                });
+            })
+        }
     };
     $scope.saveEvent = function (event){
         var obj = new ForumEvent(event).save().then(function success (result){
@@ -40,13 +53,18 @@ app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'ForumEventEditor', 'Event
             event.edit = false;
         });
     };
-    $scope.newOrEditEvent = function(forum, event){
+    $scope.addEventRow = function(forum, event){
         $scope.events.unshift({edit:true, forum_id: forum.id});
     };
-    $scope.newOrEditEvent1 = function(forum, event){
+    $scope.newOrEditEvent = function(forum, event, resetRooms){
         ForumEventEditor({forum_id: forum.id}, event).then(function(result){
             Helpers.addOrReplace($scope.events, result, result.id, true);
+            if(resetRooms){
+                getRoomsAndGroupEvents();
+            }
+
         });
+
     };
 }]);
 
