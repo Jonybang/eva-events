@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150907035456) do
+ActiveRecord::Schema.define(version: 20150914101445) do
+
+  create_table "colors", force: :cascade do |t|
+    t.string "name"
+    t.string "code"
+  end
 
   create_table "event_types", force: :cascade do |t|
     t.string   "name"
+    t.integer  "color_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -132,6 +138,7 @@ ActiveRecord::Schema.define(version: 20150907035456) do
     t.string   "alias"
     t.integer  "event_type_id"
     t.integer  "room_id"
+    t.integer  "color_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end

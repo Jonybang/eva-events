@@ -23,7 +23,7 @@
                          ng-model="event.resizer"
                          ng-change="resizeEvent(room.events, $index)">
                     </div>
-                    <a href ng-click="clickEvent(event)" class="list-group-item active">
+                    <a href ng-click="clickEvent(event)" class="list-group-item active" ng-style="{'background-color':event.color_code}">
                         <h5 class="list-group-item-heading">{{event.name}} - {{+getDuration(event).toFixed(1)}} час.</h5>
                         <p class="list-group-item-text">
                             Начало в: {{event.begin_date | amDateFormat:'D MMM. H:mm'}}

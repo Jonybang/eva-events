@@ -66,3 +66,12 @@ app.factory('Room', ['railsResourceFactory', 'railsSerializer', function (railsR
         })
     });
 }]);
+app.factory('Color', ['railsResourceFactory', 'railsSerializer', function (railsResourceFactory, railsSerializer) {
+    return railsResourceFactory({
+        url: '/api/colors',
+        name: 'color',
+        serializer: railsSerializer(function () {
+            this.exclude('class');
+        })
+    });
+}]);
