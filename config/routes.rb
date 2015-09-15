@@ -84,6 +84,8 @@ Rails.application.routes.draw do
 
   get 'manager' => 'manager#index'
 
+  get '/manager/*path' => 'manager#index'
+
   get '/:alias', to: 'forums#show'
   #get '*path' => 'application#index'
 end
