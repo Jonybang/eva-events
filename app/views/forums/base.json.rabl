@@ -1,1 +1,1 @@
-attributes :admin_ids, :volunteer_ids
+attributes :admin_ids, :volunteer_ids, :alias
