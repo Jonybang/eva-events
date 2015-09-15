@@ -335,3 +335,8 @@ table.rooms-events{
 .bs-callout-info h4 {
   color: #1B809E;
 }
+
+.input-group[class*="col-"] {
+  padding-left: 15px;
+  padding-right: 15px;
+}

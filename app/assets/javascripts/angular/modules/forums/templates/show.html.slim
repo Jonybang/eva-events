@@ -1,4 +1,14 @@
+script type="text/ng-template" id="noAliasTpl.html"
+  div
+    | Ссылка не задана! Вы можете задать ссылку в &nbsp;
+    a ui-sref="app.organizations.show.forums.show.settings" настройках
+
 h3
-  a ng-href="/{{forum.current.alias}}" target="_blank" {{forum.current.name}}
+  a ng-hide="forum.current.alias" href="" popover-placement="top" popover-template="'noAliasTpl.html'" popover-trigger="focus" {{forum.current.name}}
+  a ng-show="forum.current.alias" ng-href="/{{forum.current.alias}}" target="_blank" {{forum.current.name}}
+  |&nbsp;
+  a.btn.btn-default.btn-sm ui-sref="app.organizations.show.forums.show.settings"
+    span.glyphicon.glyphicon-cog
+
 tabs data="tabsData" type="pills"
 ui-view

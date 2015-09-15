@@ -140,3 +140,21 @@ app.controller('ForumsShowCtrl', ['$scope', '$state', '$timeout', 'Forum', 'Help
         $scope.forumsCtrl.cur_forum.grouped_events = Helpers.groupByDate($scope.forumsCtrl.cur_forum.events, 'begin_date', 'events');
     });
 }]);
+
+app.controller('ForumsFormCtrl', ['$scope', '$timeout', 'Forum', '$noty', function($scope, $timeout, Forum, $noty) {
+    $scope.forum = $scope.forumsCtrl.cur_forum;
+
+    $scope.save = function() {
+        $scope.$broadcast('show-errors-check-validity');
+        if (!$scope.forumForm.$valid) {
+            $noty.show({text:'В форме найдены ошибки, попробуйте исправить их и отправить данные снова', type:'warning'});
+            return;
+        }
+        var result = new Forum($scope.forum).save();
+        result.then(function(data){
+            angular.extend($scope.forumsCtrl.cur_forum, data);
+            $noty.show({text:'Успешно сохранено', type:'success'});
+        });
+        //$modalInstance.close($scope.event);
+    }
+}]);

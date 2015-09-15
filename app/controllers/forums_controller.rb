@@ -13,9 +13,9 @@ class ForumsController < InheritsController
   private
 
   def get_resource
-    if params[:alias]
-      resource = Forum.find_by alias: params[:alias]
-      params[:id] = resource.id
+    if params[:alias] && !params[:id]
+      forum = Forum.find_by alias: params[:alias]
+      params[:id] = forum.id
     end
     @resource = resource
   end
@@ -35,7 +35,7 @@ class ForumsController < InheritsController
   end
 
   def forum_params
-    params.require(:forum).permit(:name, :organization_id, :admin_ids => [], :volunteer_ids => [])
+    params.require(:forum).permit(:name, :organization_id, :alias, :admin_ids => [], :volunteer_ids => [])
     #params.require(:contact).permit(:name, :contact_data_id, :socnet_links_id, :organization_id, :skills_id, :workpost_id, :industries_id, :equips_id, :intellect_properties_id, :team_projects_id, :chief_projects_id, :expert_projects_id, :member_events_id, :project_tasks_id)
   end
 end
