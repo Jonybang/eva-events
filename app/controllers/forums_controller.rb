@@ -1,6 +1,30 @@
 class ForumsController < InheritsController
 
+  #before_action :get_id_by_alias, only: :show
+
+  # def show
+  #   if params[:alias]
+  #     resource = Forum.where(:alias => params[:alias])
+  #   else
+  #     show!
+  #   end
+  # end
+
   private
+
+  def get_resource
+    if params[:alias]
+      resource = Forum.find_by alias: params[:alias]
+      params[:id] = resource.id
+    end
+    @resource = resource
+  end
+  # def get_id_by_alias
+  #   if params[:alias]
+  #     resource = Forum.find_by alias: params[:alias]
+  #     params[:id] = resource.id
+  #   end
+  # end
 
   def get_collection
     if params[:organization_id]

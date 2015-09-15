@@ -6,7 +6,7 @@ class SessionsController < InheritsController
     user = User.authenticate(params[:email], params[:password])
     if user
       session[:user_id] = user.id
-      redirect_to root_url, :notice => 'Logged in!'
+      redirect_to manager, :notice => 'Logged in!'
     else
       flash.alert = 'Неправильный логин или пароль'
       render 'new'

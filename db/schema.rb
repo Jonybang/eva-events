@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(version: 20150914101445) do
     t.datetime "begin_date"
     t.datetime "end_date"
     t.boolean  "active"
+    t.string   "type"
     t.integer  "forum_id"
     t.integer  "person_id"
     t.string   "alias"

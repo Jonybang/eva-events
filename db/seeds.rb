@@ -40,7 +40,7 @@ users_list.each do |email, pass, name, organization_name|
   user.organizations << organization
 end
 
-forum = Forum.create(name: 'Мероприятие 1')
+forum = Forum.create(name: 'Мероприятие 1', alias: 'forum_1')
 forum.admins << Person.first
 
 Organization.first.forums << forum

@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resources :rooms
     resources :colors
   end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -81,5 +82,8 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/adminpanel', :as => 'rails_admin'
   #root :to => redirect('/adminpanel')
 
-  get '*path' => 'application#index'
+  get 'manager' => 'manager#index'
+
+  get '/:alias', to: 'forums#show'
+  #get '*path' => 'application#index'
 end

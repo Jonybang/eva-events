@@ -11,4 +11,8 @@ class Forum < Base
   has_and_belongs_to_many :volunteers, class_name: 'Person', :join_table => 'forums_volunteers'
   has_and_belongs_to_many :members, class_name: 'Person', :join_table => 'forums_members'
   has_and_belongs_to_many :visitors, class_name: 'Person', :join_table => 'forums_visitors'
+
+  def events
+    posts.where(type: 'Event')
+  end
 end

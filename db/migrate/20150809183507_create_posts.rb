@@ -7,6 +7,8 @@ class CreatePosts < ActiveRecord::Migration
       t.datetime :end_date
       t.boolean :active
 
+      t.string :type
+
       t.belongs_to :forum, index: true
       t.belongs_to :person, index: true
 

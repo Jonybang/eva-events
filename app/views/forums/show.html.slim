@@ -1,0 +1,15 @@
+div.container.app style="padding-top: 40px"
+  h2 #{@resource.name} - Расписание
+
+  table.table
+    tr
+      - @resource.rooms.each do |room|
+        td
+          - room.events.each do |event|
+            .bs-callout.bs-callout-info
+              h4 #{event.name} - #{event.duration} час.
+              p
+                span Время начала: #{(event.begin_date + 36000).strftime('%H:%M')}
+                br
+                span Время окончания: #{(event.end_date + 36000).strftime('%H:%M')}
+
