@@ -42,14 +42,15 @@ ul.list-group.forum-objects {
 a[tooltip]{
   font-size: 12px;
 }
-.btn-group.member-adder{
+.btn-group.select-adder{
   width: 260px;
+  padding: 0 15px;
 }
-.btn-group.member-adder .ui-select-container{
-  width: 220px !important;
+.btn-group.select-adder .ui-select-container{
+  width: 190px !important;
   display: inline-block;
 }
-.btn-group.member-adder .btn-success{
+.btn-group.select-adder .btn-success{
   float: right;
 }
 .event-groups{

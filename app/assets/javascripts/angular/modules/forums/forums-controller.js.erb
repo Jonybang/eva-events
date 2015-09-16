@@ -26,7 +26,7 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
         })
     };
     $scope.popoverContentClick = function($event){
-        if(!angular.element($event.target).hasClass('btn-success'))
+        if(!angular.element($event.target).hasClass('btn'))
             $event.stopPropagation();
     };
     $scope.addMemberToForum = function(member, forum, role){
@@ -41,7 +41,15 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
         if(!forums.length)
             return;
 
-        $scope.setCurForum(forums[forums.length - 1]);
+        if(!$state.params.forumId){
+            $scope.setCurForum(forums[forums.length - 1]);
+        } else {
+            forums.some(function(forum){
+                var res
+            });
+        }
+
+
 
         $scope.forums.forEach(function(forum){
             forum.grouped_events = Helpers.groupByDate(forum.events, 'begin_date', 'events');

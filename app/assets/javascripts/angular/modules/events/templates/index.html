@@ -1,5 +1,9 @@
 <div ng-hide="events.length" class="margin-top">
     В мероприятие пока не добавлено ни одного события
+    <br>
+    <a class="btn btn-default btn-sm" ng-click="newOrEditEvent(forumsCtrl.cur_forum)">
+        <span class="glyphicon glyphicon-plus"></span> Добавить событие
+    </a>
 </div>
 <animated-button ng-model="toggleChanged" text="Сохранить изменения" classes="pull-right" hide-before-change="true" ng-click="saveRooms()"></animated-button>
 

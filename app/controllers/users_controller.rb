@@ -27,7 +27,7 @@ class UsersController < InheritsController
       #@user.contact = Contact.new({name:@user.email})
       #@user.contact.contact_data = ContactDatum.create({email:@user.email})
       session[:user_id] = @user.id
-      redirect_to root_url, :notice => 'Добро пожаловать!'
+      redirect_to manager_path, :notice => 'Добро пожаловать!'
     else
       flash.alert = 'Произошла ошибка сервера, вы не зарегистрированы :('
       render 'new'

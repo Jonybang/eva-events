@@ -13,7 +13,7 @@ app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'ForumEventEditor', 'Event
         });
     }
     function getRoomsAndGroupEvents(){
-        Room.query().then(function(rooms){
+        Room.query({room_id: $state.params.forumId}).then(function(rooms){
             $scope.rooms = rooms;
             $scope.grouped_events = Helpers.groupByDate($scope.events, 'begin_date', 'events');
             if($scope.grouped_events && $scope.grouped_events.length){
@@ -73,6 +73,7 @@ app.controller('EventsFormCtrl', ['$scope', '$timeout', 'ForumEvent', 'EventType
     $timeout(function(){
         $scope.event = object;
     });
+    $scope.popoverAddRoom = '<%= asset_path('angular/modules/rooms/templates/popoverAddRoom.html') %>';
 
     EventType.query().then(function(types){
         $scope.event_types = types;
@@ -87,12 +88,33 @@ app.controller('EventsFormCtrl', ['$scope', '$timeout', 'ForumEvent', 'EventType
     $scope.selectType = function(eventType) {
         $scope.event.color_id = eventType.color.id;
     };
+    $scope.addRoom = function(new_room){
+        $scope.rooms.push(new_room);
+        $scope.event.room_id = new_room.id;
+        var result = new Room({name: new_room.name, forum_id: $scope.event.forum_id}).save().then(function(data){
+            angular.extend(new_room, data);
+            $scope.event.room_id = data.id;
+        });
+    };
 
     $scope.save = function() {
         $scope.$broadcast('show-errors-check-validity');
         if (!$scope.eventForm.$valid) {
             return;
         }
-        $modalInstance.close($scope.event);
+        var new_room;
+        if($scope.event.room && !$scope.event.room.id){
+            console.log($scope.event.room);
+            return;
+            //new_room = new Room({name: $scope.event.room}).save()
+        }
+        if(!new_room){
+            $modalInstance.close($scope.event);
+        } else {
+            new_room.then(function(result){
+                $modalInstance.close($scope.event);
+            });
+        }
+
     }
 }]);

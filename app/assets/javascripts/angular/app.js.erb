@@ -77,6 +77,10 @@ angular.module('app').run(['amMoment', 'datepickerConfig', 'timepickerConfig', '
             }
         }
     };
+    $rootScope.popoverContentClick = function($event){
+        if(!angular.element($event.target).hasClass('btn'))
+            $event.stopPropagation();
+    };
 
     angular.extend(datepickerConfig, {
         startingDay: 1,
