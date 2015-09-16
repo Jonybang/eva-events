@@ -34,6 +34,8 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
 
                     if(obj.events && obj.events.length)
                         eventsLength += obj.events.length;
+                    else
+                        obj.events = [];
                 });
 
                 if(scope.events.length == eventsLength)
@@ -41,10 +43,6 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
 
                 scope.events.forEach(function(obj){
                     var room = scope.ngModel[roomsIdxs[obj.room_id]];
-
-                    if(!room.events)
-                        room.events = [];
-
                     room.events.push(obj);
                 });
             });
@@ -89,10 +87,10 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                     event.end_date = new Date(event.end_date);
 
                 return (event.end_date - event.begin_date)/3600000;
-            }
+            };
             scope.getDurationMinutes = function (duration) {
                 return Math.ceil(((duration < 1.0) ? duration : (duration % Math.floor(duration))) * 100) * 60/100;
-            }
+            };
             function logHours(event, after){
                 var str = after ? ' ПОСЛЕ: ' : ' ДО: ';
                 console.log(event.name + ' НАЧАЛО ' + str + event.begin_date.getHours());
@@ -100,6 +98,8 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
             }
 
             scope.setEventStyle = function(events, index){
+                if(!events.length)
+                    return;
                 var event = events[index];
                 var prevEvent;
                 if(index)

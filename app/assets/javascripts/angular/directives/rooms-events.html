@@ -3,7 +3,7 @@
     <table class="table rooms-events">
         <tbody>
         <tr>
-            <th ng-repeat="room in ngModel">{{room.name}}</th>
+            <th ng-repeat="room in ngModel">{{room.name}}{{room.number ? ' - ' + room.number : ''}}</th>
         </tr>
         <tr class="content">
             <td ng-repeat="room in ngModel"

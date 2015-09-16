@@ -6,11 +6,17 @@
     </a>
 </div>
 <animated-button ng-model="toggleChanged" text="Сохранить изменения" classes="pull-right" hide-before-change="true" ng-click="saveRooms()"></animated-button>
-
+<div class="margin-top">
+    <button class="btn btn-default btn-sm" ng-click="newOrEditEvent(forumsCtrl.cur_forum, event_group)">
+        <span class="glyphicon glyphicon-plus"></span> Добавить событие
+    </button>
+</div>
 <div ng-show="events.length"  class="event-groups">
     <div ng-repeat="event_group in grouped_events | orderBy: 'begin_date'" class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading">{{event_group.begin_date | amDateFormat:'DD MMMM'}}</div>
+        <div class="panel-heading">
+            {{event_group.begin_date | amDateFormat:'DD MMMM'}}
+        </div>
 
         <!-- Panel body -->
         <div class="panel-body">
