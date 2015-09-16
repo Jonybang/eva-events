@@ -1,1 +1,1 @@
-attribute :forum_id
+attribute :forum_id, :number

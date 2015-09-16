@@ -13,7 +13,7 @@ app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'ForumEventEditor', 'Event
         });
     }
     function getRoomsAndGroupEvents(){
-        Room.query({room_id: $state.params.forumId}).then(function(rooms){
+        Room.query({forum_id: $state.params.forumId}).then(function(rooms){
             $scope.rooms = rooms;
             $scope.grouped_events = Helpers.groupByDate($scope.events, 'begin_date', 'events');
             if($scope.grouped_events && $scope.grouped_events.length){
@@ -91,7 +91,7 @@ app.controller('EventsFormCtrl', ['$scope', '$timeout', 'ForumEvent', 'EventType
     $scope.addRoom = function(new_room){
         $scope.rooms.push(new_room);
         $scope.event.room_id = new_room.id;
-        var result = new Room({name: new_room.name, forum_id: $scope.event.forum_id}).save().then(function(data){
+        var result = new Room({name: new_room.name, number: new_room.number, forum_id: $scope.event.forum_id}).save().then(function(data){
             angular.extend(new_room, data);
             $scope.event.room_id = data.id;
         });
