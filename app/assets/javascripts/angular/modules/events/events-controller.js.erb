@@ -54,7 +54,7 @@ app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'ForumEventEditor', 'Event
         });
     };
     $scope.addEventRow = function(forum, event){
-        $scope.events.unshift({edit:true, forum_id: forum.id});
+        $scope.events.unshift({edit:true, forum_id: forum.id, is_new: true});
     };
     $scope.newOrEditEvent = function(forum, event, resetRooms){
         ForumEventEditor({forum_id: forum.id}, event).then(function(result){

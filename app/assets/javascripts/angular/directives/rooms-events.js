@@ -9,7 +9,7 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
             events: '=',
             //callbacks
             ngChange: '&',
-            ngClick: '&',
+            ngClickEvent: '&',
             resoursableAdded: '&',
             //flags
             showAll: '=',
@@ -233,8 +233,8 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                 scope.setEventStyle(events, index);
             };
             scope.clickEvent = function(event){
-                if(scope.ngClick)
-                    scope.ngClick({event_obj: event});
+                if(scope.ngClickEvent)
+                    scope.ngClickEvent({event_obj: event});
             };
 
             var timer;

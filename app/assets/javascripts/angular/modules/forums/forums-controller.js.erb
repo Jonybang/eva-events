@@ -45,12 +45,12 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
             $scope.setCurForum(forums[forums.length - 1]);
         } else {
             forums.some(function(forum){
-                var res
+                var result = forum.id == $state.params.forumId;
+                if(result)
+                    $scope.setCurForum(forum);
+                return result;
             });
         }
-
-
-
         $scope.forums.forEach(function(forum){
             forum.grouped_events = Helpers.groupByDate(forum.events, 'begin_date', 'events');
         });
@@ -58,7 +58,9 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
 
     $scope.setCurForum = function(forum){
         self.cur_forum = $scope.cur_forum = forum;
-        $state.go('app.organizations.show.forums.show', {forumId: forum.id});
+
+        if(!$state.params.forumId || $state.params.forumId != forum.id)
+            $state.go('app.organizations.show.forums.show', {forumId: forum.id});
     };
 
     $scope.new_forum = {};

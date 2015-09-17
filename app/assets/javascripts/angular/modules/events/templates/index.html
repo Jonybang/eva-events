@@ -1,13 +1,13 @@
 <div ng-hide="events.length" class="margin-top">
     В мероприятие пока не добавлено ни одного события
     <br>
-    <a class="btn btn-default btn-sm" ng-click="newOrEditEvent(forumsCtrl.cur_forum)">
+    <a class="btn btn-success btn-sm" ng-click="newOrEditEvent(forumsCtrl.cur_forum)">
         <span class="glyphicon glyphicon-plus"></span> Добавить событие
     </a>
 </div>
 <animated-button ng-model="toggleChanged" text="Сохранить изменения" classes="pull-right" hide-before-change="true" ng-click="saveRooms()"></animated-button>
-<div class="margin-top">
-    <button class="btn btn-default btn-sm" ng-click="newOrEditEvent(forumsCtrl.cur_forum, event_group)">
+<div class="margin-top" ng-if="events.length">
+    <button class="btn btn-success btn-sm" ng-click="newOrEditEvent(forumsCtrl.cur_forum, event_group)">
         <span class="glyphicon glyphicon-plus"></span> Добавить событие
     </button>
 </div>
@@ -25,7 +25,7 @@
                 events="event_group.events"
 
                 ng-change="roomsEventsChanged()"
-                ng-click="newOrEditEvent(forumsCtrl.cur_forum, event_obj, true)"></rooms-events>
+                ng-click-event="newOrEditEvent(forumsCtrl.cur_forum, event_obj, true)"></rooms-events>
         </div>
     </div>
 </div>

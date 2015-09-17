@@ -277,10 +277,10 @@ table.rooms-events{
 .events-table{
   table-layout: fixed;
   position: relative;
-  th, td {
+  th, tr:not(.edit) td {
     /*table-layout: auto;*/
     /*white-space: nowrap;*/
-    position: relative;
+    /* position: relative;*/
     overflow-x:hidden !important;
     text-overflow: ellipsis;
   }
@@ -302,6 +302,11 @@ table.rooms-events{
   }
   .ui-select-match {
     padding: 0;
+  }
+  td.date, td.room, td.type {
+    & > div {
+      position: relative;
+    }
   }
 }
 

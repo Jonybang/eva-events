@@ -96,7 +96,7 @@ angular.module('app').run(['amMoment', 'datepickerConfig', 'timepickerConfig', '
     angular.extend(datepickerPopupConfig, {
         currentText:'Сегодня',
         clearText:'Очистить',
-        closeText:'Закрыть'
+        closeText:'Сохранить'
     });
 
     $rootScope.$on('$stateChangeStart', function(evt, to, params) {

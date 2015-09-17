@@ -32,7 +32,7 @@ angular.module('app.forums', ['ui.router'])
                         controller: 'EventsCtrl'
                     })
                     .state('app.organizations.show.forums.show.table_events', {
-                        url: '/events',
+                        url: '/table_events',
                         templateUrl: '<%= asset_path(@events_templates_path + 'table.html') %>',
                         controller: 'EventsCtrl'
                     });
