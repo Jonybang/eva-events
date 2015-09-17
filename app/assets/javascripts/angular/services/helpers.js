@@ -7,6 +7,20 @@ angular.module('app')
     .factory('Helpers', ['$http', function($http) {
 
         var service = {
+            findById: function(array, id, func){
+                var resultObject;
+                array.some(function(obj){
+                    var result = obj.id == id;
+                    if(result)
+                        resultObject = obj;
+                    return result;
+                });
+
+                if(func && resultObject)
+                    func(resultObject);
+
+                return resultObject;
+            },
             addOrReplace: function (array, object, id, isPush){
                 //Добавляет в массив или обновляет в нем объект, в зависимости от того:
                 //задано ли поле id(тоесть существует ли уже объект с таким id)

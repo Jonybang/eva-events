@@ -4,10 +4,8 @@
 'use strict';
 
 var app = angular.module('app.forums');
-console.log('forumsCtrl');
 
 app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum', 'ForumEvent', 'ForumEventEditor', 'Person', 'PersonEditor', 'RoomEditor', 'Helpers', function($scope, $state, $timeout, $modal, Forum, ForumEvent, ForumEventEditor, Person, PersonEditor, RoomEditor, Helpers) {
-    console.log('init forumsCtrl');
     var self = this;
     $scope.popover = {
         adminsOpen: false,
@@ -44,11 +42,8 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
         if(!$state.params.forumId){
             $scope.setCurForum(forums[forums.length - 1]);
         } else {
-            forums.some(function(forum){
-                var result = forum.id == $state.params.forumId;
-                if(result)
-                    $scope.setCurForum(forum);
-                return result;
+            Helpers.findById(forums, $state.params.forumId, function(forum){
+                $scope.setCurForum(forum);
             });
         }
         $scope.forums.forEach(function(forum){
@@ -113,20 +108,16 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
             if(!forum.events)
                 forum.events = [];
 
-            Helpers.addOrReplace(forum.events, result, result.id, true);
-
-            if(event_group && event_group.class == 'Room')
+            if(event_group && event_group.class == 'Room' && result.room_id == event_group.id)
                 Helpers.addOrReplace(event_group.events, result, result.id, true);
             else
                 Helpers.addItemToParentObjectInArrayById(forum.rooms, result, result.room_id, 'events');
 
-            forum.grouped_events = Helpers.groupByDate(forum.events, 'begin_date', 'events');
+            Helpers.addOrReplace(forum.events, result, result.id, true);
 
+            forum.grouped_events = Helpers.groupByDate(forum.events, 'begin_date', 'events');
             forum.grouped_events.forEach(function(obj){
-                var exist = obj.events.some(function(_event){
-                    return _event.id == result.id;
-                });
-                if(exist)
+                if(Helpers.findById(obj.events, result.id))
                     obj.expand = true;
             });
         });
