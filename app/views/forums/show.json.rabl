@@ -19,7 +19,7 @@ child :posts, :root => "events", :object_root => false  do
 end
 
 child :rooms, :root => "rooms", :object_root => false  do
-    attributes :id, :name
+    extends "inherits/base"
     child :events, :root => "events", :object_root => false do
         attributes :id, :name
     end

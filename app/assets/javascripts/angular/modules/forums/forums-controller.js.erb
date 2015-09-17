@@ -116,7 +116,7 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
             Helpers.addOrReplace(forum.events, result, result.id, true);
 
             if(event_group && event_group.class == 'Room')
-                Helpers.addOrReplace(event_group, result, result.id, true);
+                Helpers.addOrReplace(event_group.events, result, result.id, true);
             else
                 Helpers.addItemToParentObjectInArrayById(forum.rooms, result, result.room_id, 'events');
 
