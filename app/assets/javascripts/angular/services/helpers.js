@@ -137,6 +137,37 @@ angular.module('app')
                     }
                 });
                 return grouped;
+            },
+            checkOnDate: function(date){
+                if(date instanceof Date)
+                    return date;
+                else
+                    return new Date(date);
+            },
+            hoursDuration: function (_begin_date, _end_date) {
+                var begin_date = this.checkOnDate(_begin_date),
+                    end_date = this.checkOnDate(_end_date);
+
+                return (end_date - begin_date)/3600000;
+            },
+            minutesDuration: function (_begin_date, _end_date) {
+                var begin_date = this.checkOnDate(_begin_date),
+                    end_date = this.checkOnDate(_end_date);
+
+                return (end_date - begin_date)/60000;
+            },
+            setDateTime: function (copy_date, hours, minutes, plus) {
+                var date = this.checkOnDate(angular.copy(copy_date));
+
+                var _hours = hours, _minutes = minutes;
+                if(plus){
+                    _hours += date.getHours();
+                    _minutes += date.getMinutes();
+                }
+
+                date.setHours(_hours);
+                date.setMinutes(_minutes);
+                return date;
             }
         };
         return service;

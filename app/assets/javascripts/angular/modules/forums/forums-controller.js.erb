@@ -6,6 +6,8 @@
 var app = angular.module('app.forums');
 
 app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum', 'ForumEvent', 'ForumEventEditor', 'Person', 'PersonEditor', 'RoomEditor', 'Helpers', function($scope, $state, $timeout, $modal, Forum, ForumEvent, ForumEventEditor, Person, PersonEditor, RoomEditor, Helpers) {
+    var begin_hour = 8;
+
     var self = this;
     $scope.popover = {
         adminsOpen: false,
@@ -96,8 +98,10 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
             event_group.expand = true;
 
             var begin_date;
-            if(event_group.begin_date)
-                begin_date = event_group.begin_date;
+            if(event_group.begin_date){
+                begin_date = angular.copy(event_group.begin_date);
+                begin_date.setHours(begin_hour);
+            }
 
             var room_id;
             if(event_group.class == 'Room')

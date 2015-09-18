@@ -30,7 +30,8 @@
 //= require angular-resource.min
 // require angular-route.min
 
-//= require ui-bootstrap-tpls
+// require ui-bootstrap-tpls
+//= require ui-bootstrap-tpls-0.13.4.min
 //= require showErrors.min
 //= require datetime-picker.min
 //= require angular-ui-router.min

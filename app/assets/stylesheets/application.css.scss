@@ -346,3 +346,12 @@ table.rooms-events{
   padding-left: 15px;
   padding-right: 15px;
 }
+a.not_link, a.not_link:hover {
+  cursor: default;
+  color: black;
+  text-decoration: none;
+}
+.modal-body.editor .nav-tabs{
+  border: 0;
+  margin-bottom: 0;
+}
