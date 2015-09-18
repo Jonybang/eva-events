@@ -9,6 +9,7 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
     var begin_hour = 8;
 
     var self = this;
+    self.changedToggle = false;
     $scope.popover = {
         adminsOpen: false,
         volunteersOpen: false,
@@ -90,6 +91,8 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
     this.newOrEditRoom = $scope.newOrEditRoom = function(forum, room){
         RoomEditor({forum_id: forum.id}, room).then(function(result){
             Helpers.addOrReplace(forum.rooms, result, result.id, true);
+
+            self.changedToggle = !self.changedToggle;
         });
     };
     this.newOrEditEvent = $scope.newOrEditEvent = function(forum, event_group, event){
@@ -124,6 +127,8 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
                 if(Helpers.findById(obj.events, result.id))
                     obj.expand = true;
             });
+
+            self.changedToggle = !self.changedToggle;
         });
     };
 }]);

@@ -24,8 +24,13 @@ app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'ForumEventEditor', 'Event
         });
     }
 
+    //TODO: сделать через соккеты
+    $scope.$watch('forumsCtrl.changedToggle', function(){
+        getEvents();
+    });
+
     $scope.roomsEventsChanged = function(){
-        $scope.toggleChanged = !$scope.toggleChanged;
+        $scope.roomsToggleChanged = !$scope.roomsToggleChanged;
     };
 
     $scope.$watchCollection('forumsCtrl.cur_forum.events', function(){
