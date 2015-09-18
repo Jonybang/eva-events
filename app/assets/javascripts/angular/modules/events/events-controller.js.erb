@@ -72,13 +72,17 @@ app.controller('EventsFormCtrl', ['$scope', '$timeout', 'ForumEvent', 'EventType
     $timeout(function(){
         $scope.event = object;
 
-        if(!$scope.event.id)
+        if(!$scope.event.id){
             $scope.beginDateChanged();
-        console.log('timeout');
+            $scope.duration = new Date();
+        }
+        else{
+            endDateChanged();
+        }
+
+        $scope.duration_mode = true;
     });
     $scope.popoverAddRoom = '<%= asset_path('angular/modules/rooms/templates/popoverAddRoom.html') %>';
-    $scope.duration_mode = true;
-    $scope.duration = new Date();
 
     EventType.query().then(function(types){
         $scope.event_types = types;
@@ -122,11 +126,10 @@ app.controller('EventsFormCtrl', ['$scope', '$timeout', 'ForumEvent', 'EventType
             $scope.duration = duration;
         $scope.event.end_date = Helpers.setDateTime($scope.event.begin_date, $scope.duration.getHours(), $scope.duration.getMinutes(), true);
     };
-    $scope.$watch('event.end_date', function(){
-        if($scope.duration_mode)
+    function endDateChanged(){
+        if($scope.duration_mode || !$scope.event)
             return;
 
-        //not working, i dont know why :(
         var minutes_duration = Helpers.minutesDuration($scope.event.begin_date, $scope.event.end_date);
         var new_duration;
         if(minutes_duration > 24*60){
@@ -134,23 +137,12 @@ app.controller('EventsFormCtrl', ['$scope', '$timeout', 'ForumEvent', 'EventType
         } else {
             new_duration = Helpers.setDateTime(new Date(), 0, Math.ceil(minutes_duration));
         }
+        //not working if calling from watch, i dont know why :(
         $scope.duration = new_duration;
 
         console.log('endDateChanged, duration:', $scope.duration);
-    });
-//    $scope.endDateChanged = function(end_date, duration){
-//        if($scope.duration_mode)
-//            return;
-//
-//        var minutes_duration = Helpers.minutesDuration($scope.event.begin_date, end_date);
-//        var new_duration;
-//        if(minutes_duration > 24*60){
-//            new_duration = Helpers.setDateTime(new Date(), 0, 0);
-//        } else {
-//            new_duration = Helpers.setDateTime(new Date(), 0, Math.ceil(minutes_duration));
-//        }
-//        $scope.duration = new_duration;
-//    };
+    }
+    $scope.$watch('event.end_date', endDateChanged);
     $scope.changeDurationMode = function(new_val){
         $scope.duration_mode = new_val;
     };
