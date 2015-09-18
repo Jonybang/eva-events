@@ -11,8 +11,7 @@
         <th class="name">Название</th>
         <th class="type">Тип</th>
         <th class="room">Помещение</th>
-        <th class="date">Дата начала</th>
-        <th class="date">Дата окончания</th>
+        <th class="date">Сроки</th>
         <th></th>
     </tr>
     <tr ng-repeat="event in events | orderBy: ['is_new', 'begin_date']" ng-dblclick="event.edit = true" ng-class="{'edit':event.edit}">
@@ -46,13 +45,13 @@
         </td>
         <td class="date">
             <div>
-                <span ng-hide="event.edit">{{event.begin_date | amDateFormat:'D MMM. H:mm'}}</span>
+                <span ng-hide="event.edit">от {{event.begin_date | amDateFormat:'D MMM. H:mm'}}</span>
+                <span ng-show="event.edit">дата начала:</span>
                 <input type="text" ng-if="event.edit" class="form-control" name="begin_date" datetime-picker ng-model="event.begin_date" ng-init="event.begin_date = event.begin_date" is-open="event.open_begin_date" ng-click="event.open_begin_date=true" max-date="event.end_date"/>
             </div>
-        </td>
-        <td class="date">
             <div>
-                <span ng-hide="event.edit">{{event.end_date | amDateFormat:'D MMM. H:mm'}}</span>
+                <span ng-hide="event.edit">до {{event.end_date | amDateFormat:'D MMM. H:mm'}}</span>
+                <span ng-show="event.edit">дата окончания:</span>
                 <input type="text" ng-if="event.edit" class="form-control" name="end_date" datetime-picker ng-model="event.end_date" is-open="event.open_end_date" ng-click="event.open_end_date=true" min-date="event.begin_date"/>
             </div>
         </td>
