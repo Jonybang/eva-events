@@ -32,27 +32,27 @@
                 </div>
                 <div ng-repeat="error in errors.name" class="alert alert-error"><strong>Название</strong> {{error}}</div>
 
-                <div class="form-group col-md-12" show-errors>
+                <div class="form-group col-md-12">
                     <div class="col-md-4 col-lg-3 text-right">
                         <label>Сроки</label>
                     </div>
                     <div class="col-md-6 col-lg-7 controls">
                         Дата начала
-                        <div class="input-group">
+                        <div class="input-group" show-errors>
                             <span class="input-group-addon">от</span>
                             <!--<input type="date" name="begin_date" ng-model="event.begin_date" ng-change="autoStatus()" class="form-control" required/>-->
-                            <input type="text" class="form-control" name="begin_date" datetime-picker ng-model="event.begin_date" is-open="opened.begin_date" ng-click="opened.begin_date=true" max-date="event.end_date" ng-change="beginDateChanged()"/>
+                            <input type="text" class="form-control" name="begin_date" datetime-picker ng-model="event.begin_date" is-open="opened.begin_date" ng-click="opened.begin_date=true" ng-change="beginDateChanged()"/>
                         </div>
 
                         <a href ng-click="changeDurationMode(true)" ng-class="{'not_link':duration_mode}">Продолжительность</a>
                         &nbsp;или&nbsp;
-                        <a href ng-click="changeDurationMode(false)" ng-class="{'not_link':!duration_mode}">дата окончания</a>
+                        <a href ng-click="changeDurationMode(false)" ng-class="{'not_link':!duration_mode}" ng-style="{'color': eventForm.end_date.$invalid ? '#A94442' : ''}">дата окончания</a>
 
                         <timepicker ng-show="duration_mode" ng-model="duration" ng-change="durationChanged(duration)"></timepicker>
 
-                        <div class="input-group" ng-hide="duration_mode">
+                        <div class="input-group" ng-hide="duration_mode" show-errors>
                             <span class="input-group-addon">до</span>
-                            <input type="text" class="form-control" name="end_date" datetime-picker ng-model="event.end_date" is-open="opened.end_date" ng-click="opened.end_date=true" min-date="event.begin_date"/>
+                            <input type="text" class="form-control" name="end_date" datetime-picker ng-model="event.end_date" is-open="opened.end_date" ng-click="opened.end_date=true" min-date="event.begin_date" min="{{event.begin_date | date:'yyyy-MM-ddTHH:mm:ss'}}" />
                         </div>
                     </div>
                 </div>

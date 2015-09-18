@@ -78,8 +78,8 @@ app.controller('EventsFormCtrl', ['$scope', '$timeout', 'ForumEvent', 'EventType
         $scope.event = object;
 
         if(!$scope.event.id){
-            $scope.beginDateChanged();
             $scope.duration = new Date();
+            $scope.beginDateChanged();
         }
         else{
             endDateChanged();
@@ -153,8 +153,8 @@ app.controller('EventsFormCtrl', ['$scope', '$timeout', 'ForumEvent', 'EventType
     };
 
     $scope.save = function() {
+        $scope.eventForm.end_date.$validate();
         $scope.$broadcast('show-errors-check-validity');
-        if($scope.end_date < $scope.begin_date)
 
         if (!$scope.eventForm.$valid) {
             return;
