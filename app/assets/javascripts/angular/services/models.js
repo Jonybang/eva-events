@@ -12,20 +12,31 @@ app.factory('Organization', ['railsResourceFactory', 'railsSerializer', function
         })
     });
 }]);
-app.factory('Forum', ['railsResourceFactory', 'railsSerializer', function (railsResourceFactory, railsSerializer) {
-    return railsResourceFactory({
+app.factory('Forum', ['railsResourceFactory', 'railsSerializer', 'Helpers', function (railsResourceFactory, railsSerializer, Helpers) {
+    var resource =  railsResourceFactory({
         url: '/api/forums',
         name: 'forum',
         serializer: railsSerializer(function () {
             this.exclude('class');
-//            this.exclude('performers');
-//            this.exclude('project_status');
-//            this.exclude('project');
-//            //this.nestedAttribute('performers');
-//            this.exclude('contact');
-//            //this.resource('performers', 'Contact');
         })
     });
+    resource.prototype.DeletePerson = function (id, role) {
+        var self = this;
+        return resource.$delete(self.$url('persons/' + id), {role: role}).then(function (person) {
+            Helpers.deleteById(self[role + 's'], id);
+            Helpers.deleteById(self[role + '_ids'], id);
+            return person;
+        });
+    };
+    resource.prototype.AddPerson = function (id, role) {
+        var self = this;
+        return resource.$post(self.$url('persons/' + id), {id: id, role: role}).then(function (person) {
+            Helpers.addOrReplace(self[role + 's'], person, person.id, true);
+            Helpers.pushIdIfNotExist(self[role + '_ids'], person.id);
+            return person;
+        });
+    };
+    return resource;
 }]);
 app.factory('ForumEvent', ['railsResourceFactory', 'railsSerializer', function (railsResourceFactory, railsSerializer) {
     return railsResourceFactory({

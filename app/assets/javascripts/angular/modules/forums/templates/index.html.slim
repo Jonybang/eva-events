@@ -15,7 +15,9 @@
                   | Администраторы
                   span ng-class="['caret',{'inverse':forum.expand_admins}]"
                 ul collapse="!forum.admins.length || !forum.expand_admins"
-                  li ng-repeat="admin in forum.admins": a ng-bind="admin.name || admin.email" ng-click="newOrEditTeamMember(forum, 'admin', admin)"
+                  li ng-repeat="admin in forum.admins"
+                    a ng-bind="admin.name || admin.email" ng-click="newOrEditTeamMember(forum, 'admin', admin)"
+                    button.close type="button" delete-object="admin" custom-delete="memberDelete(admin.id, 'admin')": span ×
                 div.not_found ng-hide="forum.admins.length" Никого нет
 
               li
@@ -27,7 +29,9 @@
                   span ng-class="['caret',{'inverse':forum.expand_volunteers}]"
 
                 ul collapse="!forum.volunteers.length || !forum.expand_volunteers"
-                  li ng-repeat="volunteer in forum.volunteers": a ng-bind="volunteer.name || volunteer.email" ng-click="newOrEditTeamMember(forum, 'volunteer', volunteer)"
+                  li ng-repeat="volunteer in forum.volunteers"
+                    a ng-bind="volunteer.name || volunteer.email" ng-click="newOrEditTeamMember(forum, 'volunteer', volunteer)"
+                    button.close type="button" delete-object="volunteer" custom-delete="memberDelete(volunteer.id, 'volunteer')": span ×
                 div.not_found ng-hide="forum.volunteers.length" Никого нет
 
           li.list-group-item
@@ -45,7 +49,6 @@
                 ul collapse="!event_group.events.length || !event_group.expand"
                   li ng-repeat="event in event_group.events"
                     a ng-bind="event.name" ng-click="newOrEditEvent(forum, event_group, event)"
-                      | {{event.name}}
                     button.close type="button" delete-object="event" obj-model="ForumEvent" delete-success="eventDeleted(event_group, $index)": span ×
             a.btn.btn-default.btn-sm ng-click="newOrEditEvent(forum)" ng-hide="forum.events.length"
               span.glyphicon.glyphicon-plus
@@ -66,7 +69,6 @@
                 ul collapse="!room.events.length || !room.expand"
                   li ng-repeat="event in room.events"
                     a ng-bind="event.name" ng-click="newOrEditEvent(forum, room, event)"
-                      | {{event.name}}
                     button.close type="button" delete-object="event" obj-model="ForumEvent" delete-success="eventDeleted(room, $index)": span ×
                 div.not_found ng-hide="room.events.length" Ничего нет
             a.btn.btn-default.btn-sm ng-click="newOrEditRoom(forum)"

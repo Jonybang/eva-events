@@ -15,9 +15,13 @@ Rails.application.routes.draw do
   resources :users, :except => :new
   resources :sessions, :except => :new
 
-  scope '/api', :defaults => {format: :json} do
+  scope :api, :defaults => {format: :json} do
     resources :organizations
-    resources :forums
+    resources :forums do
+      scope :module => :forum do
+        resources :persons
+      end
+    end
     resources :events
     resources :event_types
     resources :persons

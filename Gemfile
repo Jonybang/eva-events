@@ -84,3 +84,5 @@ gem 'rails_12factor'
 
 gem 'ng-rails-csrf'
 gem 'angularjs-rails-resource', '~> 2.0.0'
+
+gem 'responders'
