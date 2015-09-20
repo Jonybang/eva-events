@@ -21,6 +21,27 @@ angular.module('app')
 
                 return resultObject;
             },
+            deleteById: function(array, id, func){
+                var index = -1;
+                array.some(function(obj, idx){
+                    var result = obj.id == id;
+                    if(result)
+                        index = idx;
+                    return result;
+                });
+
+                if(index != -1){
+                    array.splice(index, 1);
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            deleteByIdInGroups: function(groups, arrayName, id){
+                groups.some(function(obj){
+                    return service.deleteById(obj[arrayName], id);
+                });
+            },
             addOrReplace: function (array, object, id, isPush){
                 //Добавляет в массив или обновляет в нем объект, в зависимости от того:
                 //задано ли поле id(тоесть существует ли уже объект с таким id)

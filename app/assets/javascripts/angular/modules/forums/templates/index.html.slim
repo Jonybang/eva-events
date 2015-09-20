@@ -43,7 +43,10 @@
                   | {{event_group.begin_date | amDateFormat:'DD MMMM' }}
                   span ng-class="['caret',{'inverse':event_group.expand}]"
                 ul collapse="!event_group.events.length || !event_group.expand"
-                  li ng-repeat="event in event_group.events": a ng-bind="event.name" ng-click="newOrEditEvent(forum, event_group, event)"
+                  li ng-repeat="event in event_group.events"
+                    a ng-bind="event.name" ng-click="newOrEditEvent(forum, event_group, event)"
+                      | {{event.name}}
+                    button.close type="button" delete-object="event" obj-model="ForumEvent" delete-success="eventDeleted(event_group, $index)": span ×
             a.btn.btn-default.btn-sm ng-click="newOrEditEvent(forum)" ng-hide="forum.events.length"
               span.glyphicon.glyphicon-plus
               | Добавить событие
@@ -61,7 +64,10 @@
                   | {{room.name}}
                   span ng-class="['caret',{'inverse':room.expand}]"
                 ul collapse="!room.events.length || !room.expand"
-                  li ng-repeat="event in room.events": a ng-bind="event.name" ng-click="newOrEditEvent(forum, room, event)"
+                  li ng-repeat="event in room.events"
+                    a ng-bind="event.name" ng-click="newOrEditEvent(forum, room, event)"
+                      | {{event.name}}
+                    button.close type="button" delete-object="event" obj-model="ForumEvent" delete-success="eventDeleted(room, $index)": span ×
                 div.not_found ng-hide="room.events.length" Ничего нет
             a.btn.btn-default.btn-sm ng-click="newOrEditRoom(forum)"
               span.glyphicon.glyphicon-plus

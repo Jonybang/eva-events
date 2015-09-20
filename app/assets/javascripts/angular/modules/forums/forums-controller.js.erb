@@ -131,6 +131,20 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
             self.changedToggle = !self.changedToggle;
         });
     };
+    this.eventDeleted = $scope.eventDeleted = function(event_group, index){
+        var event = event_group.events[index];
+        event_group.events.splice(index, 1);
+
+        if(!event_group.begin_date){
+            Helpers.deleteByIdInGroups($scope.cur_forum.grouped_events, 'events', event.id);
+        }
+
+        if(event_group.class != 'Room'){
+            Helpers.deleteByIdInGroups($scope.cur_forum.rooms, 'events', event.id);
+        }
+
+        self.changedToggle = !self.changedToggle;
+    };
 }]);
 
 app.controller('ForumsShowCtrl', ['$scope', '$state', '$timeout', 'Forum', 'Helpers', function($scope, $state, $timeout, Forum, Helpers) {

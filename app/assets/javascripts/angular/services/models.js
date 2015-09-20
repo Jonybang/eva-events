@@ -75,3 +75,16 @@ app.factory('Color', ['railsResourceFactory', 'railsSerializer', function (rails
         })
     });
 }]);
+
+app.factory('Models', ['Organization', 'Forum', 'ForumEvent', 'EventType', 'Person', 'Room', 'Color',
+        function(Organization, Forum, ForumEvent, EventType, Person, Room, Color) {
+            return {
+                Organization: Organization,
+                Forum: Forum,
+                ForumEvent: ForumEvent,
+                EventType: EventType,
+                Person: Person,
+                Room: Room,
+                Color: Color
+            };
+}]);

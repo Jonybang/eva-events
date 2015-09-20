@@ -31,7 +31,7 @@ angular.module('app', [
     'ngSanitize'
         ])
         .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', 'showErrorsConfigProvider',
-            '$httpProvider', 'railsSerializerProvider', 'uiSelectConfig', function($urlRouterProvider, $stateProvider, $locationProvider, showErrorsConfigProvider, $httpProvider, railsSerializerProvider, uiSelectConfig) {
+            '$httpProvider', 'railsSerializerProvider', 'uiSelectConfig', 'RailsResourceProvider', function($urlRouterProvider, $stateProvider, $locationProvider, showErrorsConfigProvider, $httpProvider, railsSerializerProvider, uiSelectConfig, RailsResourceProvider) {
 
             $urlRouterProvider.otherwise("/manager");
 
@@ -64,6 +64,19 @@ angular.module('app', [
             });
 
             railsSerializerProvider.underscore(angular.identity).camelize(angular.identity);
+
+            RailsResourceProvider
+        }]).config(['$provide', function($provide) {
+            $provide.decorator('$state', function($delegate, $stateParams) {
+                $delegate.forceReload = function() {
+                    return $delegate.go($delegate.current, $stateParams, {
+                        reload: true,
+                        inherit: false,
+                        notify: true
+                    });
+                };
+                return $delegate;
+            });
         }]);
 
 angular.module('app').run(['amMoment', 'datepickerConfig', 'timepickerConfig', 'datepickerPopupConfig', '$rootScope', '$state', function(amMoment, datepickerConfig, timepickerConfig, datepickerPopupConfig, $rootScope, $state) {
