@@ -1,5 +1,5 @@
-<div class="btn-group select-adder" dropdown ng-click="$parent.popoverContentClick($event)">
-    <ui-select ng-model="cur_member_id" style="width:200px" on-select="$parent.addMemberToForum($item, $parent.forum, $parent.popover.role); cur_member_id=''">
+<div class="btn-group select-adder" dropdown ng-click="popoverContentClick($event)">
+    <ui-select ng-model="cur_member_id" style="width:200px" on-select="$parent.addMember($item, $parent.popover.role); cur_member_id=''; $parent.popover.persons.splice($index, 1)">
         <ui-select-match placeholder="Выберите {{$parent.popover.role == 'admin' ? 'администратора' : 'волонтера'}}" allow-clear="true">{{$select.selected.name || $select.selected.email}}</ui-select-match>
         <ui-select-choices repeat="member.id as member in $parent.popover.persons | filter: {$: $select.search}">
             <div ng-bind-html="member.name | highlight: $select.search"></div>

@@ -17,7 +17,7 @@ angular.module('app').directive('deleteObject', ['Models', '$noty', '$timeout', 
 
                 $noty.dialog({text:'Вы действительно хотите удалить объект "' + $scope.deleteObject.name + '"?'}).then(function(){
                     var objPromise;
-                    if(!$scope.customDelete)
+                    if($scope.objModel)
                         objPromise = new Models[$scope.objModel]({id: $scope.deleteObject.id}).delete();
                     else
                         objPromise = $scope.customDelete();

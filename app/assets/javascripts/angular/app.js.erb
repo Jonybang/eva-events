@@ -90,10 +90,15 @@ angular.module('app').run(['amMoment', 'datepickerConfig', 'timepickerConfig', '
             }
         }
     };
-    $rootScope.popoverContentClick = function($event){
-        if(!angular.element($event.target).hasClass('btn'))
-            $event.stopPropagation();
-    };
+//    $rootScope.popoverContentClick = function($event){
+//        //если мы нажимаем не на кнопку .btn, тогда останавливаем закрытие окна
+//        var $element = angular.element($event.target);
+//        if(!$element.hasClass('btn'))
+//            $event.stopPropagation();
+//
+//        if($element.hasClass('btn-default'))
+//            $event.stopPropagation();
+//    };
 
     angular.extend(datepickerConfig, {
         startingDay: 1,
@@ -134,3 +139,19 @@ angular.module('app').run(['amMoment', 'datepickerConfig', 'timepickerConfig', '
 });
 
 var roomsEventsHtml = "<%= asset_path('angular/directives/rooms-events.html') %>";
+
+angular.module('app').directive('selectAdder', [function() {
+    return {
+        restrict: 'C',
+        link: function ($scope, $element, $attrs){
+            $element.click(function($event){
+                var $element = angular.element($event.target);
+                if(!$element.hasClass('btn'))
+                    $event.stopPropagation();
+
+                if($element.hasClass('btn-default'))
+                    $event.stopPropagation();
+            });
+        }
+    };
+}]);

@@ -142,11 +142,12 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
     this.memberDelete = $scope.memberDelete = function(id, role){
         return $scope.cur_forum.DeletePerson(id, role);
     };
-    $scope.addMemberToForum = function(member, forum, role){
-        Helpers.addOrReplace(forum[role + 's'], member, member.id, true);
-
-        Helpers.pushIdIfNotExist(forum[role + '_ids'], member.id);
-        var forum_promise = new Forum(forum).update();
+    $scope.addMember = function(member, role){
+//        Helpers.addOrReplace(forum[role + 's'], member, member.id, true);
+//
+//        Helpers.pushIdIfNotExist(forum[role + '_ids'], member.id);
+//        var forum_promise = new Forum(forum).update();
+        return $scope.cur_forum.AddPerson(member.id, role);
     };
 }]);
 

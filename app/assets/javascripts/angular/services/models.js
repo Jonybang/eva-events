@@ -30,7 +30,7 @@ app.factory('Forum', ['railsResourceFactory', 'railsSerializer', 'Helpers', func
     };
     resource.prototype.AddPerson = function (id, role) {
         var self = this;
-        return resource.$post(self.$url('persons/' + id), {id: id, role: role}).then(function (person) {
+        return resource.$post(self.$url('persons'), {id: id, role: role}, {rootWrapping: false}).then(function (person) {
             Helpers.addOrReplace(self[role + 's'], person, person.id, true);
             Helpers.pushIdIfNotExist(self[role + '_ids'], person.id);
             return person;
