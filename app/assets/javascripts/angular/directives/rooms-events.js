@@ -18,7 +18,9 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
 
         },
         link: function (scope, element){
-            var begin_hour = 8;
+            scope.begin_hour = 8;
+            scope.begin_minute = 0;
+
             var multipler = 1;
             var minimum_hours = 0.5;
 
@@ -54,7 +56,27 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                 var diff = new Date(second_date) - new Date(first_date);
                 return multipler * (diff / 100000) + 'px';
             }
-            function checkAndMoveNextEvent(events, curIndex, curEvent){
+            scope.getFirstEventMargin = function (event){
+                var begin_date = event.begin_date;
+
+                var minDate = angular.copy(begin_date);
+                minDate.setHours(scope.begin_hour);
+                minDate.setMinutes(scope.begin_minute);
+
+                if(minDate - begin_date >= 60000){
+                    scope.begin_hour = begin_date.getHours();
+                    scope.begin_minute = begin_date.getMinutes();
+
+                    scope.ngModel.forEach(function(obj, index){
+                        scope.setEventStyle(obj.events, 0);
+                        checkAndMoveNextEvent(obj.events, 0);
+                    });
+                    return '0px';
+                } else {
+                    return getPixelDiffBetweenDates(minDate, begin_date);
+                }
+            };
+            function checkAndMoveNextEvent(events, curIndex){
                 // var curEvent = curEvent ? curEvent : events[curIndex];
                 // var nextIndex = (nextIndex || nextIndex === 0) ? nextIndex : (curIndex + 1);
                 var nextIndex = curIndex + 1;
@@ -114,6 +136,9 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
 
                 if(prevEvent)
                     event.style['margin-top'] = getPixelDiffBetweenDates(prevEvent.end_date, event.begin_date);
+                else
+                    event.style['margin-top'] = scope.getFirstEventMargin(event);
+
                 return event.style;
             };
             scope.eventDropped = function(events, item, destIndex){
@@ -156,10 +181,12 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                     prevEventIndex++;
                 }
 
-                if(destIndex)
+                if(destIndex){
                     item.begin_date = new Date(newArr[prevEventIndex].end_date);
-                else
-                    item.begin_date.setHours(begin_hour);
+                } else {
+                    item.begin_date.setHours(scope.begin_hour);
+                    item.begin_date.setMinutes(scope.begin_minute);
+                }
 
                 console.log(newArr);
 
@@ -170,7 +197,8 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
 
                 scope.setEventStyle(newArr, destIndex == 0 ? 0 : destIndex - 1);
 
-                checkAndMoveNextEvent(newArr, 0, item, 1);
+                scope.setEventStyle(newArr, 0);
+                checkAndMoveNextEvent(newArr, 0);
                 $timeout(scope.ngChange);
                 return item;
             };
