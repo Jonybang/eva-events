@@ -46,7 +46,11 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                 scope.events.forEach(function(obj){
                     var room = scope.ngModel[roomsIdxs[obj.room_id]];
                     room.events.push(obj);
+
+                    scope.checkAndSetBeginTime(obj.begin_date);
                 });
+
+                scope.refreshStyles();
             });
 
             scope.$watchCollection('events', initEvents);
@@ -59,13 +63,7 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
             scope.getFirstEventMargin = function (event){
                 var begin_date = event.begin_date;
 
-                var minDate = angular.copy(begin_date);
-                minDate.setHours(scope.begin_hour);
-                minDate.setMinutes(scope.begin_minute);
-
-                if(minDate - begin_date >= 60000){
-                    scope.begin_hour = begin_date.getHours();
-                    scope.begin_minute = begin_date.getMinutes();
+                if(scope.checkAndSetBeginTime(begin_date)){
 
                     scope.ngModel.forEach(function(obj, index){
                         scope.setEventStyle(obj.events, 0);
@@ -73,9 +71,27 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                     });
                     return '0px';
                 } else {
-                    return getPixelDiffBetweenDates(minDate, begin_date);
+                    return getPixelDiffBetweenDates(getBeginDate(begin_date), begin_date);
                 }
             };
+
+
+            scope.checkAndSetBeginTime = function(datetime){
+                if(getBeginDate(datetime) - datetime >= 60000) {
+                    scope.begin_hour = datetime.getHours();
+                    scope.begin_minute = datetime.getMinutes();
+                    return true;
+                }
+                return false;
+            };
+            function getBeginDate(date){
+                var minDate = angular.copy(date);
+                minDate.setHours(scope.begin_hour);
+                minDate.setMinutes(scope.begin_minute);
+                return minDate;
+            }
+
+
             function checkAndMoveNextEvent(events, curIndex){
                 // var curEvent = curEvent ? curEvent : events[curIndex];
                 // var nextIndex = (nextIndex || nextIndex === 0) ? nextIndex : (curIndex + 1);
@@ -102,6 +118,8 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
 
                 checkAndMoveNextEvent(events, nextIndex, nextEvent, nextIndex + 1);
             }
+
+
             scope.getDuration = function (event) {
                 if(!(event.begin_date instanceof Date))
                     event.begin_date = new Date(event.begin_date);
@@ -113,12 +131,21 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
             scope.getDurationMinutes = function (duration) {
                 return Math.ceil(((duration < 1.0) ? duration : (duration % Math.floor(duration))) * 100) * 60/100;
             };
+
+
             function logHours(event, after){
                 var str = after ? ' ПОСЛЕ: ' : ' ДО: ';
                 console.log(event.name + ' НАЧАЛО ' + str + event.begin_date.getHours());
                 console.log(event.name + ' ОКОНЧАНИЕ ' + str + event.end_date.getHours());
             }
 
+            scope.refreshStyles = function(){
+                scope.ngModel.forEach(function(room){
+                    room.events.forEach(function(obj, index){
+                        scope.setEventStyle(room.events, index);
+                    })
+                });
+            };
             scope.setEventStyle = function(events, index){
                 if(!events.length)
                     return;
@@ -197,8 +224,10 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
 
                 scope.setEventStyle(newArr, destIndex == 0 ? 0 : destIndex - 1);
 
-                scope.setEventStyle(newArr, 0);
                 checkAndMoveNextEvent(newArr, 0);
+
+                $timeout(scope.refreshStyles);
+
                 $timeout(scope.ngChange);
                 return item;
             };
