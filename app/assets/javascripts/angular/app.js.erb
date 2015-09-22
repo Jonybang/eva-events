@@ -64,8 +64,6 @@ angular.module('app', [
             });
 
             railsSerializerProvider.underscore(angular.identity).camelize(angular.identity);
-
-            RailsResourceProvider
         }]).config(['$provide', function($provide) {
             $provide.decorator('$state', ['$delegate', '$stateParams', function($delegate, $stateParams) {
                 $delegate.forceReload = function() {

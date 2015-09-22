@@ -3,10 +3,10 @@
     <table class="table rooms-events">
         <tbody>
         <tr>
-            <th ng-repeat="room in ngModel">{{room.name}}{{room.number ? ' - ' + room.number : ''}}</th>
+            <th ng-repeat="room in ngModel | orderBy:'id'">{{room.name}}{{room.number ? ' - ' + room.number : ''}}</th>
         </tr>
         <tr class="content">
-            <td ng-repeat="room in ngModel"
+            <td ng-repeat="room in ngModel | orderBy:'id'"
                 dnd-list="room.events"
                 dnd-drop="eventDropped(room.events, item, index)">
                 <div class="list-group"

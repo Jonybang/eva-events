@@ -60,7 +60,7 @@
               a tooltip="Помещения в которых будут проходить события" tooltip-placement="top" tooltip-trigger="mouseenter"
                 span.glyphicon.glyphicon-question-sign
             ul.list-unstyled ng-show="forum.rooms.length"
-              li ng-repeat="room in forum.rooms"
+              li ng-repeat="room in forum.rooms | orderBy:'id'"
                 a.btn.btn-default.btn-xs.pull-right ng-click="newOrEditEvent(forum, room)"
                   span.glyphicon.glyphicon-plus
                 h5: a ng-click="room.expand = !room.expand"
