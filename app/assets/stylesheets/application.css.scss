@@ -55,9 +55,6 @@ a[tooltip]{
 }
 .event-groups{
   margin-top: 20px;
-  .panel-default{
-    margin: 0 50px 10px;
-  }
 }
 div.list-group.forums a{
   cursor: pointer;
@@ -358,4 +355,19 @@ a.not_link, a.not_link:hover {
 .list-group.forums .close {
   float:none;
   margin-left: 10px;
+}
+@media (min-width:1500px){
+  .container {
+    width: 1450px;
+  }
+}
+@media (min-width:1700px){
+  .container {
+    width: 1640px;
+  }
+}
+@media (min-width:2000px){
+  .container {
+    width: 1920px;
+  }
 }
