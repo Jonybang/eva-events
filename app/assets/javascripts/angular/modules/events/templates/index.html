@@ -6,6 +6,9 @@
     </a>
 </div>
 <animated-button ng-model="roomsToggleChanged" text="Сохранить изменения" classes="pull-right" hide-before-change="true" ng-click="saveRooms()"></animated-button>
+<div class="margin-top">
+    Всего <b>{{events.length}}</b> {{events.length | enducement:['событие', 'события', 'событий']}}
+</div>
 <div class="margin-top" ng-if="events.length">
     <button class="btn btn-success btn-sm" ng-click="newOrEditEvent(forumsCtrl.cur_forum, event_group)">
         <span class="glyphicon glyphicon-plus"></span> Добавить событие
@@ -15,7 +18,7 @@
     <div ng-repeat="event_group in grouped_events | orderBy: 'begin_date'" class="panel panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading">
-            {{event_group.begin_date | amDateFormat:'DD MMMM'}}
+            {{event_group.begin_date | amDateFormat:'DD MMMM'}}: {{event_group.events.length}} {{event_group.events.length | enducement:['событие', 'события', 'событий']}}
         </div>
 
         <!-- Panel body -->

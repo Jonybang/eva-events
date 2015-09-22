@@ -39,6 +39,11 @@
                 </div>
             </td>
         </tr>
+        <tr>
+            <td ng-repeat="room in ngModel | orderBy:'id'">
+                Всего: {{room.events.length}} {{room.events.length | enducement:['событие', 'события', 'событий']}}
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>

@@ -1,6 +1,9 @@
 <div ng-hide="events.length" class="margin-top">
     В мероприятие пока не добавлено ни одного события
 </div>
+<div class="margin-top">
+    Всего <b>{{events.length}}</b> {{events.length | enducement:['событие', 'события', 'событий']}}
+</div>
 <div class="btn-toolbar margin-top">
     <button class="btn btn-success btn-sm" ng-click="addEventRow(forumsCtrl.cur_forum)">
         <span class="glyphicon glyphicon-plus"></span> Добавить событие
