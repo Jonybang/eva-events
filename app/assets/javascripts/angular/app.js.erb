@@ -67,7 +67,7 @@ angular.module('app', [
 
             RailsResourceProvider
         }]).config(['$provide', function($provide) {
-            $provide.decorator('$state', function($delegate, $stateParams) {
+            $provide.decorator('$state', ['$delegate', '$stateParams', function($delegate, $stateParams) {
                 $delegate.forceReload = function() {
                     return $delegate.go($delegate.current, $stateParams, {
                         reload: true,
@@ -76,7 +76,7 @@ angular.module('app', [
                     });
                 };
                 return $delegate;
-            });
+            }]);
         }]);
 
 angular.module('app').run(['amMoment', 'datepickerConfig', 'timepickerConfig', 'datepickerPopupConfig', '$rootScope', '$state', function(amMoment, datepickerConfig, timepickerConfig, datepickerPopupConfig, $rootScope, $state) {
