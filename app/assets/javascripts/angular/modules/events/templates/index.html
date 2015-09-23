@@ -27,6 +27,8 @@
                 ng-model="event_group.rooms"
                 events="event_group.events"
 
+                date="event_group.begin_date"
+
                 ng-change="roomsEventsChanged()"
                 ng-click-event="newOrEditEvent(forumsCtrl.cur_forum, event_obj, true)"></rooms-events>
         </div>

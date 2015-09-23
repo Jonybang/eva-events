@@ -7,6 +7,8 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
             ngModel: '=',
             //if rooms not include events
             events: '=',
+            //date for cross date dropped
+            date: '=',
             //callbacks
             ngChange: '&',
             ngClickEvent: '&',
@@ -211,6 +213,9 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                 if(destIndex){
                     item.begin_date = new Date(newArr[prevEventIndex].end_date);
                 } else {
+                    if(scope.date)
+                        item.begin_date = new Date(scope.date);
+
                     item.begin_date.setHours(scope.begin_hour);
                     item.begin_date.setMinutes(scope.begin_minute);
                 }

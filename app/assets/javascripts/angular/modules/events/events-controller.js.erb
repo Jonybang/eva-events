@@ -88,6 +88,7 @@ app.controller('EventsFormCtrl', ['$scope', '$timeout', 'ForumEvent', 'EventType
         $scope.duration_mode = true;
     });
     $scope.popoverAddRoom = '<%= asset_path('angular/modules/rooms/templates/popoverAddRoom.html') %>';
+    $scope.popoverAddEventType = '<%= asset_path('angular/modules/events/templates/popoverAddEventType.html') %>';
 
     EventType.query().then(function(types){
         $scope.event_types = types;
@@ -108,6 +109,15 @@ app.controller('EventsFormCtrl', ['$scope', '$timeout', 'ForumEvent', 'EventType
         var result = new Room({name: new_room.name, number: new_room.number, forum_id: $scope.event.forum_id}).save().then(function(data){
             angular.extend(new_room, data);
             $scope.event.room_id = data.id;
+        });
+    };
+    $scope.addEventType = function(new_type){
+        $scope.event_types.push(new_type);
+        $scope.event.event_type_id = new_type.id;
+        $scope.event.color_id = new_type.color_id;
+        var result = new EventType({name: new_type.name, color_id: new_type.color_id, forum_id: $scope.event.forum_id}).save().then(function(data){
+            angular.extend(new_type, data);
+            $scope.event.event_type_id = data.id;
         });
     };
 
