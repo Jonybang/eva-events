@@ -33,6 +33,7 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
 
                 scope.hours = [];
                 var date = new Date(scope.date);
+                date.setHours(scope.begin_hour);
 
                 while(date.getHours() < scope.end_hour){
                     var hour = {date: angular.copy(date), events: []};

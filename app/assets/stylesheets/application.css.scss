@@ -215,19 +215,30 @@ table.rooms-events{
   tr:not(:first-child) {
     min-width: 50px;
   }
-  td[dnd-list] {
+  [dnd-list] {
     min-height: 25px;
     min-width: 60px;
   }
-  td[dnd-list], td[dnd-list] > div{
+  [dnd-list], [dnd-list] > div{
     position: relative;
-    margin-bottom: 5px;
     overflow-y: hidden;
   }
-  td[dnd-list] > div a{
-    height: 100%;
+  /* td[dnd-list] {
+      position: relative;
+  } */
+  /* td[dnd-list] > div{
+      position: absolute;
+  } */
+  .event-container {
+    overflow-y: visible;
+    position: relative;
+    margin-bottom: 0px;
   }
-  td[dnd-list] .dndPlaceholder {
+  [dnd-list] > div a{
+    height: 100%;
+    overflow: hidden;
+  }
+  [dnd-list] .dndPlaceholder {
     display: block;
     background-color: #ddd;
     min-height: 25px;
@@ -242,7 +253,7 @@ table.rooms-events{
     cursor: e-resize;
   }
   div[resizer="horizontal"] {
-    position: absolute;
+    position: relative;
     height: 6px;
     left: 0;
     right: 0;
@@ -259,6 +270,12 @@ table.rooms-events{
 
   div[resizer] {
     background-color: #AAA;
+  }
+  td.ng-scope {
+    padding: 0 8px !important;
+  }
+  .list-group-item {
+    padding: 5px 15px;
   }
 }
 

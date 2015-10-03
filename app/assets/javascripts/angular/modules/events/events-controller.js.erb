@@ -44,8 +44,8 @@ app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'ForumEventEditor', 'Event
     $scope.saveRooms = function(){
         if($scope.grouped_events && $scope.grouped_events.length){
             $scope.grouped_events.forEach(function(obj){
-                obj.rooms.forEach(function(room){
-                    var obj = new Room(room).save().then(function success (result){
+                obj.events.forEach(function(event){
+                    var obj = new ForumEvent(event).save().then(function success (result){
                         //nothing
                     });
                 });
