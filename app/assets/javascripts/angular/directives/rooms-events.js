@@ -21,61 +21,58 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
         },
         link: function (scope, element){
             scope.begin_hour = 8;
+            scope.end_hour = 17;
             scope.begin_minute = 0;
 
-            var multipler = 1;
+            var hourPixels = 36;
             var minimum_hours = 0.5;
 
-            var initEvents = $debounce(500, function (){
-                if(!scope.events || !scope.events.length ||
-                    !scope.ngModel || !scope.ngModel.length)
+            function generateHours (){
+                if(!scope.events)
                     return;
 
-                var eventsLength = 0;
-                var roomsIdxs = {};
-                scope.ngModel.forEach(function(obj, index){
-                    roomsIdxs[obj.id] = index;
+                scope.hours = [];
+                var date = new Date(scope.date);
 
-                    if(obj.events && obj.events.length)
-                        eventsLength += obj.events.length;
-                    else
-                        obj.events = [];
-                });
+                while(date.getHours() < scope.end_hour){
+                    var hour = {date: angular.copy(date), events: []};
 
-                if(scope.events.length == eventsLength)
-                    return;
-
-                scope.events.forEach(function(obj){
-                    var room = scope.ngModel[roomsIdxs[obj.room_id]];
-                    room.events.push(obj);
-
-                    scope.checkAndSetBeginTime(obj.begin_date);
-                });
-
-                scope.refreshStyles();
-            });
-
-            scope.$watchCollection('events', initEvents);
-            scope.$watchCollection('ngModel', initEvents);
-
-            function getPixelDiffBetweenDates(first_date, second_date){
-                var diff = new Date(second_date) - new Date(first_date);
-                return multipler * (diff / 100000) + 'px';
-            }
-            scope.getFirstEventMargin = function (event){
-                var begin_date = event.begin_date;
-
-                if(scope.checkAndSetBeginTime(begin_date)){
-
-                    scope.ngModel.forEach(function(obj, index){
-                        scope.setEventStyle(obj.events, 0);
-                        checkAndMoveNextEvent(obj.events, 0);
+                    scope.events.forEach(function(obj){
+                        obj.begin_date = new Date(obj.begin_date);
+                        if(obj.begin_date.getHours() == date.getHours()){
+                            hour.events.push(obj);
+                            scope.setEventStyle(hour, hour.events.length - 1);
+                        }
                     });
-                    return '0px';
-                } else {
-                    return getPixelDiffBetweenDates(getBeginDate(begin_date), begin_date);
+
+                    scope.hours.push(hour);
+
+                    date.setHours(date.getHours() + 1);
                 }
-            };
+                refreshRoomsEventsLength();
+            }
+
+            scope.$watchCollection('events', generateHours);
+            scope.$watchCollection('date', generateHours);
+
+            function refreshRoomsEventsLength(){
+                scope.roomsEventsLength = {};
+                scope.events.forEach(function(event){
+                    if(!scope.roomsEventsLength[event.room_id])
+                        scope.roomsEventsLength[event.room_id] = 1;
+                    else
+                        scope.roomsEventsLength[event.room_id]++;
+                })
+            }
+
+            function getPixelDiffBetweenDates(first_date, second_date, plus){
+                var diff = new Date(second_date) - new Date(first_date);
+                var pixels = ((diff * hourPixels) / (60000 * 60));
+                if(plus)
+                    pixels += plus;
+
+                return pixels  + 'px';
+            }
 
 
             scope.checkAndSetBeginTime = function(datetime){
@@ -87,7 +84,7 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                 return false;
             };
             function getBeginDate(date){
-                var minDate = angular.copy(date);
+                var minDate = new Date(date);
                 minDate.setHours(scope.begin_hour);
                 minDate.setMinutes(scope.begin_minute);
                 return minDate;
@@ -95,8 +92,6 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
 
 
             function checkAndMoveNextEvent(events, curIndex){
-                // var curEvent = curEvent ? curEvent : events[curIndex];
-                // var nextIndex = (nextIndex || nextIndex === 0) ? nextIndex : (curIndex + 1);
                 var nextIndex = curIndex + 1;
                 var curEvent = events[curIndex];
                 var nextEvent = events[nextIndex];
@@ -148,8 +143,10 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                     })
                 });
             };
-            scope.setEventStyle = function(events, index){
-                if(!events.length)
+            scope.setEventStyle = function(hour, index){
+                events = hour.events;
+
+                if(!events || !events.length)
                     return;
                 var event = events[index];
                 var prevEvent;
@@ -157,22 +154,39 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                     prevEvent = events[index - 1];
 
                 event.style = {
-                    'height': '',
-                    'margin-top': ''
+                    'display': 'block'
                 };
 
-                event.style['height'] = getPixelDiffBetweenDates(event.begin_date, event.end_date);
+                hour.style = {
+                    'height': hourPixels + 'px',
+                    'padding-top': ''
+                };
+
+                event.content_style = {
+                    'height': getPixelDiffBetweenDates(event.begin_date, event.end_date, -12),
+                    'background-color': event.color_code
+                };
 
                 if(prevEvent)
-                    event.style['margin-top'] = getPixelDiffBetweenDates(prevEvent.end_date, event.begin_date);
+                    hour.style['padding-top'] = getPixelDiffBetweenDates(prevEvent.end_date, event.begin_date);
                 else
-                    event.style['margin-top'] = scope.getFirstEventMargin(event);
+                    hour.style['padding-top'] = getPixelDiffBetweenDates(event.begin_date, hour.date);
 
-                return event.style;
+                return event;
             };
-            scope.eventDropped = function(events, item, destIndex){
-                var prevIndex;
-                events.some(function(obj, idx){
+            scope.eventDragStart = function(event){
+                event.style.display = 'none';
+            }
+            scope.eventDragEnd = function(event){
+                event.style.display = 'block';
+            }
+            scope.eventDropped = function(hour, room, item, destIndex){
+                item.room_id = room.id;
+
+                item.style.display = 'block';
+
+                var prevIndex = -1;
+                hour.events.some(function(obj, idx){
                     var result = obj.id == item.id;
                     if(result){
                         prevIndex = idx;
@@ -180,64 +194,62 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                     return result;
                 });
 
-                if(destIndex - prevIndex == 1)
-                    return;
+                var roomArr = [];
+                if(hour.events.length){
+                    hour.events.forEach(function(obj, index, array){
+                        if(index == destIndex)
+                            roomArr.push(item);
+
+                        if(obj.id != item.id && obj.room_id == item.room_id)
+                            roomArr.push(obj);
+                    });
+
+                    if(destIndex == hour.events.length && hour.events.length > roomArr.length)
+                        roomArr.push(item);
+                } else {
+                    roomArr.push(item);
+                }
 
                 var duration = scope.getDuration(item);
 
                 logHours(item);
 
-                var prevEventIndex = destIndex - 2;
-
-                var newArr = [];
-                if(prevIndex != destIndex){
-                    events.forEach(function(obj, index, array){
-                        if(index == destIndex)
-                            newArr.push(item);
-
-                        if(obj.id != item.id)
-                            newArr.push(obj);
-                    });
-
-                    if(destIndex == events.length && events.length > newArr.length)
-                        newArr.push(item);
-
-                    if(prevEventIndex < 0)
-                        prevEventIndex = 0;
-                } else {
-                    newArr = events;
-                    newArr[destIndex] = item;
-                    prevEventIndex++;
-                }
-
-                if(destIndex){
-                    item.begin_date = new Date(newArr[prevEventIndex].end_date);
+                if(destIndex && roomArr.length > 1){
+                    item.begin_date = new Date(roomArr[destIndex - 1].end_date);
                 } else {
                     if(scope.date)
                         item.begin_date = new Date(scope.date);
 
-                    item.begin_date.setHours(scope.begin_hour);
-                    item.begin_date.setMinutes(scope.begin_minute);
+                    item.begin_date.setHours(hour.date.getHours());
+                    item.begin_date.setMinutes(0);
                 }
-
-                console.log(newArr);
 
                 item.end_date = angular.copy(item.begin_date);
                 item.end_date.setHours(item.begin_date.getHours() + duration);
                 item.end_date.setMinutes(item.begin_date.getMinutes() + scope.getDurationMinutes(duration));
                 logHours(item, true);
 
-                scope.setEventStyle(newArr, destIndex == 0 ? 0 : destIndex - 1);
+                scope.events.some(function(obj, idx){
+                    var result = obj.id == item.id;
+                    if(result){
+                        scope.events[idx] = item;
+                    }
+                    return result;
+                });
 
-                checkAndMoveNextEvent(newArr, 0);
+                scope.setEventStyle({date: hour.date, events: roomArr}, destIndex == 0 ? 0 : destIndex - 1);
 
-                $timeout(scope.refreshStyles);
+                checkAndMoveNextEvent(roomArr, 0);
+
+                refreshRoomsEventsLength();
+                //$timeout(scope.refreshStyles);
 
                 $timeout(scope.ngChange);
                 return item;
             };
 
-            scope.resizeEvent = function(events, index){
+            scope.resizeEvent = function(hour, index){
+                var events = hour.events;
                 var event = events[index];
 
                 var duration = scope.getDuration(event);
@@ -264,7 +276,7 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                                 // events.splice(index, 0, prevEvent);
                             }
 
-                            scope.setEventStyle(events, index - 1);
+                            scope.setEventStyle(hour, index - 1);
                         }
                     }
                 }
@@ -289,10 +301,10 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                         obj.end_date = angular.copy(events[idx - 1].end_date);
                         obj.end_date.setHours(obj.begin_date.getHours() + duration);
                     }
-                    scope.setEventStyle(events, idx);
+                    scope.setEventStyle(hour, idx);
                 });
 
-                scope.setEventStyle(events, index);
+                scope.setEventStyle(hour, index);
             };
             scope.clickEvent = function(event){
                 if(scope.ngClickEvent)

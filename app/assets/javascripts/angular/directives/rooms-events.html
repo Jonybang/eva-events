@@ -1,47 +1,61 @@
-{{resizerStatus.stepY}}
 <div class="table-responsive">
-    <table class="table rooms-events">
+    <table class="table table-bordered rooms-events">
         <tbody>
         <tr>
+            <th></th>
             <th ng-repeat="room in ngModel | orderBy:'id'">{{room.name}}{{room.number ? ' - ' + room.number : ''}}</th>
         </tr>
-        <tr class="content">
-            <td ng-repeat="room in ngModel | orderBy:'id'"
-                dnd-list="room.events"
-                dnd-drop="eventDropped(room.events, item, index)">
-                <div class="list-group"
-                     ng-repeat="event in room.events"
-                     dnd-draggable="event"
-                     dnd-effect-allowed="move"
-                     dnd-moved="room.events.splice($index, 1)"
-                     dnd-disable-if="event.resizer.active"
+        <tr class="content hour" ng-repeat="hour in hours">
+            <td>{{hour.date | amDateFormat:'HH:mm'}}</td>
+            <td ng-repeat="room in ngModel | orderBy:'id'">
+                <div class="event-container"
+                     ng-style="hour.style"
 
-                     ng-init="setEventStyle(room.events, $index)"
-                     ng-style="event.style">
-                    <div class="top"
-                         resizer="horizontal"
-                         ng-model="event.resizer"
-                         ng-change="resizeEvent(room.events, $index)">
-                    </div>
-                    <a href ng-click="clickEvent(event)" class="list-group-item active" ng-style="{'background-color':event.color_code}">
-                        <h5 class="list-group-item-heading">{{event.name}} - {{+getDuration(event).toFixed(1)}} час.</h5>
-                        <p class="list-group-item-text">
-                            Начало в: {{event.begin_date | amDateFormat:'D MMM. H:mm'}}
-                            <br/>
-                            Окончание в: {{event.end_date | amDateFormat:'D MMM. H:mm'}}
-                        </p>
-                    </a>
-                    <div class="bottom"
-                         resizer="horizontal"
-                         ng-model="event.resizer"
-                         ng-change="resizeEvent(room.events, $index)">
+                     dnd-list="hour.events"
+                     dnd-drop="eventDropped(hour, room, item, index)">
+
+                    <div class="list-group event-item"
+                         ng-repeat="cur_event in hour.events"
+                         ng-if="cur_event.room_id == room.id"
+                         ng-init="setEventStyle(hour, $index)"
+                         ng-style="cur_event.style"
+
+                         dnd-draggable="cur_event"
+                         dnd-effect-allowed="move"
+                         dnd-moved="hour.events.splice($index, 1)"
+                         dnd-disable-if="cur_event.resizer.active"
+                         dnd-dragstart="cur_event.style.display = 'none'"
+                         dnd-dragend="cur_event.style.display = 'block'">
+
+                        <div class="top"
+                             resizer="horizontal"
+                             ng-model="cur_event.resizer"
+                             ng-change="resizeEvent(hour, $index)">
+                        </div>
+
+                        <a href ng-click="clickEvent(cur_event)" class="list-group-item active" ng-style="cur_event.content_style">
+                            <h5 class="list-group-item-heading">{{cur_event.name}} - {{+getDuration(cur_event).toFixed(1)}} час.</h5>
+                            <p class="list-group-item-text">
+                                Начало в: {{cur_event.begin_date | amDateFormat:'D MMM. H:mm'}}
+                                <br/>
+                                Окончание в: {{cur_event.end_date | amDateFormat:'D MMM. H:mm'}}
+                            </p>
+                        </a>
+
+                        <div class="bottom"
+                             resizer="horizontal"
+                             ng-model="cur_event.resizer"
+                             ng-change="resizeEvent(hour, $index)">
+                        </div>
+
                     </div>
                 </div>
             </td>
         </tr>
         <tr>
+            <td></td>
             <td ng-repeat="room in ngModel | orderBy:'id'">
-                Всего: {{room.events.length}} {{room.events.length | enducement:['событие', 'события', 'событий']}}
+                Всего: {{roomsEventsLength[room.id]}} {{roomsEventsLength[room.id] | enducement:['событие', 'события', 'событий']}}
             </td>
         </tr>
         </tbody>

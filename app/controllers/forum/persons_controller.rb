@@ -4,7 +4,6 @@ class Forum::PersonsController < ApplicationController
   helper_method :forum, :persons_collection, :person
 
   def index
-    persons_collection
     respond_with :api, persons_collection
   end
   def create
@@ -36,6 +35,8 @@ class Forum::PersonsController < ApplicationController
       @collection ||= forum.admins
     elsif params[:role] == 'volunteer'
       @collection ||= forum.volunteers
+    elsif !params[:role]
+      @collection ||= forum.admins + forum.volunteers
     end
   end
 end
