@@ -21,7 +21,7 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
         },
         link: function (scope, element){
             scope.begin_hour = 8;
-            scope.end_hour = 17;
+            scope.end_hour = 15;
             scope.begin_minute = 0;
 
             var hourPixels = 36;
@@ -31,22 +31,51 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
                 if(!scope.events)
                     return;
 
+                scope.events.forEach(function(obj){
+                    obj.begin_date = new Date(obj.begin_date);
+                    obj.end_date = new Date(obj.end_date);
+                    if(obj.begin_date.getHours() < scope.begin_hour){
+                        scope.begin_hour = obj.begin_date.getHours();
+                    }
+                    if(obj.end_date.getHours() > scope.end_hour){
+                        scope.end_hour = obj.end_date.getHours();
+                    }
+                });
+
                 scope.hours = [];
                 var date = new Date(scope.date);
                 date.setHours(scope.begin_hour);
 
-                while(date.getHours() < scope.end_hour){
+                while(!(date.getHours() > scope.end_hour)){
                     var hour = {date: angular.copy(date), events: []};
 
                     scope.events.forEach(function(obj){
-                        obj.begin_date = new Date(obj.begin_date);
                         if(obj.begin_date.getHours() == date.getHours()){
                             hour.events.push(obj);
                             scope.setEventStyle(hour, hour.events.length - 1);
                         }
                     });
 
+                    hour.classes = ['content', 'hour'];
+
+                    var subclass;
+                    if(hour.date.getHours() < 5)
+                        subclass = 'active';
+                    else if(hour.date.getHours() >= 5 && hour.date.getHours() < 8)
+                        subclass = 'warning';
+                    else if(hour.date.getHours() >= 8 && hour.date.getHours() < 12)
+                        subclass = 'success';
+                    else if(hour.date.getHours() >= 12 && hour.date.getHours() < 20)
+                        subclass = 'info';
+                    else if(hour.date.getHours() >= 20)
+                        subclass = 'active';
+
+                    hour.classes.push(subclass);
+
                     scope.hours.push(hour);
+
+                    if(scope.hours.length >= scope.end_hour - scope.begin_hour + 1)
+                        break;
 
                     date.setHours(date.getHours() + 1);
                 }
@@ -310,6 +339,15 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
             scope.clickEvent = function(event){
                 if(scope.ngClickEvent)
                     scope.ngClickEvent({event_obj: event});
+            };
+
+            scope.addHourRow = function(position){
+                if(position == 'top'){
+                    scope.begin_hour--;
+                } else {
+                    scope.end_hour++;
+                }
+                generateHours ();
             };
 
             var timer;

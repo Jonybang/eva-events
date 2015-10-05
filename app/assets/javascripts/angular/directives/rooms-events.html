@@ -2,10 +2,14 @@
     <table class="table table-bordered rooms-events">
         <tbody>
         <tr>
-            <th></th>
+            <th>
+                <button type="button" class="btn btn-default btn-sm" ng-click="addHourRow('top')" ng-disabled="!begin_hour">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </th>
             <th ng-repeat="room in ngModel | orderBy:'id'">{{room.name}}{{room.number ? ' - ' + room.number : ''}}</th>
         </tr>
-        <tr class="content hour" ng-repeat="hour in hours">
+        <tr ng-repeat="hour in hours" ng-class="hour.classes">
             <td>{{hour.date | amDateFormat:'HH:mm'}}</td>
             <td ng-repeat="room in ngModel | orderBy:'id'">
                 <div class="event-container"
@@ -53,7 +57,11 @@
             </td>
         </tr>
         <tr>
-            <td></td>
+            <td>
+                <button type="button" class="btn btn-default btn-sm" ng-click="addHourRow('bottom')" ng-disabled="end_hour == 23">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </td>
             <td ng-repeat="room in ngModel | orderBy:'id'">
                 Всего: {{roomsEventsLength[room.id]}} {{roomsEventsLength[room.id] | enducement:['событие', 'события', 'событий']}}
             </td>
