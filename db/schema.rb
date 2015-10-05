@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150914101445) do
+ActiveRecord::Schema.define(version: 20151003040436) do
 
   create_table "colors", force: :cascade do |t|
     t.string "name"
@@ -111,6 +111,11 @@ ActiveRecord::Schema.define(version: 20150914101445) do
 
   add_index "forums_volunteers", ["forum_id"], name: "index_forums_volunteers_on_forum_id"
   add_index "forums_volunteers", ["person_id"], name: "index_forums_volunteers_on_person_id"
+
+  create_table "news", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "organizations", force: :cascade do |t|
     t.string  "name"

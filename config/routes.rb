@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     resources :persons
     resources :rooms
     resources :colors
+    resources :news
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

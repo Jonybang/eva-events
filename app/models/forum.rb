@@ -15,4 +15,7 @@ class Forum < Base
   def events
     posts.where(type: 'Event')
   end
+  def news
+    posts.where(type: 'News')
+  end
 end
