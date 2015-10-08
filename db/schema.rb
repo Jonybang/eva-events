@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151003040436) do
+ActiveRecord::Schema.define(version: 20151008014619) do
 
   create_table "colors", force: :cascade do |t|
     t.string "name"
@@ -24,6 +24,26 @@ ActiveRecord::Schema.define(version: 20151003040436) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "events", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "begin_date"
+    t.datetime "end_date"
+    t.boolean  "active"
+    t.string   "type"
+    t.integer  "forum_id"
+    t.integer  "person_id"
+    t.string   "alias"
+    t.integer  "event_type_id"
+    t.integer  "room_id"
+    t.integer  "color_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "events", ["forum_id"], name: "index_events_on_forum_id"
+  add_index "events", ["person_id"], name: "index_events_on_person_id"
 
   create_table "events_admins", id: false, force: :cascade do |t|
     t.integer "person_id"
@@ -63,6 +83,7 @@ ActiveRecord::Schema.define(version: 20151003040436) do
     t.string   "description"
     t.datetime "begin_date"
     t.datetime "end_date"
+    t.boolean  "published"
     t.integer  "organization_id"
     t.integer  "person_id"
     t.datetime "created_at",      null: false
@@ -113,9 +134,17 @@ ActiveRecord::Schema.define(version: 20151003040436) do
   add_index "forums_volunteers", ["person_id"], name: "index_forums_volunteers_on_person_id"
 
   create_table "news", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name"
+    t.string   "description"
+    t.boolean  "completed"
+    t.integer  "forum_id"
+    t.integer  "person_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
+
+  add_index "news", ["forum_id"], name: "index_news_on_forum_id"
+  add_index "news", ["person_id"], name: "index_news_on_person_id"
 
   create_table "organizations", force: :cascade do |t|
     t.string  "name"
@@ -132,26 +161,6 @@ ActiveRecord::Schema.define(version: 20151003040436) do
   add_index "organizations_teams", ["organization_id"], name: "index_organizations_teams_on_organization_id"
   add_index "organizations_teams", ["person_id"], name: "index_organizations_teams_on_person_id"
 
-  create_table "posts", force: :cascade do |t|
-    t.string   "name"
-    t.string   "description"
-    t.datetime "begin_date"
-    t.datetime "end_date"
-    t.boolean  "active"
-    t.string   "type"
-    t.integer  "forum_id"
-    t.integer  "person_id"
-    t.string   "alias"
-    t.integer  "event_type_id"
-    t.integer  "room_id"
-    t.integer  "color_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
-  add_index "posts", ["forum_id"], name: "index_posts_on_forum_id"
-  add_index "posts", ["person_id"], name: "index_posts_on_person_id"
-
   create_table "rooms", force: :cascade do |t|
     t.string  "name"
     t.string  "number"
@@ -159,6 +168,29 @@ ActiveRecord::Schema.define(version: 20151003040436) do
   end
 
   add_index "rooms", ["forum_id"], name: "index_rooms_on_forum_id"
+
+  create_table "tasks", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "begin_date"
+    t.datetime "end_date"
+    t.boolean  "completed"
+    t.integer  "forum_id"
+    t.integer  "person_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "tasks", ["forum_id"], name: "index_tasks_on_forum_id"
+  add_index "tasks", ["person_id"], name: "index_tasks_on_person_id"
+
+  create_table "tasks_performers", id: false, force: :cascade do |t|
+    t.integer "person_id"
+    t.integer "task_id"
+  end
+
+  add_index "tasks_performers", ["person_id"], name: "index_tasks_performers_on_person_id"
+  add_index "tasks_performers", ["task_id"], name: "index_tasks_performers_on_task_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",              null: false

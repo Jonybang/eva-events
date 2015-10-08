@@ -20,25 +20,29 @@ html
           ul.nav.navbar-nav
             -if current_user
               li
-                a href="#" class="disabled"
-                  =fa_icon 'info'
-                  | &nbsp; О компании
+                a href="/manager"
+                  =' fa_icon 'tasks'
+                  | Управлениe
               li
                 a href="#" class="disabled"
-                  =fa_icon 'line-chart'
-                  | &nbsp; Управленческий учет
+                  =' fa_icon 'info'
+                  | О компании
+              li
+                a href="#" class="disabled"
+                  =' fa_icon 'line-chart'
+                  | Управленческий учет
               li
                 =link_to rails_admin_path, target: "_blank" do
-                  =fa_icon 'database'
-                  | &nbsp; База данных
+                  =' fa_icon 'database'
+                  | База данных
               li
                 a href="#" class="disabled"
-                  =fa_icon 'skyatlas'
-                  | &nbsp; Файлы
+                  =' fa_icon 'skyatlas'
+                  | Файлы
               li
                 a href="#" class="disabled"
-                  =fa_icon 'cogs'
-                  | &nbsp; Настройки
+                  =' fa_icon 'cogs'
+                  | Настройки
             -else
               li.first.dropdown
                 a href="/" title="Главная"

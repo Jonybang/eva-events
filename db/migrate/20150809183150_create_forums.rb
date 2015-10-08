@@ -6,6 +6,7 @@ class CreateForums < ActiveRecord::Migration
       t.string :description
       t.datetime :begin_date
       t.datetime :end_date
+      t.boolean :published
 
       t.belongs_to :organization, index: true
       t.belongs_to :person, index: true

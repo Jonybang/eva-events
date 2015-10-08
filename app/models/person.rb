@@ -8,6 +8,8 @@ class Person < User
   has_many :creator_organizations, class_name: 'Organization', inverse_of: :creator
   has_many :posts, class_name: 'Post', inverse_of: :posted_by
 
+  has_and_belongs_to_many :tasks, class_name: 'Task', inverse_of: :performers, :join_table => 'tasks_performers'
+
   has_and_belongs_to_many :organizations, class_name: 'Organization', inverse_of: :team, :join_table => 'organizations_teams'
 
   has_and_belongs_to_many :admin_forums, class_name: 'Forum', inverse_of: :admins, :join_table => 'forums_admins'

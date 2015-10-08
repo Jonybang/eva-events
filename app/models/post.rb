@@ -1,4 +1,5 @@
 class Post < Base
+  self.abstract_class = true
   # name:string description:string active:boolean begin_date:datetime end_date:datetime
 
   belongs_to :forum, class_name: 'Forum'
