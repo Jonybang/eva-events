@@ -68,3 +68,12 @@ rooms_list.each do |name, events_list|
     room.events << event
   end
 end
+
+news_list = [
+    [ 'У события "Событие 1" изменилось расписание! ', 'Время начала Событие 1 перенесено с 6:00 на 8:00. ' ],
+    [ 'У события "Событие 2" изменилось расписание! ', 'Время начала Событие 2 перенесено с 7:00 на 8:00. ' ]
+]
+news_list.each do |name, description|
+  news = News.create(name: name, description: description, posted_by: Person.first)
+  forum.news << news
+end
