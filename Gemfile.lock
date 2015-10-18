@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/alexpeattie/heroku_secrets.git
+  revision: 717af8e0acf399bc88d2c8c1a7e230023942af0f
+  specs:
+    heroku_secrets (0.0.2)
+
+GIT
   remote: git://github.com/josevalim/inherited_resources.git
   revision: 1ca42fedd8831f083490089dbf4609bc7e354fff
   branch: master
@@ -287,6 +293,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   debase
   font-awesome-rails
+  heroku_secrets!
   inherited_resources!
   jquery-rails
   ng-rails-csrf
@@ -314,4 +321,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.10.5
+   1.10.6

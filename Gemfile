@@ -99,3 +99,5 @@ group :development do
 end
 
 gem 'puma'
+
+gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
