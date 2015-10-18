@@ -35,7 +35,7 @@ users_list = [
 
 users_list.each do |email, pass, name, organization_name|
   user = Person.create(name: name, email: email, password: pass)
-  organization = Organization.new(name: organization_name)
+  organization = Organization.create(name: organization_name)
   user.creator_organizations << organization
   user.organizations << organization
 end
@@ -62,7 +62,7 @@ rooms_list.each do |name, events_list|
   room = Room.create(name: name)
   forum.rooms << room
   events_list.each do |event_name, begin_date, end_date, event_type|
-    event = Event.new(name: event_name, begin_date: begin_date, end_date: end_date, forum: forum, event_type: event_type)
+    event = Event.create(name: event_name, begin_date: begin_date, end_date: end_date, forum: forum, event_type: event_type)
     event.begin_date = (event.begin_date.to_time - 10*60*60).to_datetime
     event.end_date = (event.end_date.to_time - 10*60*60).to_datetime
     room.events << event
