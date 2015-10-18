@@ -20,6 +20,9 @@ Rails.application.routes.draw do
     resources :forums do
       scope :module => :forum do
         resources :persons
+        resources :events
+        resources :news
+        resources :rooms
       end
     end
     resources :events
