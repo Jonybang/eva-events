@@ -1,5 +1,3 @@
-load 'config/recipes/assets'
-
 server '128.199.219.149', roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:jonybang/eva-events.git'
@@ -81,7 +79,6 @@ namespace :deploy do
   after  :finishing,    :cleanup
   after  :finishing,    :restart
 end
-
 
 # ps aux | grep puma    # Get puma pid
 # kill -s SIGUSR2 pid   # Restart puma
