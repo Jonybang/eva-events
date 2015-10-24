@@ -46,12 +46,12 @@ forum.admins << Person.first
 Organization.first.forums << forum
 
 rooms_list = [
-    ['Помещение 1', [
+    ['Площадка 1', [
         [ 'Событие 1', '2015-08-15 [8:00:00]', '2015-08-15 [10:00:00]', EventType.first ],
         [ 'Событие 2', '2015-08-15 [10:00:00]', '2015-08-15 [11:00:00]', EventType.last ],
         [ 'Событие 3', '2015-08-15 [14:00:00]', '2015-08-15 [17:00:00]', EventType.first ]
     ]],
-    ['Помещение 2', [
+    ['Площадка 2', [
         [ 'Событие 4', '2015-08-15 [8:00:00]', '2015-08-15 [11:00:00]', EventType.first ],
         [ 'Событие 5', '2015-08-15 [11:00:00]', '2015-08-15 [14:00:00]', EventType.last ],
         [ 'Событие 6', '2015-08-15 [15:00:00]', '2015-08-15 [17:00:00]', EventType.first ]
@@ -70,10 +70,12 @@ rooms_list.each do |name, events_list|
 end
 
 news_list = [
-    [ 'У события "Событие 1" изменилось расписание! ', 'Время начала Событие 1 перенесено с 6:00 на 8:00. ' ],
-    [ 'У события "Событие 2" изменилось расписание! ', 'Время начала Событие 2 перенесено с 7:00 на 8:00. ' ]
+    [ 'У события "Событие 1" изменилось расписание! ', 'Время начала Событие 1 перенесено с 6:00 на 8:00. ', 'Событие 1', 'test@mail.ru' ],
+    [ 'У события "Событие 2" изменилось расписание! ', 'Время начала Событие 2 перенесено с 7:00 на 8:00. ', 'Событие 2', 'test@mail.ru' ]
 ]
-news_list.each do |name, description|
-  news = News.create(name: name, description: description, posted_by: Person.first)
+news_list.each do |name, description, event_name, user_email|
+  event = Event.where(name: event_name).first
+  person = Person.where(email: user_email).first
+  news = News.create(name: name, description: description, newsable: event, posted_by: person, forum: Forum.first)
   forum.news << news
 end

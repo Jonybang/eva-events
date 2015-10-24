@@ -139,11 +139,14 @@ ActiveRecord::Schema.define(version: 20151008014619) do
     t.boolean  "completed"
     t.integer  "forum_id"
     t.integer  "person_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "newsable_id"
+    t.string   "newsable_type"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   add_index "news", ["forum_id"], name: "index_news_on_forum_id"
+  add_index "news", ["newsable_type", "newsable_id"], name: "index_news_on_newsable_type_and_newsable_id"
   add_index "news", ["person_id"], name: "index_news_on_person_id"
 
   create_table "organizations", force: :cascade do |t|

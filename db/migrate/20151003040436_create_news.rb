@@ -8,6 +8,8 @@ class CreateNews < ActiveRecord::Migration
       t.belongs_to :forum, index: true
       t.belongs_to :person, index: true
 
+      t.references :newsable, polymorphic: true, index: true
+
       t.timestamps null: false
     end
   end
