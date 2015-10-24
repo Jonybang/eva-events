@@ -207,7 +207,8 @@ angular.module('app')
                     return two;
                 }
                 return five;
-            }
+            },
+            convertDateStringsToDates: convertDateStringsToDates
         };
         return service;
     }]);

@@ -5,4 +5,10 @@ class Room < Base
   has_many :events, class_name: 'Event'
   accepts_nested_attributes_for :events, allow_destroy: true
   belongs_to :forum
+
+  def near_event(near_date=nil)
+    result = events.order(begin_date: :asc)
+    result = result.where('begin_date > ?', near_date) if near_date
+    result.order(begin_date: :asc).first
+  end
 end
