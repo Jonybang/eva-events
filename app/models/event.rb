@@ -34,7 +34,7 @@ class Event < Post
       self.local_time('end')
     elsif field == 'begin_date'
       self.local_time('begin')
-    elsif field == 'room'
+    elsif field == 'room_id'
       self.room.name
     end
   end
