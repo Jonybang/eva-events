@@ -53,7 +53,7 @@
 
                         <div class="input-group" ng-hide="duration_mode" show-errors>
                             <span class="input-group-addon">до</span>
-                            <input type="text" class="form-control" name="end_date" datetime-picker ng-model="event.end_date" is-open="opened.end_date" ng-click="opened.end_date=true" min-date="event.begin_date" min="{{event.begin_date | date:'yyyy-MM-ddTHH:mm:ss'}}" />
+                            <input type="text" class="form-control" name="end_date" datetime-picker ng-model="event.end_date" is-open="opened.end_date" ng-click="opened.end_date=true" min-date="event.begin_date" min="{{event.begin_date | date:'yyyy-MM-ddTHH:mm:ssZ'}}" />
                         </div>
                     </div>
                 </div>

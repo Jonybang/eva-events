@@ -11,7 +11,10 @@ angular.module('app').directive('datetimePicker', ['Helpers', function(Helpers) 
 
                     if(modelValue && attrs.min){
                         var cur_date = new Date(modelValue);
-                        var min_date = new Date(Helpers.convertDateStringsToDates(attrs.min));
+
+//                        if(attrs.min.slice(-1) != 'Z')
+//                            attrs.min += 'Z';
+                        var min_date = new Date(attrs.min);
 
                         result = cur_date > min_date;
                     }

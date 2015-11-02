@@ -208,13 +208,43 @@ angular.module('app')
                 }
                 return five;
             },
-            convertDateStringsToDates: convertDateStringsToDates
+            convertDateStringsToDates: convertDateStringsToDates,
+            convertDateStringToLocal: convertDateStringToLocal
+
         };
         return service;
     }]);
+
+function convertDateStringToLocal(value, toLocal) {
+    var milliseconds = Date.parse(value);
+    if (!isNaN(milliseconds)) {
+        if (toLocal) {
+            var date = new Date(milliseconds);
+            var mmnt = moment.utc(date);
+            var local = mmnt.local();
+            var new_date = local.toDate();
+            return new_date;
+        } else {
+            return moment(new Date(milliseconds)).utc().toDate();
+        }
+
+    }
+}
+function prepareDateStringToLocal(value, toLocal) {
+    var regexIso8601 = /^(\d{4}|\+\d{6})(?:-(\d{2})(?:-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})\.(\d{1,})(Z|([\-+])(\d{2}):(\d{2}))?)?)?)?$/;
+    var match;
+    // Check for string properties which look like dates.
+    if (typeof value === "string" && (match = value.match(regexIso8601))) {
+        return convertDateStringToLocal(match[0], toLocal);
+    } else if (typeof value === "object") {
+        // Recurse into object
+        convertDateStringsToDates(value);
+        return false;
+    }
+}
 function convertDateStringsToDates (input, toLocal) {
     //var regexIso8601 = /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/;
-    var regexIso8601 = /^(\d{4}|\+\d{6})(?:-(\d{2})(?:-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})\.(\d{1,})(Z|([\-+])(\d{2}):(\d{2}))?)?)?)?$/;
+
     //return input;
     // Ignore things that aren't objects.
     if (typeof input !== "object") return input;
@@ -223,25 +253,9 @@ function convertDateStringsToDates (input, toLocal) {
         if (!input.hasOwnProperty(key)) continue;
 
         var value = input[key];
-        var match;
-        // Check for string properties which look like dates.
-        if (typeof value === "string" && (match = value.match(regexIso8601))) {
-            var milliseconds = Date.parse(match[0]);
-            if (!isNaN(milliseconds)) {
-                if (toLocal) {
-                    var date = new Date(milliseconds);
-                    var mmnt = moment.utc(date);
-                    var local = mmnt.local();
-                    var new_date = local.toDate();
-                    input[key] = new_date;
-                } else {
-                    input[key] = moment(new Date(milliseconds)).utc().toDate();
-                }
-
-            }
-        } else if (typeof value === "object") {
-            // Recurse into object
-            convertDateStringsToDates(value);
+        var result = prepareDateStringToLocal(value, toLocal);
+        if(result){
+            input[key] = result;
         }
     }
     return input;
