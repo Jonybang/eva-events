@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">{{object.id ? 'Редактировать' : 'Создать'}} новость</h4>
+</div>
+<form name="Form" ng-submit="save()" novalidate class="form-horizontal">
+    <div class="modal-body row">
+        <tabset>
+            <tab heading="Основные данные">
+                <div class="form-group col-md-12" show-errors>
+                    <div class="col-md-4 col-lg-3 text-right">
+                        <label>Название</label>
+                    </div>
+                    <div class="col-md-6 col-lg-7">
+                        <input type="text" ng-init="focusName = true;" focus-me="focusName" name="name" ng-model="object.name" class="form-control" required >
+                    </div>
+                </div>
+                <div ng-repeat="error in errors.name" class="alert alert-error"><strong>Название</strong> {{error}}</div>
+
+                <div class="form-group col-md-12" show-errors>
+                    <div class="col-md-4 col-lg-3 text-right">
+                        <label>Содержание</label>
+                    </div>
+                    <div class="col-md-6 col-lg-7">
+                        <textarea name="description" ng-model="object.description" class="form-control" required ></textarea>
+                    </div>
+                </div>
+                <div ng-repeat="error in errors.email" class="alert alert-error"><strong>Email</strong> {{error}}</div>
+            </tab>
+        </tabset>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="$dismiss()">Закрыть</button>
+        <button type="submit" class="btn btn-primary">Сохранить данные</button>
+    </div>
+</form>

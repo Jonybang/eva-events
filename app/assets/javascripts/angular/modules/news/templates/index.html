@@ -1,0 +1,17 @@
+<div ng-hide="news_list.length" class="margin-top">
+    В мероприятие пока не добавлено ни одной новости
+</div>
+<div class="margin-top">
+    Всего <b>{{news_list.length}}</b> {{news_list.length | enducement:['новость', 'новости', 'новостей']}}
+</div>
+<div class="btn-toolbar margin-top">
+    <button class="btn btn-success btn-sm" ng-click="addNews(forumsCtrl.cur_forum)">
+        <span class="glyphicon glyphicon-plus"></span> Добавить событие
+    </button>
+</div>
+<div class="panel panel-default" ng-repeat="news in news_list">
+    <div class="panel-heading">{{news.name}}</div>
+    <div class="panel-body" style="white-space: pre-line;">
+        {{news.description}}
+    </div>
+</div>

@@ -86,9 +86,18 @@ app.factory('Color', ['railsResourceFactory', 'railsSerializer', function (rails
         })
     });
 }]);
+app.factory('News', ['railsResourceFactory', 'railsSerializer', function (railsResourceFactory, railsSerializer) {
+    return railsResourceFactory({
+        url: '/api/news',
+        name: 'news',
+        serializer: railsSerializer(function () {
+            this.exclude('class');
+        })
+    });
+}]);
 
-app.factory('Models', ['Organization', 'Forum', 'ForumEvent', 'EventType', 'Person', 'Room', 'Color',
-        function(Organization, Forum, ForumEvent, EventType, Person, Room, Color) {
+app.factory('Models', ['Organization', 'Forum', 'ForumEvent', 'EventType', 'Person', 'Room', 'Color', 'News',
+        function(Organization, Forum, ForumEvent, EventType, Person, Room, Color, News) {
             return {
                 Organization: Organization,
                 Forum: Forum,
@@ -96,6 +105,7 @@ app.factory('Models', ['Organization', 'Forum', 'ForumEvent', 'EventType', 'Pers
                 EventType: EventType,
                 Person: Person,
                 Room: Room,
-                Color: Color
+                Color: Color,
+                Mews: News
             };
 }]);

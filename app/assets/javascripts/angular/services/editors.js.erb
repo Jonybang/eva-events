@@ -35,6 +35,12 @@ var editors = [
         class: 'Room',
         controller: defaultController,
         template:'<%= asset_path('angular/modules/rooms/templates/modals/form.html') %>'
+    },
+    {
+        module: 'news',
+        class: 'News',
+        controller: defaultController,
+        template:'<%= asset_path('angular/modules/news/templates/modals/form.html') %>'
     }
 ];
 editors.forEach(function(editor){

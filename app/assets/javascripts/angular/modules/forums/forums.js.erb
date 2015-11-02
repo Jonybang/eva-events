@@ -8,6 +8,7 @@ angular.module('app.forums', ['ui.router'])
 
             <% @forum_templates_path = 'angular/modules/forums/templates/' %>
             <% @events_templates_path = 'angular/modules/events/templates/' %>
+            <% @news_templates_path = 'angular/modules/news/templates/' %>
 
             $stateProvider
                     .state('app.organizations.show.forums', {
@@ -25,6 +26,11 @@ angular.module('app.forums', ['ui.router'])
                         url: '/settings',
                         templateUrl: '<%= asset_path(@forum_templates_path + 'settings.html') %>',
                         controller: 'ForumsFormCtrl'
+                    })
+                    .state('app.organizations.show.forums.show.news', {
+                        url: '/news',
+                        templateUrl: '<%= asset_path(@news_templates_path + 'index.html') %>',
+                        controller: 'NewsCtrl'
                     })
                     .state('app.organizations.show.forums.show.events', {
                         url: '/events',

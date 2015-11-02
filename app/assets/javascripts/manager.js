@@ -62,6 +62,7 @@
 //= require ./angular/modules/forums/forums.js.erb
 //= require ./angular/modules/events/events.js.erb
 //= require ./angular/modules/persons/persons.js.erb
+//= require ./angular/modules/news/news.js.erb
 //= require angular/app.js.erb
 //= require angular/services/models.js
 //= require angular/services/editors.js.erb

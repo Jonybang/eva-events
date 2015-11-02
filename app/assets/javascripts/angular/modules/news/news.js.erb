@@ -1,0 +1,17 @@
+/**
+ * Created by jonybang on 10.08.15.
+ */
+'use strict';
+
+angular.module('app.news', ['ui.router'])
+        .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', function($urlRouterProvider, $stateProvider, $locationProvider) {
+
+            <% @templates_path = 'angular/modules/news/templates/' %>
+
+            $stateProvider
+                    .state('app.news', {
+                        url: '/news',
+                        templateUrl: '<%= asset_path('angular/modules/news/templates/index.html') %>',
+                        controller: 'NewsCtrl'
+                    });
+        }]);
