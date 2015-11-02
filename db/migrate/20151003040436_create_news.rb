@@ -4,6 +4,10 @@ class CreateNews < ActiveRecord::Migration
       t.string :name
       t.string :description
       t.boolean :completed
+      t.boolean :published
+
+      t.datetime :published_time
+      t.datetime :changed_time
 
       t.belongs_to :forum, index: true
       t.belongs_to :person, index: true

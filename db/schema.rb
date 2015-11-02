@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 20151008014619) do
     t.datetime "begin_date"
     t.datetime "end_date"
     t.boolean  "published"
+    t.string   "time_zone"
     t.integer  "organization_id"
     t.integer  "person_id"
     t.datetime "created_at",      null: false
@@ -137,12 +138,15 @@ ActiveRecord::Schema.define(version: 20151008014619) do
     t.string   "name"
     t.string   "description"
     t.boolean  "completed"
+    t.boolean  "published"
+    t.datetime "published_time"
+    t.datetime "changed_time"
     t.integer  "forum_id"
     t.integer  "person_id"
     t.integer  "newsable_id"
     t.string   "newsable_type"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   add_index "news", ["forum_id"], name: "index_news_on_forum_id"

@@ -1,5 +1,11 @@
 class EventsController < InheritsController
+  def update
+    object = Event.find event_params[:id]
+    object.assign_attributes(event_params)
+    changes = object.changes
 
+    update! { get_resource and News.create_by_object(@resource, changes) and render :show and return }
+  end
   private
 
   def get_collection

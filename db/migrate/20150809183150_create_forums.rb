@@ -8,6 +8,8 @@ class CreateForums < ActiveRecord::Migration
       t.datetime :end_date
       t.boolean :published
 
+      t.string :time_zone
+
       t.belongs_to :organization, index: true
       t.belongs_to :person, index: true
 

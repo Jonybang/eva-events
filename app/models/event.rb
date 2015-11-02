@@ -20,17 +20,22 @@ class Event < Post
   def duration
     ((self.end_date - self.begin_date) / 1.hour).round
   end
-
-  def begin_date=(begin_date)
-    datetime_changed('begin_date', self.begin_date, begin_date)
-    super(begin_date) #must add this otherwise you need to add this thing and place the value which you want to save.
+  def local_time(type)
+    date = nil
+    if type == 'begin'
+      date = self.begin_date
+    elsif type == 'end'
+      date = self.end_date
+    end
+    date.in_time_zone(self.forum.time_zone).strftime('%R')
   end
-  def end_date=(end_date)
-    datetime_changed('end_date', self.end_date, end_date)
-    super(end_date) #must add this otherwise you need to add this thing and place the value which you want to save.
-  end
-
-  def datetime_changed(type, old_val, new_val)
-
+  def humanize_field(field)
+    if field == 'end_date'
+      self.local_time('end')
+    elsif field == 'begin_date'
+      self.local_time('begin')
+    elsif field == 'room'
+      self.room.name
+    end
   end
 end

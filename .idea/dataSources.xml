@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1808010486">
+  <component name="DataSourceManagerImpl" format="xml" hash="4085024130">
     <data-source source="LOCAL" name="Rails eva-events: development" uuid="bcbb3907-e3ba-4115-959b-b8471b9711e6">
       <driver-ref>sqlite.xerial</driver-ref>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>

@@ -56,8 +56,8 @@
 
           li.list-group-item
             h4
-              a События по Помещениям&nbsp;
-              a tooltip="Помещения в которых будут проходить события" tooltip-placement="top" tooltip-trigger="mouseenter"
+              a События по Площадкам&nbsp;
+              a tooltip="Площадки в которых будут проходить события" tooltip-placement="top" tooltip-trigger="mouseenter"
                 span.glyphicon.glyphicon-question-sign
             ul.list-unstyled ng-show="forum.rooms.length"
               li ng-repeat="room in forum.rooms | orderBy:'id'"
@@ -73,7 +73,7 @@
                 div.not_found ng-hide="room.events.length" Ничего нет
             a.btn.btn-default.btn-sm ng-click="newOrEditRoom(forum)"
               span.glyphicon.glyphicon-plus
-              | Добавить помещение
+              | Добавить площадку
 
       a.btn.btn-success.btn-block ng-click="new_forum.add = new_forum.focus = true;" ng-hide="new_forum.add"
         span.glyphicon.glyphicon-plus

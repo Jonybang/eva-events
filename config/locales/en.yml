@@ -20,4 +20,6 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  begin_date: "Begin date"
+  end_date: "End date"
+  room: "Room"
