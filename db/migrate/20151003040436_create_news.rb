@@ -5,6 +5,7 @@ class CreateNews < ActiveRecord::Migration
       t.string :description
       t.boolean :completed
       t.boolean :published
+      t.boolean :important
 
       t.datetime :published_time
       t.datetime :changed_time

@@ -32,6 +32,9 @@ Rails.application.routes.draw do
     resources :colors
     resources :news
     resources :tasks
+
+    post 'login' => 'sessions#api_create'
+    post 'auto_register' => 'users#api_auto_create'
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

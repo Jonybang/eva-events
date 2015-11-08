@@ -21,16 +21,28 @@ class UsersController < InheritsController
 
     @user = Person.new(email: user_params[:email], password: user_params[:password])
     if @user.save!
-      organization = Organization.new(name: user_params[:organization]);
+      organization = Organization.new(name: user_params[:organization])
       @user.creator_organizations << organization
       @user.organizations << organization
-      #@user.contact = Contact.new({name:@user.email})
-      #@user.contact.contact_data = ContactDatum.create({email:@user.email})
+
       session[:user_id] = @user.id
       redirect_to manager_path, :notice => 'Добро пожаловать!'
     else
       flash.alert = 'Произошла ошибка сервера, вы не зарегистрированы :('
       render 'new'
+    end
+  end
+
+  def api_auto_create
+    @user = Person.new
+    if @user.save!
+      @user.email = @user.id + '@eva-events.ru'
+      @user.name = @user.id
+
+      session[:user_id] = @user.id
+      respond_with(@user, :status => :success)
+    else
+      respond_with(@user, :status => :failed)
     end
   end
   private
