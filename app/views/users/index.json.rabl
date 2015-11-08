@@ -1,4 +1,4 @@
-object @resource
+collection @collection
 
 extends "inherits/base"
 

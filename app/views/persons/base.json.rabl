@@ -1,1 +1,1 @@
-attributes :email
+attribute :id, :name, :email, :image

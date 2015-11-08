@@ -25,4 +25,8 @@ class Person < User
   has_and_belongs_to_many :volunteer_events, class_name: 'Event', inverse_of: :volunteers, :join_table => 'events_volunteers'
   has_and_belongs_to_many :member_events, class_name: 'Event', inverse_of: :members, :join_table => 'events_members'
   has_and_belongs_to_many :visitor_events, class_name: 'Event', inverse_of: :visitors, :join_table => 'events_visitors'
+
+  def image
+    read_attribute(:image) || 'default/silhouette.jpg'
+  end
 end
