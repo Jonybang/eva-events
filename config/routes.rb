@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     resources :tasks
 
     post 'login' => 'sessions#api_create'
-    post 'auto_register' => 'users#api_auto_create'
+    post 'anonym_register' => 'users#api_anonym_create'
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

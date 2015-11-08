@@ -14,7 +14,7 @@ class SessionsController < InheritsController
   end
 
   def api_create
-    @user = User.authenticate(params[:email], params[:password])
+    @user = User.authenticate(params[:id], params[:password])
     if @user
       session[:user_id] = @user.id
       respond_with(@user, :status => :success)

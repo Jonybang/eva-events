@@ -33,11 +33,16 @@ class UsersController < InheritsController
     end
   end
 
-  def api_auto_create
-    @user = Person.new(user_params)
-    if @user.save!
-      @user.email = @user.id + '@eva-events.ru'
-      @user.name = @user.id
+  def api_anonym_create
+    user = Person.new
+    if user.save!
+      user.email = @user.id + '@eva-events.ru'
+      user.name = @user.id
+
+      temp_password = KeePass::Password.generate('A{9}s')
+      user.password = temp_password
+
+      @user = {id: user.id, password: temp_password}
 
       session[:user_id] = @user.id
       respond_with(@user, :status => :success)

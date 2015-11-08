@@ -13,6 +13,8 @@ gem 'sorted'
 gem 'sorted-activerecord'
 gem 'ransack'
 
+gem 'keepass-password-generator'
+
 # Use SCSS for stylesheets
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'sass-rails', '>= 3.2'
