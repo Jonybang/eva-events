@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1879077858">
+  <component name="DataSourceManagerImpl" format="xml" hash="1834425914">
     <data-source source="LOCAL" name="Rails eva-events: development" uuid="bcbb3907-e3ba-4115-959b-b8471b9711e6">
       <driver-ref>sqlite.xerial</driver-ref>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db/development.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:postgresql://127.0.0.1/eva_events_development</jdbc-url>
+      <user-name>jonybang</user-name>
+      <user-password>dfe0dfc8df9bdf93df98df92df99df9d</user-password>
       <libraries />
     </data-source>
     <data-source source="LOCAL" name="Rails eva-events: production" uuid="62f49542-6869-4ce6-a2b4-a9f6b02ac6bd">
       <driver-ref>sqlite.xerial</driver-ref>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db/development.sqlite3</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="PostgreSQL - eva_events_development@localhost" uuid="c91f94a9-f21f-4dc3-85da-89f7ba4cfa20">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/eva_events_development</jdbc-url>
+      <user-name>jonybang</user-name>
+      <user-password>dfe0dfc8df9bdf93df98df92df99df9d</user-password>
       <libraries />
     </data-source>
   </component>

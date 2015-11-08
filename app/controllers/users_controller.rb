@@ -44,16 +44,16 @@ class UsersController < InheritsController
   def api_anonym_create
     temp_password = KeePass::Password.generate('A{9}s')
 
-    user = Person.new(anonym: true, password: temp_password)
+    @user = Person.new(anonym: true, password: temp_password)
     begin
-      if user.save!
-        user.email = user.id + '@eva-events.ru'
-        user.name = user.id
-        user.save
+      if @user.save!
+        @user.email = @user.id.to_s + '@eva-events.ru'
+        @user.name = @user.id
+        @user.save
 
-        session[:user_id] = user.id
+        session[:user_id] = @user.id
 
-        @user = {id: user.id, password: temp_password}
+        #@user = {id: user.id, password: temp_password}
         respond_with(@user, :status => :success)
       else
         respond_with(@user = user, :status => :failed)
