@@ -15,14 +15,24 @@ Rails.application.routes.draw do
   resources :users, :except => :new
   resources :sessions, :except => :new
 
+  get 'api' => 'api#index'
+
   scope :api, :defaults => {format: :json} do
     resources :organizations
     resources :forums do
       scope :module => :forum do
-        resources :persons
-        resources :events
-        resources :news
-        resources :rooms
+        resources :persons do
+          resources :likes
+        end
+        resources :events do
+          resources :likes
+        end
+        resources :news do
+          resources :likes
+        end
+        resources :rooms do
+          resources :likes
+        end
       end
     end
     resources :events
@@ -32,8 +42,11 @@ Rails.application.routes.draw do
     resources :colors
     resources :news
     resources :tasks
+    resources :likes
 
     post 'login' => 'sessions#api_create'
+    get 'current_user_id' => 'sessions#current_user_id'
+    post 'logout' => 'sessions#api_destroy'
     post 'anonym_register' => 'users#api_anonym_create'
   end
 

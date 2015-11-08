@@ -1,5 +1,5 @@
 class UsersController < InheritsController
-  skip_before_filter :verify_authenticity_token, :only => [:api_anonym_create]
+  skip_before_action :is_auth, only: [:new, :create, :api_anonym_create]
 
   def new
     @user = User.new
@@ -48,15 +48,14 @@ class UsersController < InheritsController
     begin
       if @user.save!
         @user.email = @user.id.to_s + '@eva-events.ru'
-        @user.name = @user.id
+        @user.name = '%09o' % @user.id
         @user.save
 
         session[:user_id] = @user.id
 
-        #@user = {id: user.id, password: temp_password}
-        respond_with(@user, :status => :success)
+        respond_with(@user, :status => 200)
       else
-        respond_with(@user = user, :status => :failed)
+        respond_with(@user = user, :status => 400)
       end
     rescue ActiveRecord::RecordInvalid => invalid
       puts invalid.record.errors

@@ -1,36 +1,24 @@
-class Forum::NewsController < ApplicationController
-  respond_to :json
-
-  helper_method :forum, :news_collection, :news
-
+class Forum::NewsController < Forum::InForumController
   def index
-    respond_with :api, news_collection
+    render 'news/index'
   end
-  def create
-    news_collection << news
 
-    forum.save
-    respond_with news
+  def create
+    @collection << news
+    render 'news/show'
   end
 
   def destroy
-    news_collection.delete news
-
-    forum.save
-    respond_with news
+    news.destroy
+    head(:ok)
   end
 
   private
-
-  def forum
-    @parent ||= Forum.find params[:forum_id]
-  end
-
   def news
     @resource ||= News.find params[:id]
   end
 
-  def news_collection
-    @collection ||= forum.news
+  def get_collection
+    @collection ||= forum.news.where('for_' + cur_person_role => true)
   end
 end

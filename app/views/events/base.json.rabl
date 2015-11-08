@@ -8,3 +8,4 @@ end
 glue :color do
   attributes :code => :color_code
 end
+extends "forums/likes_count"

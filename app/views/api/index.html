@@ -1,0 +1,48 @@
+<h1>EvaEvents API</h1>
+<h2>Objects:</h2>
+<ul>
+    <li>Organizations - <a href="/api/organizations">/api/organizations</a></li>
+    <li>Forums - <a href="/api/forums">/api/forums</a></li>
+    <li>Events - <a href="/api/events">/api/events</a></li>
+    <li>News - <a href="/api/news">/api/news</a></li>
+    <li>Persons - <a href="/api/persons">/api/persons</a></li>
+    <li>Rooms - <a href="/api/rooms">/api/rooms</a></li>
+    <li>Likes - <a href="/api/likes">/api/likes</a></li>
+    <li>Event types - <a href="/api/event_types">/api/event_types</a></li>
+    <li>Colors - <a href="/api/colors">/api/colors</a></li>
+    <li>Tasks - <a href="/api/tasks">/api/tasks</a></li>
+</ul>
+<h2>Arguments Examples:</h2>
+<ul>
+    <li>
+        Sorting:
+        <ul>
+            <li><a href="/api/events?sort=id_desc">/api/events?sort=id_asc</a></li>
+            <li><a href="/api/events?sort=updated_at_desc">/api/events?sort=updated_at_desc</a></li>
+        </ul>
+    </li>
+    <li>Limit - <a href="/api/events?limit=2">/api/events?limit=2</a></li>
+</ul>
+<h2>Forum inherited objects</h2>
+<ul>
+    <li>GET all forum Events - <a href="/api/forums/1/events">/api/forums/1/events</a></li>
+    <li>GET all forum Rooms with near event for every room - <a href="/api/forums/1/rooms?near_event=1&cur_date=2015-08-14T23:00:00.000Z">/api/forums/1/rooms?near_event=1&cur_date=2015-08-14T23:00:00.000Z</a></li>
+    <li>GET News for current authorized user - <a href="/api/forums/1/news">/api/forums/1/news</a></li>
+    <li>POST Person as visitor to forum - <a href="/api/forums/1/persons?role=visitor">/api/forums/1/persons?role=visitor</a></li>
+    <li>POST and DELETE Like to some of Forum inherited objects - <a href="/api/forums/1/events/1/likes">/api/forums/1/events/1/likes</a></li>
+</ul>
+<h2>Authenticate</h2>
+<ul>
+    <li>Anonymous register(no need arguments, return id and password) - <a href="/api/anonym_register">/api/anonym_register</a></li>
+    <li>Login(need id and password) - <a href="/api/login">/api/login</a></li>
+    <li>Logout(no need arguments, just remove from session) - <a href="/api/logout">/api/logout</a></li>
+    <li>Current user id - <a href="/api/current_user_id">/api/current_user_id</a></li>
+</ul>
+<h2>Other</h2>
+<ul>
+    <li>Register - <a href="/register">/register</a></li>
+    <li>Login - <a href="/login">/login</a></li>
+    <li>Logout - <a href="/logout">/logout</a></li>
+    <li>Manager - <a href="/manager">/manager</a></li>
+    <li>Adminpanel - <a href="/adminpanel">/adminpanel</a></li>
+</ul>

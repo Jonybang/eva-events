@@ -1,36 +1,24 @@
-class Forum::EventsController < ApplicationController
-  respond_to :json
-
-  helper_method :forum, :events_collection, :event
-
+class Forum::EventsController < Forum::InForumController
   def index
-    respond_with :api, events_collection
+    render 'events/index'
   end
   def create
-    events_collection << event
-
-    forum.save
-    respond_with event
+    @collection << event
+    render 'events/show'
   end
 
   def destroy
-    events_collection.delete event
-
-    forum.save
-    respond_with event
+    event.destroy
+    head(:ok)
   end
 
   private
-
-  def forum
-    @parent ||= Forum.find params[:forum_id]
-  end
 
   def event
     @resource ||= Event.find params[:id]
   end
 
-  def events_collection
+  def get_collection
     @collection ||= forum.events
   end
 end

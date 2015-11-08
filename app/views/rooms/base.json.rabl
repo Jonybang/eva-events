@@ -5,3 +5,4 @@ if @near_event
       u.near_event @cur_date
     end
 end
+extends "forums/likes_count"

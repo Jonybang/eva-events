@@ -7,6 +7,11 @@ class CreateNews < ActiveRecord::Migration
       t.boolean :published
       t.boolean :important
 
+      t.boolean :for_visitor, default: true
+      t.boolean :for_member, default: true
+      t.boolean :for_volunteer, default: true
+      t.boolean :for_admin, default: true
+
       t.datetime :published_time
       t.datetime :changed_time
 

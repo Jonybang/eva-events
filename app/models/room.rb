@@ -2,6 +2,8 @@ class Room < Base
   # name:string number:string
   default_scope { includes(:events).order('events.begin_date ASC') }
 
+  has_many :likes, as: :likeable
+
   has_many :events, class_name: 'Event'
   accepts_nested_attributes_for :events, allow_destroy: true
   belongs_to :forum
