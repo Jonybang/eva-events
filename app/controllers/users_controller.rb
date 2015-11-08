@@ -34,7 +34,7 @@ class UsersController < InheritsController
   end
 
   def api_auto_create
-    @user = Person.new
+    @user = Person.new(user_params)
     if @user.save!
       @user.email = @user.id + '@eva-events.ru'
       @user.name = @user.id
