@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(version: 20151008014619) do
     t.string   "description"
     t.boolean  "completed"
     t.boolean  "published"
+    t.boolean  "important"
     t.datetime "published_time"
     t.datetime "changed_time"
     t.integer  "forum_id"
@@ -200,9 +201,11 @@ ActiveRecord::Schema.define(version: 20151008014619) do
   add_index "tasks_performers", ["task_id"], name: "index_tasks_performers_on_task_id"
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",              null: false
+    t.string   "email"
     t.string   "encrypted_password"
+    t.boolean  "anonym"
     t.string   "name"
+    t.string   "image"
     t.datetime "registered_on"
     t.integer  "person_id"
     t.datetime "created_at",         null: false

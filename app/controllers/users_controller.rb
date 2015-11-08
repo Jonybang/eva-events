@@ -1,9 +1,17 @@
 class UsersController < InheritsController
+  skip_before_filter :verify_authenticity_token, :only => [:api_anonym_create]
+
   def new
     @user = User.new
   end
 
   def create
+    unless user_params[:email]
+      flash.alert = 'Email не задан'
+      render 'new'
+      return
+    end
+
     user_params[:email].downcase!
 
     existing_user = User.find_by_email user_params[:email]
@@ -34,20 +42,25 @@ class UsersController < InheritsController
   end
 
   def api_anonym_create
-    user = Person.new
-    if user.save!
-      user.email = @user.id + '@eva-events.ru'
-      user.name = @user.id
+    temp_password = KeePass::Password.generate('A{9}s')
 
-      temp_password = KeePass::Password.generate('A{9}s')
-      user.password = temp_password
+    user = Person.new(anonym: true, password: temp_password)
+    begin
+      if user.save!
+        user.email = user.id + '@eva-events.ru'
+        user.name = user.id
+        user.save
 
-      @user = {id: user.id, password: temp_password}
+        session[:user_id] = user.id
 
-      session[:user_id] = @user.id
-      respond_with(@user, :status => :success)
-    else
-      respond_with(@user, :status => :failed)
+        @user = {id: user.id, password: temp_password}
+        respond_with(@user, :status => :success)
+      else
+        respond_with(@user = user, :status => :failed)
+      end
+    rescue ActiveRecord::RecordInvalid => invalid
+      puts invalid.record.errors
+      Rails.logger.debug invalid.record.errors
     end
   end
   private

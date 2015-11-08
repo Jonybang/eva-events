@@ -4,8 +4,10 @@ class CreateUsers < ActiveRecord::Migration
       t.string :email
       t.string :encrypted_password
 
+      t.boolean :anonym
       # Person
       t.string :name
+      t.string :image
       t.datetime :registered_on
 
       t.belongs_to :person

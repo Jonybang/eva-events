@@ -3,8 +3,7 @@ class User < ActiveRecord::Base
   attr_accessor :password
   validates_confirmation_of :password
   validates_presence_of :password, :on => :create, :message => "can't be blank"
-  validates_presence_of :email, :message => "can't be blank"
-  validates_uniqueness_of :email, :message => "already in use"
+  validates_uniqueness_of :email, :message => 'already in use', :allow_blank => true
 
   before_create :encrypt_password
 
