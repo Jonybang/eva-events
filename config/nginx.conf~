@@ -3,7 +3,7 @@ upstream puma_eva_events {
 }
 
 server {
-  listen 80;
+  listen 80  ipv6only=on;
   server_name events.jonybang.ru;
 
   root /home/deploy/apps/eva_events/current/public;
