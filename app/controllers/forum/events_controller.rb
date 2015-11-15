@@ -1,4 +1,8 @@
 class Forum::EventsController < Forum::InForumController
+  before_action :is_auth, only: [:person_subscribe, :person_unsubscribe]
+  def show
+    render 'events/show'
+  end
   def index
     render 'events/index'
   end

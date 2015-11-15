@@ -1,5 +1,5 @@
 class Forum::InForumController < InheritsController
-  before_action :forum, :get_collection
+  before_action :forum, :get_collection, :user_id
   helper_method :forum
 
   private

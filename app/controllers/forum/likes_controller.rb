@@ -11,12 +11,17 @@ class Forum::LikesController < Forum::InForumController
     like = Like.create(forum_id: forum.id, person_id: user_id)
     parent.likes << like
 
-    render 'likes/index'
+    head(:ok)
   end
 
   def destroy
-    Like.destroy params[:id]
-    render 'likes/index'
+    like = Like.where(person_id: user_id, likeable: parent)
+    if like.empty?
+      return head(:not_found)
+    end
+    like.first.destroy
+
+    head(:ok)
   end
 
   private

@@ -5,7 +5,7 @@ class Forum::PersonsController < Forum::InForumController
 
   def create
     @collection << person
-    render 'persons/show'
+    head(:ok)
   end
 
   def destroy
