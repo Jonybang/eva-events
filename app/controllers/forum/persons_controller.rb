@@ -13,6 +13,10 @@ class Forum::PersonsController < Forum::InForumController
     head(:ok)
   end
 
+  def subscribed_events
+    @collection = cur_person.visitor_events
+    render 'events/index'
+  end
   private
 
   def person

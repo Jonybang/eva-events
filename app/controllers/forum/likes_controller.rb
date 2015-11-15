@@ -6,7 +6,7 @@ class Forum::LikesController < Forum::InForumController
   def create
     exist_like = Like.where(person_id: user_id, likeable: parent)
     unless exist_like.empty?
-      return head(406)
+      return head(:not_acceptable)
     end
     like = Like.create(forum_id: forum.id, person_id: user_id)
     parent.likes << like

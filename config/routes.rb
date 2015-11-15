@@ -23,9 +23,13 @@ Rails.application.routes.draw do
       scope :module => :forum do
         resources :persons do
           resources :likes
+          get 'subscribed_events' => 'persons#subscribed_events'
         end
         resources :events do
           resources :likes
+          post 'subscribes' => 'events#person_subscribe'
+          get 'subscribes' => 'events#subscribes'
+          delete 'subscribes' => 'events#person_unsubscribe'
         end
         resources :news do
           resources :likes
