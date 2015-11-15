@@ -36,6 +36,13 @@ app.factory('Forum', ['railsResourceFactory', 'railsSerializer', 'Helpers', func
             return person;
         });
     };
+    resource.prototype.GetRooms = function () {
+        var self = this;
+        return resource.$get(self.$url('rooms'), {}, {rootWrapping: false}).then(function (rooms) {
+            self.rooms = rooms;
+            return rooms;
+        });
+    };
     return resource;
 }]);
 app.factory('ForumEvent', ['railsResourceFactory', 'railsSerializer', function (railsResourceFactory, railsSerializer) {

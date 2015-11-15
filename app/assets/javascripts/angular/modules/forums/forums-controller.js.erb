@@ -9,6 +9,9 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
     var begin_hour = 8;
 
     var self = this;
+
+    self.cur_forum = $scope.cur_forum = {};
+
     self.changedToggle = false;
     $scope.popover = {
         adminsOpen: false,
@@ -49,7 +52,7 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
     });
 
     $scope.setCurForum = function(forum){
-        self.cur_forum = $scope.cur_forum = forum;
+        angular.extend($scope.cur_forum, forum);
 
         if(!$state.params.forumId || $state.params.forumId != forum.id)
             $state.go('app.organizations.show.forums.show', {forumId: forum.id});
@@ -122,6 +125,9 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
                     obj.expand = true;
             });
 
+            if(!forum.rooms || !forum.rooms.length){
+                forum.GetRooms();
+            }
             self.changedToggle = !self.changedToggle;
         });
     };
@@ -164,9 +170,13 @@ app.controller('ForumsShowCtrl', ['$scope', '$state', '$timeout', 'Forum', 'Help
         events: []
     };
     Forum.get($state.params.forumId).then(function(forum){
+        console.log('forum before', $scope.forumsCtrl.cur_forum);
         angular.extend($scope.forumsCtrl.cur_forum, forum);
+        //$scope.forumsCtrl.cur_forum = forum;
+        console.log('forum after', $scope.forumsCtrl.cur_forum);
         self.current = $scope.forumsCtrl.cur_forum;
         $scope.forumsCtrl.cur_forum.grouped_events = Helpers.groupByDate($scope.forumsCtrl.cur_forum.events, 'begin_date', 'events');
+        console.log('grouped_events', $scope.forumsCtrl.cur_forum.grouped_events);
     });
 }]);
 
