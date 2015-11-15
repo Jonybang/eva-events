@@ -27,9 +27,14 @@
 <ul>
     <li>GET all forum Events - <a href="/api/forums/1/events">/api/forums/1/events</a></li>
     <li>GET all forum Rooms with near event for every room - <a href="/api/forums/1/rooms?near_event=1&cur_date=2015-08-14T23:00:00.000Z">/api/forums/1/rooms?near_event=1&cur_date=2015-08-14T23:00:00.000Z</a></li>
-    <li>GET News for current authorized user - <a href="/api/forums/1/news">/api/forums/1/news</a></li>
-    <li>POST Person as visitor to forum - <a href="/api/forums/1/persons?role=visitor">/api/forums/1/persons?role=visitor</a></li>
-    <li>POST and DELETE Like to some of Forum inherited objects - <a href="/api/forums/1/events/1/likes">/api/forums/1/events/1/likes</a></li>
+    <li>POST or DELETE Person by id as visitor to forum - /api/forums/1/persons?role=visitor&id=12</li>
+</ul>
+<h2>Personal requests(for current authorized user)</h2>
+<ul>
+    <li>GET personal News - <a href="/api/forums/1/news">/api/forums/1/news</a></li>
+    <li>POST or DELETE Like to some of Forum inherited objects - <a href="/api/forums/1/news/2/likes">/api/forums/1/news/2/likes</a></li>
+    <li>POST or DELETE Subscribe to some Event - <a href="/api/forums/1/events/2/subscribes">/api/forums/1/events/2/subscribes</a></li>
+    <li>GET personal subscribed Events - <a href="/api/forums/1/persons/2/subscribed_events">/api/forums/1/persons/2/subscribed_events</a></li>
 </ul>
 <h2>Authenticate</h2>
 <ul>
