@@ -4,7 +4,7 @@
             <label>Название</label>
         </div>
         <div>
-            <input type="text" ng-init="new_room = {'id':-1};" ng-model="new_room.name" class="form-control">
+            <input type="text" focus-me="focusName" ng-init="new_room = {'id':-1};focusName = true;" ng-model="new_room.name" class="form-control">
         </div>
     </div>
     <div class="form-group col-md-12 row">

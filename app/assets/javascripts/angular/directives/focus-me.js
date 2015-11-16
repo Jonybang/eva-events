@@ -7,7 +7,7 @@ angular.module('app').directive('focusMe', ['$timeout', function($timeout) {
                     $timeout(function() {
                         element[0].focus();
                         scope[attrs.focusMe] = false;
-                    });
+                    }, 500);
                 }
             });
         }

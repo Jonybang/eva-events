@@ -11,7 +11,7 @@
                         <label>Название</label>
                     </div>
                     <div class="col-md-6 col-lg-7">
-                        <input type="text" ng-init="focusName = true;" focus-me="focusName" name="name" ng-model="event.name" class="form-control" required >
+                        <input type="text" focus-me="focusName" name="name" ng-model="event.name" class="form-control" required >
                     </div>
                 </div>
                 <div ng-repeat="error in errors.name" class="alert alert-error"><strong>Название</strong> {{error}}</div>
@@ -97,7 +97,7 @@
         </tabset>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="$dismiss()">Закрыть</button>
+        <!--<button type="button" class="btn btn-default" ng-click="$dismiss()">Закрыть</button>-->
         <button type="submit" class="btn btn-primary">Сохранить данные</button>
     </div>
 </form>

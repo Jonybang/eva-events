@@ -215,8 +215,16 @@ table.rooms-events{
   tr:not(:first-child) {
     min-width: 50px;
   }
+  td:not(:first-child), th:not(:first-child) {
+    min-width: 220px;
+    width: 220px;
+    overflow: hidden;
+    //display: inline-block;
+    white-space: nowrap;
+  }
   [dnd-list] {
-    min-height: 25px;
+    //min-height: 25px;
+    min-height: 71px;
     min-width: 60px;
   }
   [dnd-list], [dnd-list] > div{

@@ -111,8 +111,8 @@ angular.module('app').run(['amMoment', 'datepickerConfig', 'timepickerConfig', '
     });
 
     angular.extend(datepickerPopupConfig, {
-        currentText:'Сегодня',
-        clearText:'Очистить',
+        currentText:'',
+        clearText:'',
         closeText:'Сохранить'
     });
 
@@ -126,15 +126,15 @@ angular.module('app').run(['amMoment', 'datepickerConfig', 'timepickerConfig', '
     dateFormat: 'dd.MM.yyyy H:mm',
     enableDate: true,
     enableTime: true,
-    todayText: 'Сегодня',
-    nowText: 'Сейчас',
-    clearText: 'Очистить',
+    todayText: '',
+    nowText: '',
+    clearText: '',
     closeText: 'Сохранить',
     dateText: 'Дата',
     timeText: 'Время',
     closeOnDateSelection: true,
     appendToBody: false,
-    showButtonBar: true
+    showButtonBar: false
 });
 
 var roomsEventsHtml = "<%= asset_path('angular/directives/rooms-events.html') %>";

@@ -86,6 +86,7 @@ app.controller('EventsFormCtrl', ['$scope', '$timeout', 'ForumEvent', 'EventType
         }
 
         $scope.duration_mode = true;
+        $scope.focusName = true;
     });
     $scope.popoverAddRoom = '<%= asset_path('angular/modules/rooms/templates/popoverAddRoom.html') %>';
     $scope.popoverAddEventType = '<%= asset_path('angular/modules/events/templates/popoverAddEventType.html') %>';

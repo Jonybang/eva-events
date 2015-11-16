@@ -24,7 +24,7 @@ angular.module('app').directive('roomsEvents', ['$timeout', '$sce', '$q', 'debou
             scope.end_hour = 15;
             scope.begin_minute = 0;
 
-            var hourPixels = 36;
+            var hourPixels = 72;
             var minimum_hours = 0.5;
 
             function generateHours (){
