@@ -9,6 +9,10 @@ class Forum::RoomsController < Forum::InForumController
     render 'rooms/show'
   end
 
+  def show
+    render 'rooms/show'
+  end
+
   def destroy
     room.destroy
     head(:ok)
