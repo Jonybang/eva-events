@@ -29,15 +29,15 @@ class Person < User
     read_attribute(:image) || 'default/silhouette.jpg'
   end
   def role_in_forum(forum)
-    if admin_forums.find_by(id: forum.id)
+    if !self.admin_forums.where(forums_admins: {forum_id: forum.id}).empty?
       'admin'
-    elsif volunteer_forums.find_by(id: forum.id)
+    elsif !self.volunteer_forums.where(forums_volunteers: {forum_id: forum.id}).empty?
       'volunteer'
-    elsif member_forums.find_by(id: forum.id)
+    elsif !self.member_forums.where(forums_members: {forum_id: forum.id}).empty?
       'member'
-    elsif visitor_forums.find_by(id: forum.id)
+    elsif !self.visitor_forums.where(forums_visitors: {forum_id: forum.id}).empty?
       'visitor'
-    elsif organizations.find_by(id: forum.organization.id)
+    elsif !self.organizations.where(organizations_teams: {organization_id: forum.organization.id}).empty?
       'admin'
     else
       'visitor'

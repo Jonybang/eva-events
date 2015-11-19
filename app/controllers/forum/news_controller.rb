@@ -19,6 +19,7 @@ class Forum::NewsController < Forum::InForumController
   end
 
   def get_collection
-    @collection ||= forum.news.where('for_' + cur_person_role => true)
+    role = cur_person_role
+    @collection ||= forum.news.where('for_' + role => true)
   end
 end
