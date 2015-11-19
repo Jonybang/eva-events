@@ -42,7 +42,7 @@ class UsersController < InheritsController
   end
 
   def api_anonym_create
-    temp_password = KeePass::Password.generate('A{9}s')
+    temp_password = KeePass::Password.generate('h{10}')
 
     @user = Person.new(anonym: true, password: temp_password)
     begin

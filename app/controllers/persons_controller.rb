@@ -4,12 +4,6 @@ class PersonsController < InheritsController
     person_params[:password] = 123 unless person_params[:password]
     create!
   end
-  def setter=(val)
-
-  end
-  def getter
-
-  end
 
   private
 
