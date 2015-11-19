@@ -39,7 +39,7 @@ class Person < User
       'visitor'
     elsif organizations.find_by(id: forum.organization.id)
       'admin'
-    elsif
+    else
       'visitor'
     end
   end
