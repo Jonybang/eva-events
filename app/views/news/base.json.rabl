@@ -7,3 +7,4 @@ child :posted_by, :root => "posted_by", :object_root => false  do
 end
 
 extends "forums/likes_count"
+extends "posts/liked"
