@@ -19,6 +19,7 @@ class InheritsController < ApplicationController
 
   def render *args
     sort_and_paging
+    filtering
     super
   end
   protected
@@ -42,6 +43,14 @@ class InheritsController < ApplicationController
         @collection = @collection.limit(params[:limit])
       end
     end
+  def filtering
+    unless @collection
+      return
+    end
+    if params[:less_created_at]
+      @collection = @collection.where('created_at < (?)', params[:less_created_at])
+    end
+  end
     def is_auth
       unless session[:user_id]
         return head(401)
