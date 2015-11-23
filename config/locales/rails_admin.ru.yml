@@ -1,0 +1,131 @@
+ru:
+  admin:
+    actions:
+      bulk_delete:
+        breadcrumb: "Удалить несколько"
+        bulk_link: "Удалить выбранное %{model_label_plural}"
+        menu: "Удалить несколько"
+        title: "Удалить %{model_label_plural}"
+      dashboard:
+        breadcrumb: "Панель"
+        menu: "Панель"
+        title: "Административная панель"
+      delete:
+        title: "Удалить %{model_label} '%{object_label}'"
+        menu: "Удалить"
+        breadcrumb: "Удалить"
+        link: "Удалить '%{object_label}'"
+        done: "удалено"
+      edit:
+        title: "Редактировать %{model_label} '%{object_label}'"
+        menu: "Редактировать"
+        breadcrumb: "Редактировать"
+        link: "Редактировать это %{model_label}"
+        done: "обновлено"
+      export:
+        title: "Экспорт %{model_label_plural}"
+        menu: "Экспорт"
+        breadcrumb: "Экспорт"
+        link: "Экспорт found %{model_label_plural}"
+        bulk_link: "Экспорт выбранного %{model_label_plural}"
+        done: "экспортированно"
+      history_index:
+        title: "История для %{model_label_plural}"
+        menu: "История"
+        breadcrumb: "История"
+      history_show:
+        title: "История для %{model_label} '%{object_label}'"
+        menu: "История"
+        breadcrumb: "История"
+      index:
+        title: "Таблица %{model_label_plural}"
+        menu: "Таблица"
+        breadcrumb: "%{model_label_plural}"
+      new:
+        title: "Новый %{model_label}"
+        menu: "Добавить новый"
+        breadcrumb: "Новый"
+        link: "Добавить новый %{model_label}"
+        done: "создано"
+      show:
+        title: "Подробности для %{model_label} '%{object_label}'"
+        menu: "Подробности"
+        breadcrumb: "%{object_label}"
+      show_in_app:
+        menu: "Показать в приложении"
+    export:
+      confirmation: "Експортировать в %{name}"
+      select: "Выберите поля для экспорта"
+      select_all_fields: "Выбрать все поля"
+      fields_from: "Поля из %{name}"
+      fields_from_associated: "Поля из связанного %{name}"
+      display: "Отобразить %{name}: %{type}"
+      options_for: "Опции для %{name}"
+      empty_value_for_associated_objects: "<пусто>"
+      click_to_reverse_selection: 'Нажать для реверса выбора'
+      csv:
+        header_for_root_methods: "%{name}" # 'model' is available
+        header_for_association_methods: "%{name} [%{association}]"
+        encoding_to: "Encode to"
+        encoding_to_help: "Choose output encoding. Leave empty to let current input encoding untouched: (%{name})"
+        skip_header: "Нет заголовка"
+        skip_header_help: "Do not output a header (no fields description)"
+        default_col_sep: ","
+        col_sep: "Column separator"
+        col_sep_help: "Leave blank for default ('%{value}')" # value is default_col_sep
+    flash:
+      successful: "%{name} полностью %{action}"
+      error: "%{name} неудачно %{action}"
+      noaction: "Нет действий для выбранного"
+      model_not_found: "Модель '%{model}' не может быть найдена"
+      object_not_found: "%{model} с id: '%{id}' не может быть найдена"
+    form:
+      cancel: "Отменить"
+      basic_info: "Простейшая информация"
+      required: "Обязательно"
+      optional: "Не обязательно"
+      one_char: "символ"
+      char_length_up_to: "длина до"
+      char_length_of: "длина"
+      save: "Сохранить"
+      save_and_add_another: "Сохранить и добавить новый"
+      save_and_edit: "Сохранить и отредактировать"
+      all_of_the_following_related_items_will_be_deleted: "? Следующие зависимые объекты могут быть также удалены или отвязаны:"
+      are_you_sure_you_want_to_delete_the_object: "Вы уверены что хотите удалить это: %{model_name}"
+      confirmation: "Да, я уверен"
+      bulk_delete: "Следующие объекты будут удалены, они могут быть удалены или отвязаны от зависимых объектов:"
+      new_model: "%{name} (новый)"
+    misc:
+      filter_date_format: "mm/dd/yy" # a combination of 'dd', 'mm' and 'yy' with any delimiter. No other interpolation will be done!
+      search: "Поиск"
+      filter: "Фильтрация"
+      refresh: "Обновление"
+      show_all: "Показать все"
+      add_filter: "Добавить фильтр"
+      bulk_menu_title: "Выбрать объекты"
+      remove: "Удалить"
+      add_new: "Добавить новый"
+      chosen: "Выбран %{name}"
+      chose_all: "Выбрать все"
+      clear_all: "Очистить все"
+      up: "Вверх"
+      down: "Вниз"
+      navigation: "Навигация"
+      navigation_static_label: "Ссылки"
+      log_out: "Выйти"
+      ago: "ago"
+    table_headers:
+      model_name: "Название модели"
+      last_used: "Последним использовано"
+      records: "Записи"
+      username: "Пользователи"
+      changes: "Изменения"
+      created_at: "Дата/Время"
+      item: "Объект"
+      message: "Сообщение"
+    home:
+      name: "Домой"
+    pagination:
+      previous: "&laquo; Предыдущее"
+      next: "Следующее &raquo;"
+      truncate: "…"

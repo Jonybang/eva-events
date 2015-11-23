@@ -71,6 +71,7 @@ gem 'simple_form'
 gem 'select2-rails'
 
 gem 'rails_admin', github: 'pencilcheck/rails_admin', branch: 'master'
+gem 'rails_admin-i18n'
 
 gem 'cancan'
 
