@@ -1,4 +1,4 @@
-attributes :begin_date, :end_date, :event_type_id, :room_id, :color_id
+attributes :begin_date, :end_date, :event_type_id, :room_id, :color_id, :description
 child :event_type  do
     attributes :id, :name
 end
