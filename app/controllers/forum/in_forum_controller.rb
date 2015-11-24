@@ -13,7 +13,7 @@ class Forum::InForumController < InheritsController
     @cur_person ||= Person.where(id: user_id)
   end
   def cur_person_role
-    if cur_person
+    if @cur_person
       @cur_person_role ||= @cur_person.role_in_forum forum
       session[:user_role] ||= @cur_person_role
     else
