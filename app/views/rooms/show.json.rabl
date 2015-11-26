@@ -9,4 +9,5 @@ child :events, :root => "events", :object_root => false  do
     child :event_type  do
         attributes :id, :name
     end
+    extends "events/subscribed"
 end
