@@ -14,7 +14,7 @@ class Forum::PersonsController < Forum::InForumController
   end
 
   def subscribed_events
-    @collection = cur_person.visitor_events
+    @collection = person.visitor_events
     render 'events/index'
   end
   private
