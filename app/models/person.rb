@@ -9,7 +9,7 @@ class Person < User
   has_many :creator_forums, class_name: 'Forum', inverse_of: :creator
   has_many :creator_organizations, class_name: 'Organization', inverse_of: :creator
   has_many :posts, class_name: 'Post', inverse_of: :posted_by
-  has_many :liked, inverse_of: :person
+  has_many :liked, inverse_of: :person, class_name: 'Like'
 
   has_and_belongs_to_many :tasks, class_name: 'Task', inverse_of: :performers, :join_table => 'tasks_performers'
 
