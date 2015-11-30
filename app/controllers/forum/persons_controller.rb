@@ -14,13 +14,13 @@ class Forum::PersonsController < Forum::InForumController
   end
 
   def subscribed_events
-    @collection = person.visitor_events
+    @collection = person.visitor_events.where(forum_id: params[:forum_id])
     render 'events/index'
   end
   private
 
   def person
-    @resource ||= Person.find params[:id]
+    @resource ||= Person.find(params[:id] || params[:person_id])
   end
 
   def get_collection
