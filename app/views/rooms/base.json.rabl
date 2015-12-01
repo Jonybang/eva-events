@@ -1,4 +1,4 @@
-attribute :forum_id, :number
+attribute :forum_id, :number, :alias
 
 if @near_event
     node :near_event do |u|

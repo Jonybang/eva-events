@@ -50,6 +50,9 @@ class InheritsController < ApplicationController
     if params[:less_created_at]
       @collection = @collection.where('created_at < (?)', params[:less_created_at])
     end
+    if params[:forum_id]
+      @collection = @collection.where(forum_id: params[:forum_id])
+    end
   end
     def is_auth
       unless session[:user_id]

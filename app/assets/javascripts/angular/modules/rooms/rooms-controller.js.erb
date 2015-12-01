@@ -1,0 +1,33 @@
+/**
+ * Created by jonybang on 10.08.15.
+ */
+'use strict';
+
+var app = angular.module('app.rooms');
+
+app.controller('RoomsCtrl', ['$scope', 'Room', 'RoomEditor', 'Helpers', '$state', '$modal', function($scope, Room, RoomEditor, Helpers, $state, $modal) {
+    function getRooms(){
+        Room.query({forum_id: $state.params.forumId}).then(function(rooms){
+            $scope.rooms = rooms;
+        });
+    }
+    $scope.$watchCollection('forumsCtrl.cur_forum.rooms', function(){
+        getRooms();
+    });
+
+    $scope.saveRoom = function (room){
+        var obj = new Room(room).save().then(function success (result){
+            angular.extend(room, result);
+            room.edit = false;
+        });
+    };
+    $scope.addRoomRow = function(forum, room){
+        $scope.rooms.unshift({edit:true, forum_id: forum.id, is_new: true});
+    };
+    $scope.newOrEditRoom = function(forum, room){
+        RoomEditor({forum_id: forum.id}, room).then(function(result){
+            Helpers.addOrReplace($scope.rooms, result, result.id, true);
+        });
+    };
+}]);
+

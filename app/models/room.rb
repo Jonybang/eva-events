@@ -14,9 +14,9 @@ class Room < Base
     result.order(begin_date: :asc).first
   end
   def full_name
-    self.name + (self.number ? ' - ' + self.number : '')
+    self.name + (self.number.blank? ? '': ' - ' + self.number)
   end
   def alias_url
-    '/' + self.forum.alias + '/' + self.alias
+    '/' + self.forum.alias + '/' + (self.alias.blank? ? self.id.to_s : self.alias)
   end
 end

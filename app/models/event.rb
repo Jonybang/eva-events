@@ -53,6 +53,6 @@ class Event < Post
     end
   end
   def alias_url
-    '/' + self.forum.alias + '/' + self.room.alias + '/' + self.alias
+    self.room.alias_url + '/' + (self.alias.blank? ? self.id.to_s : self.alias)
   end
 end
