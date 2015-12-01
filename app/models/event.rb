@@ -15,7 +15,11 @@ class Event < Post
 
   alias_method :original_color, :color
   def color
-    self.original_color ? self.original_color : self.event_type.color
+    if self.event_type
+      self.original_color ? self.original_color : self.event_type.color
+    else
+      self.original_color
+    end
   end
   def duration
     ((self.end_date - self.begin_date) / 1.hour).round
