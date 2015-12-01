@@ -13,6 +13,18 @@ class RoomsController < InheritsController
   end
 
   private
+
+  def get_resource
+    @near_event = params[:near_event]
+    @cur_date = params[:cur_date]
+    if params[:room_alias] && !params[:id]
+      @forum = Forum.find_by alias: params[:forum_alias]
+      room = Room.where(forum_id: @forum.id).find_by alias: params[:room_alias]
+      params[:id] = room.id
+    end
+    super
+  end
+
   def get_collection
     @near_event = params[:near_event]
     @cur_date = params[:cur_date]
@@ -22,12 +34,6 @@ class RoomsController < InheritsController
     else
       @collection = Room.all
     end
-  end
-  def get_resource
-    @near_event = params[:near_event]
-    @cur_date = params[:cur_date]
-
-    super
   end
 
   def room_params

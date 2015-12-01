@@ -46,25 +46,26 @@ forum.admins << Person.first
 Organization.first.forums << forum
 
 rooms_list = [
-    ['Площадка 1', [
-        [ 'Событие 1', '2015-08-15 [8:00:00]', '2015-08-15 [10:00:00]', EventType.first ],
-        [ 'Событие 2', '2015-08-15 [10:00:00]', '2015-08-15 [11:00:00]', EventType.last ],
-        [ 'Событие 3', '2015-08-15 [14:00:00]', '2015-08-15 [17:00:00]', EventType.first ]
+    ['Площадка 1', 'room_1', [
+        [ 'Событие 1', 'event_1', '2015-08-15 [8:00:00]', '2015-08-15 [10:00:00]', EventType.first ],
+        [ 'Событие 2', 'event_2', '2015-08-15 [10:00:00]', '2015-08-15 [11:00:00]', EventType.last ],
+        [ 'Событие 3', 'event_3', '2015-08-15 [14:00:00]', '2015-08-15 [17:00:00]', EventType.first ]
     ]],
-    ['Площадка 2', [
-        [ 'Событие 4', '2015-08-15 [8:00:00]', '2015-08-15 [11:00:00]', EventType.first ],
-        [ 'Событие 5', '2015-08-15 [11:00:00]', '2015-08-15 [14:00:00]', EventType.last ],
-        [ 'Событие 6', '2015-08-15 [15:00:00]', '2015-08-15 [17:00:00]', EventType.first ]
+    ['Площадка 2', 'room_2', [
+        [ 'Событие 4', 'event_4', '2015-08-15 [8:00:00]', '2015-08-15 [11:00:00]', EventType.first ],
+        [ 'Событие 5', 'event_5', '2015-08-15 [11:00:00]', '2015-08-15 [14:00:00]', EventType.last ],
+        [ 'Событие 6', 'event_6', '2015-08-15 [15:00:00]', '2015-08-15 [17:00:00]', EventType.first ]
     ]]
 ]
 
-rooms_list.each do |name, events_list|
-  room = Room.create(name: name)
+rooms_list.each do |name, room_alias, events_list|
+  room = Room.create(name: name, alias: room_alias)
   forum.rooms << room
-  events_list.each do |event_name, begin_date, end_date, event_type|
-    event = Event.create(name: event_name, begin_date: begin_date, end_date: end_date, forum: forum, event_type: event_type)
+  events_list.each do |event_name, event_alias, begin_date, end_date, event_type|
+    event = Event.create(name: event_name, alias: event_alias, begin_date: begin_date, end_date: end_date, forum: forum, event_type: event_type)
     event.begin_date = (event.begin_date.to_time - 10*60*60).to_datetime
     event.end_date = (event.end_date.to_time - 10*60*60).to_datetime
+    event.description = 'Таким образом реализация намеченных плановых заданий в значительной степени обуславливает создание форм развития. Повседневная практика показывает, что новая модель организационной деятельности в значительной степени обуславливает создание позиций, занимаемых участниками в отношении поставленных задач. Разнообразный и богатый опыт постоянный количественный рост и сфера нашей активности позволяет оценить значение форм развития. С другой стороны консультация с широким активом обеспечивает широкому кругу (специалистов) участие в формировании позиций, занимаемых участниками в отношении поставленных задач. Не следует, однако забывать, что постоянный количественный рост и сфера нашей активности требуют определения и уточнения модели развития.'
     room.events << event
   end
 end

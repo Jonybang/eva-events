@@ -1,0 +1,20 @@
+div.container.app style="padding-top: 40px"
+  = render partial: 'forums/header', locals: {forum: @resource.forum, object: @resource}
+
+  .row
+    div
+      .panel.panel-default
+        .panel-heading
+          .panel-title Событие: #{@resource.name}
+        .panel-body
+          | #{@resource.description}
+        .list-group
+          .list-group-item
+            b' Площадка:
+            | #{@resource.room.full_name}
+          .list-group-item
+            b' Время начала:
+            | #{@resource.far_east_time('begin')}
+          .list-group-item
+            b' Время окончания:
+            | #{@resource.far_east_time('end')}

@@ -13,4 +13,10 @@ class Room < Base
     result = result.where('begin_date > ?', near_date) if near_date
     result.order(begin_date: :asc).first
   end
+  def full_name
+    self.name + (self.number ? ' - ' + self.number : '')
+  end
+  def alias_url
+    '/' + self.forum.alias + '/' + self.alias
+  end
 end

@@ -1,4 +1,5 @@
 class EventsController < InheritsController
+
   def update
     object = Event.find event_params[:id]
     object.assign_attributes(event_params)
@@ -7,6 +8,15 @@ class EventsController < InheritsController
     update! { get_resource and News.create_by_object(@resource, changes) and render :show and return }
   end
   private
+
+  def get_resource
+    if params[:event_alias] && !params[:id]
+      @forum = Forum.find_by alias: params[:forum_alias]
+      event = Event.where(forum_id: @forum.id).find_by alias: params[:event_alias]
+      params[:id] = event.id
+    end
+    super
+  end
 
   def get_collection
     collection = InheritsController.instance_method(:get_collection).bind(self).call

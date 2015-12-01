@@ -5,9 +5,12 @@ class ForumsController < InheritsController
   def get_resource
     if params[:alias] && !params[:id]
       forum = Forum.find_by alias: params[:alias]
+
+      #return head(404) if !forum || forum.empty?
+
       params[:id] = forum.id
     end
-    @resource = resource
+    super
   end
 
   def get_collection

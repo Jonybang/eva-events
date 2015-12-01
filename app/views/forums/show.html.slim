@@ -1,17 +1,9 @@
 div.container.app style="padding-top: 40px"
-  h2 #{@resource.name} - Расписание
+  = render partial: 'forums/header', locals: {forum: @resource}
 
   table.table
     tr
       - @resource.rooms.each do |room|
         td
           - room.events.each do |event|
-            .bs-callout.bs-callout-info style="border-left-color: #{event.color.code};"
-              h4 #{event.name} - #{event.duration} час.
-              p
-                span Площадка: #{event.room.name} #{event.room.number ? '-' : ''} #{event.room.number}
-                br
-                span Время начала: #{(event.begin_date + 10.hour).strftime('%H:%M')}
-                br
-                span Время окончания: #{(event.end_date + 10.hour).strftime('%H:%M')}
-
+            = render partial: 'events/item', object: event

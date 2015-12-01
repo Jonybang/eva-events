@@ -122,5 +122,8 @@ Rails.application.routes.draw do
   get '/manager/*path' => 'manager#index'
 
   get '/:alias', to: 'forums#show'
+  #get '/:forum_alias/:event_alias', to: 'events#show'
+  get '/:forum_alias/:room_alias', to: 'rooms#show'
+  get '/:forum_alias/:room_alias/:event_alias', to: 'events#show'
   #get '*path' => 'application#index'
 end

@@ -25,6 +25,15 @@ class Event < Post
   def duration
     ((self.end_date - self.begin_date) / 1.hour).round
   end
+  def far_east_time(type)
+    date = nil
+    if type == 'begin'
+      date = self.begin_date
+    elsif type == 'end'
+      date = self.end_date
+    end
+    (date + 10.hour).strftime('%H:%M')
+  end
   def local_time(type)
     date = nil
     if type == 'begin'
@@ -42,5 +51,8 @@ class Event < Post
     elsif field == 'room_id'
       self.room.name
     end
+  end
+  def alias_url
+    '/' + self.forum.alias + '/' + self.room.alias + '/' + self.alias
   end
 end
