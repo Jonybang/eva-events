@@ -21,6 +21,7 @@ class Event < Post
       self.original_color
     end
   end
+
   def duration
     ((self.end_date - self.begin_date) / 1.hour).round
   end
