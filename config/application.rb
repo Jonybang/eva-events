@@ -34,6 +34,7 @@ module EvaEvents
 
     # Enable the asset pipeline
     config.assets.enabled = true
+    #Notification.perform_in(5.minutes, 'bob')
   end
 end
 

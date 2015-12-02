@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.2'
+ruby '2.2.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
@@ -102,3 +102,4 @@ gem 'puma'
 gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 
 gem 'rqrcode_png'
+gem 'sidekiq'

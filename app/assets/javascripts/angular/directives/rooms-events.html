@@ -37,7 +37,7 @@
                              ng-change="resizeEvent(hour, $index)">
                         </div>
 
-                        <a href ng-click="clickEvent(cur_event)" class="list-group-item active" ng-style="cur_event.content_style">
+                        <a href ng-click="clickEvent(cur_event)" class="list-group-item active" ng-style="cur_event.content_style" title="{{cur_event.name}}">
                             <h5 class="list-group-item-heading">{{cur_event.name}} - {{+getDuration(cur_event).toFixed(1)}} час.</h5>
                             <p class="list-group-item-text">
                                 Начало в: {{cur_event.begin_date | amDateFormat:'D MMM. H:mm'}}
