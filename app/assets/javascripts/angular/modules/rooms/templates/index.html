@@ -36,6 +36,10 @@
             <button type="button" class="btn btn-primary btn-sm" ng-click="saveRoom(room)" ng-show="room.edit">
                 <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
             </button>
+
+            <a ng-href="/qr?class={{room.class}}&id={{room.id}}" class="btn btn-default btn-sm" target="_blank">
+                <span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span>
+            </a>
         </td>
     </tr>
 </table>

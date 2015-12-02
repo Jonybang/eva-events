@@ -117,6 +117,8 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/adminpanel', :as => 'rails_admin'
   #root :to => redirect('/adminpanel')
 
+  get 'qr' => 'qr#index'
+
   get 'manager' => 'manager#index'
 
   get '/manager/*path' => 'manager#index'
