@@ -145,6 +145,12 @@ app.controller('ForumsCtrl', ['$scope', '$state', '$timeout', '$modal', 'Forum',
 
         self.changedToggle = !self.changedToggle;
     };
+    this.roomDeleted = $scope.roomDeleted = function(rooms, index){
+        var room = rooms[index];
+        rooms.splice(index, 1);
+
+        self.changedToggle = !self.changedToggle;
+    };
     this.memberDelete = $scope.memberDelete = function(id, role){
         return $scope.cur_forum.DeletePerson(id, role);
     };

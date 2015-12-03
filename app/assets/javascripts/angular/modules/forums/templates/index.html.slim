@@ -63,9 +63,11 @@
               li ng-repeat="room in cur_forum.rooms | orderBy:'id'"
                 a.btn.btn-default.btn-xs.pull-right ng-click="newOrEditEvent(cur_forum, room)"
                   span.glyphicon.glyphicon-plus
-                h5: a ng-click="room.expand = !room.expand"
-                  | {{room.name}}
-                  span ng-class="['caret',{'inverse':room.expand}]"
+                h5
+                  a ng-click="room.expand = !room.expand"
+                    | {{room.name}}
+                    span ng-class="['caret',{'inverse':room.expand}]"
+                  button.close type="button" delete-object="room" obj-model="Room" delete-success="roomDeleted(cur_forum.rooms, $index)": span ×
                 ul collapse="!room.events.length || !room.expand"
                   li ng-repeat="event in room.events"
                     a ng-bind="event.name" ng-click="newOrEditEvent(cur_forum, room, event)"
