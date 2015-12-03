@@ -1,7 +1,7 @@
 div.container.app style="padding-top: 40px"
   = render partial: 'forums/header', locals: {forum: @resource.forum, object: @resource}
 
-  table.table
+  table.table.public-events
     tr
       td
         - @resource.events.each do |event|

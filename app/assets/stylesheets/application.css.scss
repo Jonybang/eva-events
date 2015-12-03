@@ -382,6 +382,15 @@ a.not_link, a.not_link:hover {
   float:none;
   margin-left: 10px;
 }
+.public-events {
+  .bs-callout {
+    padding: 20px 10px;
+    margin: 15px;
+    h4 {
+      font-size: 17px;
+    }
+  }
+}
 @media (min-width:1500px){
   .container {
     width: 1450px;

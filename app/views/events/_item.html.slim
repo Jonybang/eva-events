@@ -7,6 +7,6 @@
       ' Площадка:
       a href="#{item.room.alias_url}" #{item.room.full_name}
     br
-    span Время начала: #{item.far_east_time('begin')}
+    span Время начала: #{item.local_time('begin')}
     br
-    span Время окончания: #{item.far_east_time('end')}
+    span Время окончания: #{item.local_time('end')}

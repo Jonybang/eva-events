@@ -1,9 +1,17 @@
 div.container.app style="padding-top: 40px"
   = render partial: 'forums/header', locals: {forum: @resource}
 
-  table.table
+  table.table.public-events
     tr
+      th
       - @resource.rooms.each do |room|
+        th
+          = room.full_name
+    - @resource.hours_array.each do |hour|
+      tr
         td
-          - room.events.each do |event|
-            = render partial: 'events/item', object: event
+          = (hour + 10.hours).strftime('%R')
+        - @resource.rooms.each do |room|
+          td
+            - room.events_in_hour(hour).each do |event|
+              = render partial: 'events/item', object: event

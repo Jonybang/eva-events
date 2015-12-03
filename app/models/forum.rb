@@ -17,4 +17,28 @@ class Forum < Base
   def alias_url
     '/' + self.alias
   end
+  def begin_date
+    events.order(begin_date: :asc).first.begin_date
+  end
+  def end_date
+    events.order(end_date: :desc).first.end_date
+  end
+  def local_time(type)
+    date = nil
+    if type == 'begin'
+      date = self.begin_date
+    elsif type == 'end'
+      date = self.end_date
+    end
+    date.in_time_zone(self.forum.time_zone.empty? ? 'Vladivostok' : self.forum.time_zone)
+  end
+  def hours_array
+    @hours = []
+    temp_date = self.begin_date
+    while temp_date < self.end_date do
+      @hours.push(temp_date)
+      temp_date += 1.hour
+    end
+    @hours
+  end
 end

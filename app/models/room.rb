@@ -19,4 +19,7 @@ class Room < Base
   def alias_url
     '/' + self.forum.alias + '/' + (self.alias.blank? ? self.id.to_s : self.alias)
   end
+  def events_in_hour(hour)
+    self.events.where('begin_date >= ?', hour).where('begin_date < ?', hour + 1.hour)
+  end
 end

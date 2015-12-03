@@ -14,7 +14,7 @@ div.container.app style="padding-top: 40px"
             | #{@resource.room.full_name}
           .list-group-item
             b' Время начала:
-            | #{@resource.far_east_time('begin')}
+            | #{@resource.local_time('begin')}
           .list-group-item
             b' Время окончания:
-            | #{@resource.far_east_time('end')}
+            | #{@resource.local_time('end')}
