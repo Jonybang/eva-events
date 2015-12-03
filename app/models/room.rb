@@ -1,5 +1,6 @@
 class Room < Base
   # name:string number:string
+  default_scope { order('position ASC') }
   default_scope { includes(:events).order('events.begin_date ASC') }
 
   has_many :likes, as: :likeable
