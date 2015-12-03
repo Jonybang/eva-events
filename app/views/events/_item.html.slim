@@ -1,12 +1,13 @@
-.bs-callout.bs-callout-info style="border-left-color: #{item.color.code};"
-  h4
-    a' href="#{item.alias_url}" #{item.name}
-    |- #{item.duration} час.
-  p
-    span
-      ' Площадка:
-      a href="#{item.room.alias_url}" #{item.room.full_name}
-    br
-    span Время начала: #{item.local_time('begin')}
-    br
-    span Время окончания: #{item.local_time('end')}
+.clearfix
+  .bs-callout.bs-callout-info style="border-left-color: #{item.color.code};"
+    h4
+      a' href="#{item.alias_url}" #{item.name}
+      |- #{item.duration} час.
+    p
+      span
+        ' Площадка:
+        a href="#{item.room.alias_url}" #{item.room.full_name}
+      br
+      span Время начала: #{item.local_time('begin')}
+      br
+      span Время окончания: #{item.local_time('end')}
