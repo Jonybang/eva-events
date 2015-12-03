@@ -38,7 +38,7 @@ class Forum < Base
     while temp_date < self.end_date do
       @hours.push(temp_date)
       if temp_date.min > 0
-        temp_date += (60.min - temp_date.min)
+        temp_date += (60.minute - temp_date.min.minute)
       else
         temp_date += 1.hour
       end
