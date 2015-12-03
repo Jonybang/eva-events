@@ -20,6 +20,7 @@ class Room < Base
     '/' + self.forum.alias + '/' + (self.alias.blank? ? self.id.to_s : self.alias)
   end
   def events_in_hour(hour)
-    self.events.where('begin_date >= ?', hour).where('begin_date < ?', hour + 1.hour)
+    increment = hour.min ? (60.minute - hour.min.minute) : 1.hour
+    self.events.where('begin_date >= ?', hour).where('begin_date < ?', hour + increment)
   end
 end
