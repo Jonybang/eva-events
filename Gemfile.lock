@@ -154,6 +154,8 @@ GEM
     mime-types (2.99)
     mini_portile2 (2.0.0)
     minitest (5.8.3)
+    mobylette (3.5)
+      actionpack (>= 3.0)
     multi_json (1.11.2)
     nested_form (0.3.2)
     net-scp (1.2.1)
@@ -315,6 +317,7 @@ DEPENDENCIES
   inherited_resources!
   jquery-rails
   keepass-password-generator
+  mobylette
   ng-rails-csrf
   oj
   pg

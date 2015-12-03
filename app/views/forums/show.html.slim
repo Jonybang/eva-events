@@ -1,17 +1,19 @@
 div.container.app style="padding-top: 40px"
   = render partial: 'forums/header', locals: {forum: @resource}
 
-  table.table.public-events
-    tr
-      th
-      - @resource.rooms.each do |room|
-        th
-          = room.full_name
-    - @resource.hours_array.each do |hour|
-      tr
-        td
-          = (hour + 10.hours).strftime('%R')
-        - @resource.rooms.each do |room|
-          td
-            - room.events_in_hour(hour).each do |event|
-              = render partial: 'events/item', object: event
+  #public-rooms-slider
+    - @room_groups.each do |rooms|
+      div: table.table.public-events
+        tr
+          th
+          - rooms.each do |room|
+            th
+              = room.full_name
+        - @resource.hours_array.each do |hour|
+          tr
+            td
+              = (hour + 10.hours).strftime('%R')
+            - rooms.each do |room|
+              td
+                - room.events_in_hour(hour).each do |event|
+                  = render partial: 'events/item', object: event

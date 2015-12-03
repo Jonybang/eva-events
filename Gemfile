@@ -104,3 +104,5 @@ gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 gem 'rqrcode_png'
 gem 'sidekiq'
 gem 'sidekiq-scheduler', '~> 2.0'
+
+gem 'mobylette'
