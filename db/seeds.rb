@@ -34,7 +34,7 @@ users_list = [
 ]
 
 users_list.each do |email, pass, name, organization_name|
-  user = Person.create(name: name, email: email, password: pass)
+  user = Person.create(name: name, email: email, password: pass, is_admin: true)
   organization = Organization.create(name: organization_name)
   user.creator_organizations << organization
   user.organizations << organization
