@@ -12,7 +12,9 @@ div.container.app style="padding-top: 40px"
         - @resource.hours_array.each do |hour|
           tr
             td
-              = (hour + 10.hours).strftime('%R')
+              div.hour-container
+                span.hour
+                  = (hour + 10.hours).strftime('%R')
             - rooms.each do |room|
               td
                 - room.events_in_hour(hour).each do |event|
