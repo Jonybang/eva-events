@@ -8,8 +8,8 @@
         ' Площадка:
         a href="#{item.room.alias_url}" #{item.room.full_name}
       br
-      span Время начала: #{item.local_time('begin')}
+      span Начало: #{item.local_time('begin')}
       br
-      span Время окончания: #{item.local_time('end')}
+      span Окончание: #{item.local_time('end')}
       span.label.pull-right style="background-color: #{item.color.code};"
         | #{item.event_type.name}
