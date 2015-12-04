@@ -77,4 +77,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
   config.i18n.available_locales = [:en, :ru]
+
+  GA.tracker = 'UA-71040637-1'
 end

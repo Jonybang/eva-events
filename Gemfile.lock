@@ -130,6 +130,7 @@ GEM
       railties (>= 3.2, < 5.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    google-analytics-rails (0.0.6)
     haml (4.0.7)
       tilt
     has_scope (0.6.0)
@@ -313,6 +314,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   debase
   font-awesome-rails
+  google-analytics-rails
   heroku_secrets!
   inherited_resources!
   jquery-rails
