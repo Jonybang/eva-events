@@ -26,7 +26,7 @@ class ForumsController < InheritsController
   end
 
   def get_room_groups
-    group_size = 3
+    group_size = 1
     group_size = 1 if is_mobile_request?
     @room_groups = []
     group_index = 0
