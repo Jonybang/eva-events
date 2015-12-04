@@ -16,8 +16,14 @@ class SessionsController < InheritsController
   end
 
   def api_create
-    db_user = User.find_by(id: params[:id])
-    @user = User.authenticate(db_user.email, params[:password])
+    @user = nil
+    if is_number?(params[:id])
+      db_user = User.find_by(id: params[:id])
+      @user = User.authenticate(db_user.email, params[:password])
+    else
+      @user = User.authenticate(params[:id], params[:password])
+    end
+
     if @user
       session[:user_id] = @user.id
       respond_with(@user, :status => 200)
@@ -39,5 +45,8 @@ class SessionsController < InheritsController
   def destroy
     session[:user_id] = nil
     redirect_to root_url, :notice => 'Logged out!'
+  end
+  def is_number?(string)
+    true if Float(string) rescue false
   end
 end
