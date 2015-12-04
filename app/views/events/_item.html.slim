@@ -11,3 +11,5 @@
       span Время начала: #{item.local_time('begin')}
       br
       span Время окончания: #{item.local_time('end')}
+      span.label.pull-right style="background-color: #{item.color.code};"
+        | #{item.event_type.name}

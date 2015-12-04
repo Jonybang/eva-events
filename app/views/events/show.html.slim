@@ -13,6 +13,9 @@ div.container.app style="padding-top: 40px"
             b' Площадка:
             | #{@resource.room.full_name}
           .list-group-item
+            b' Тип:
+            | #{@resource.event_type.name}
+          .list-group-item
             b' Время начала:
             | #{@resource.local_time('begin')}
           .list-group-item
