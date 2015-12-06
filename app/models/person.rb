@@ -26,7 +26,7 @@ class Person < User
   has_and_belongs_to_many :visitor_events, class_name: 'Event', inverse_of: :visitors, :join_table => 'events_visitors'
 
   def image
-    !read_attribute(:image) || read_attribute(:image).empty? ? 'default/silhouette.jpg' : read_attribute(:image)
+    !read_attribute(:image) || read_attribute(:image).empty? ? 'default/robot.png' : read_attribute(:image)
   end
   def role_in_forum(forum)
     if !self.admin_forums.where(forums_admins: {forum_id: forum.id}).empty?
