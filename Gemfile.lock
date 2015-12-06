@@ -218,6 +218,8 @@ GEM
       i18n
       polyamorous (~> 1.2)
     rdoc (4.2.0)
+    recaptcha (1.0.2)
+      json
     redis (3.2.2)
     remotipart (1.2.1)
     responders (2.1.0)
@@ -331,6 +333,7 @@ DEPENDENCIES
   rails_admin!
   rails_admin-i18n
   ransack
+  recaptcha
   responders
   rqrcode_png
   ruby-debug-ide

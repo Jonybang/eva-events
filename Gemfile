@@ -108,3 +108,5 @@ gem 'sidekiq-scheduler', '~> 2.0'
 gem 'mobylette'
 
 gem 'google-analytics-rails'
+
+gem "recaptcha", require: "recaptcha/rails"

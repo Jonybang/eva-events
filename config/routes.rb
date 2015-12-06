@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   resources :users, :except => :new
   resources :sessions, :except => :new
+  resources :issues
 
   get 'api' => 'api#index'
 
@@ -115,9 +116,9 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
   mount RailsAdmin::Engine => '/adminpanel', :as => 'rails_admin'
-  #root :to => redirect('/adminpanel')
 
   get 'qr' => 'qr#index'
+  get 'support' => 'issues#new'
 
   get 'manager' => 'manager#index'
 
