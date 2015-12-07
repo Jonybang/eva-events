@@ -110,3 +110,5 @@ gem 'mobylette'
 gem 'google-analytics-rails'
 
 gem "recaptcha", require: "recaptcha/rails"
+
+gem "paperclip", "~> 4.3"

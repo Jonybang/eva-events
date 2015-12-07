@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151206071707) do
+ActiveRecord::Schema.define(version: 20151207045655) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,18 +162,22 @@ ActiveRecord::Schema.define(version: 20151206071707) do
     t.boolean  "completed"
     t.boolean  "published"
     t.boolean  "important"
-    t.boolean  "for_visitor",    default: true
-    t.boolean  "for_member",     default: true
-    t.boolean  "for_volunteer",  default: true
-    t.boolean  "for_admin",      default: true
+    t.boolean  "for_visitor",        default: true
+    t.boolean  "for_member",         default: true
+    t.boolean  "for_volunteer",      default: true
+    t.boolean  "for_admin",          default: true
     t.datetime "published_time"
     t.datetime "changed_time"
     t.integer  "forum_id"
     t.integer  "person_id"
     t.integer  "newsable_id"
     t.string   "newsable_type"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "news", ["forum_id"], name: "index_news_on_forum_id", using: :btree
