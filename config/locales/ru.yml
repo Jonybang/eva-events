@@ -4,3 +4,6 @@ ru:
   end_date: "Время окончания"
   room: "Площадка"
   room_id: "Площадка"
+  event_type_id: "Тип события"
+  color_id: "Цвет объекта"
+  description: "Описание"
