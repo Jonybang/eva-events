@@ -1,4 +1,4 @@
-job = Sidekiq::Cron::Job.create(name: 'Notifications about Events', cron: '*/2 * * * *', class: 'Notification')
+job = Sidekiq::Cron::Job.create(name: 'Notifications about Events', cron: '*/10 * * * *', class: 'Notification')
 
 class AuthConstraint
   def self.admin?(request)
