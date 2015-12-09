@@ -8,6 +8,7 @@ class SessionsController < InheritsController
     user = User.authenticate(params[:email], params[:password])
     if user
       session[:user_id] = user.id
+      cookies[:user_id] = user.id
       redirect_to manager_path, :notice => 'Logged in!'
     else
       flash.alert = 'Неправильный логин или пароль'
@@ -26,6 +27,7 @@ class SessionsController < InheritsController
 
     if @user
       session[:user_id] = @user.id
+      cookies[:user_id] = @user.id
       respond_with(@user, :status => 200)
     else
       respond_with(@user, :status => 400)
@@ -34,6 +36,7 @@ class SessionsController < InheritsController
 
   def api_destroy
     session[:user_id] = nil
+    cookies[:user_id] = nil
     respond_with({}, :status => 200, :location => nil)
   end
 
@@ -44,6 +47,7 @@ class SessionsController < InheritsController
 
   def destroy
     session[:user_id] = nil
+    cookies[:user_id] = nil
     redirect_to root_url, :notice => 'Logged out!'
   end
   def is_number?(string)

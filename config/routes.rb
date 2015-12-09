@@ -1,3 +1,4 @@
+
 Rails.application.routes.draw do
   root :to => 'application#index'
 
@@ -115,6 +116,13 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  require 'sidekiq/web'
+  require 'sidekiq/cron/web'
+
+  constraints lambda {|request| AuthConstraint.admin?(request) } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   mount RailsAdmin::Engine => '/adminpanel', :as => 'rails_admin'
 
   get 'qr' => 'qr#index'

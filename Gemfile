@@ -95,6 +95,7 @@ group :development do
   gem 'capistrano3-puma',   require: false
   gem 'capistrano-secrets-yml', '~> 1.0.0'
   gem 'capistrano-postgresql'
+  gem 'capistrano-sidekiq'
 end
 
 gem 'puma'
@@ -104,11 +105,14 @@ gem 'heroku_secrets', github: 'alexpeattie/heroku_secrets'
 gem 'rqrcode_png'
 gem 'sidekiq'
 gem 'sidekiq-scheduler', '~> 2.0'
+gem 'sidekiq-cron', '~> 0.4.0'
 
 gem 'mobylette'
 
 gem 'google-analytics-rails'
 
-gem "recaptcha", require: "recaptcha/rails"
+gem 'recaptcha', require: 'recaptcha/rails'
 
-gem "paperclip", "~> 4.3"
+gem 'paperclip', '~> 4.3'
+
+gem 'sinatra', :require => nil

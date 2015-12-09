@@ -1,6 +1,6 @@
 class Notification
   include Sidekiq::Worker
-  def perform(name)
+  def perform
     response = push_all_request({title: 'Заголовок', text: 'Тестовое сообщение'})
   end
 
@@ -17,11 +17,13 @@ class Notification
   def post_request(url, data)
     uri = URI(url)
     http = Net::HTTP.new(uri.host, uri.port)
-    #http.use_ssl = true
+    http.use_ssl = true
 
-    request = Net::HTTP::Post.new(uri.path, {:Content-Type =>'application/json'})
+    request = Net::HTTP::Post.new(uri.path, {'Content-Type' => 'application/json'})
     request.body = data.to_json
 
-    http.request(request)
+    Rails.logger.debug 'Send notification: '
+    Rails.logger.debug data
+    Rails.logger.debug http.request(request)
   end
 end
