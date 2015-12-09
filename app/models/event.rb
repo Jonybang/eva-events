@@ -23,7 +23,8 @@ class Event < Post
   end
 
   def duration
-    ((self.end_date - self.begin_date) / 1.hour).round
+    '%g' % ('%.2f' % ((((self.end_date - self.begin_date) / 1.hour)*10).round/10.0))
+
   end
   def local_time(type)
     date = nil
