@@ -1,7 +1,7 @@
 class Notification
   include Sidekiq::Worker
   def perform
-    response = push_all_request({title: 'Заголовок', text: 'Тестовое сообщение'})
+    response = push_all_request({title: 'Робомех рулит!', text: 'Робомех действительно рулит'})
   end
 
   private
