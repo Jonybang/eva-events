@@ -23,8 +23,8 @@ require 'capistrano/puma'
 require 'capistrano/secrets_yml'
 require 'capistrano/postgresql'
 
-#require 'capistrano/sidekiq'
-#require 'capistrano/sidekiq/monit' #to require monit tasks # Only for capistrano3
+require 'capistrano/sidekiq'
+require 'capistrano/sidekiq/monit' #to require monit tasks # Only for capistrano3
 
 #Dir.glob('lib/capistrano/**/*.rb').each { |r| import r }
 Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }

@@ -6,7 +6,7 @@ class ForumsController < InheritsController
     if params[:alias] && !params[:id]
       forum = Forum.find_by alias: params[:alias]
 
-      return head(404) if !forum || forum.empty?
+      return head(404) if !forum
       params[:id] = forum.id
     end
     super
