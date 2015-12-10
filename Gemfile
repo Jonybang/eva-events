@@ -116,3 +116,7 @@ gem 'recaptcha', require: 'recaptcha/rails'
 gem 'paperclip', '~> 4.3'
 
 gem 'sinatra', :require => nil
+
+gem 'builder'
+
+gem 'iconv'
