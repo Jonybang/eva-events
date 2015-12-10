@@ -1,20 +1,26 @@
 class Notification
   include Sidekiq::Worker
   def perform
-    #response = push_all_request({title: 'Робомех рулит!', text: 'Робомех действительно рулит. Рандомное число: ' + Random.rand(999).to_s})
-    #post_to_sms_many_numbers('Тестовое сообщение. Рандомное число: ' + Random.rand(999).to_s,
-    #                         %w(79141779406 79141591070 79147710401 79145480304 79242039725))
+    #post_to_sms_many_numbers('Сервис рассылки СМС "Робомех 2015" работает отлично!',
+    #                        %w(79141779406 79147756745 79098535667 79242039725 79244080473 79622281551 79990852644))
+
+    # On fire uncomment lines below
+    # %w(79141779406 79141591070 79147710401 79145480304 79242039725).each do |phone|
+    #   post_to_sms_one_number('Тестовое сообщение для группы. Рандомное число: ' + Random.rand(999).to_s, phone)
+    # end
+
+    check_events_and_send_noty 1
   end
 
   private
 
-  def push_all_request(data)
+  def push_all_request(title, text='')
     post_request('https://pushall.ru/api.php', {
         type: 'broadcast',
         id: '845',
         key: 'be1acda5e707166d57930063e647cc7a',
-        title: data[:title],
-        text: data[:text]})
+        title: title,
+        text: text})
   end
   def post_request(url, data)
     uri = URI(url)
@@ -28,10 +34,15 @@ class Notification
     #uri.query = URI.encode_www_form(data)
     #request = Net::HTTP.get_response(uri)
 
-    Rails.logger.debug 'Send notification: '
-    Rails.logger.debug data
+    #Rails.logger.debug 'Send notification: '
+    #Rails.logger.debug data
     Rails.logger.debug response.body
-    Rails.logger.debug '========================='
+    #Rails.logger.debug '========================='
+  end
+  def get_request(url, data={})
+    uri = URI(url)
+    uri.query = URI.encode_www_form(data)
+    Net::HTTP.get_response(uri).body
   end
 
   def post_to_sms_one_number(text, phone)
@@ -95,6 +106,33 @@ class Notification
       Rails.logger.debug xml_target
       Rails.logger.debug response.body
       Rails.logger.debug '========================='
+    end
+  end
+
+  def send_sms_to_robomech_phones(text, type='visitors')
+    phones = JSON.parse get_request('http://robomech.ru/get-phones', {type: type})
+    phones.push('79141779406')
+
+    post_to_sms_many_numbers(text, phones)
+
+    # phones.each do |phone|
+    #   post_to_sms_one_number(text, phone)
+    # end
+  end
+  def check_events_and_send_noty(forum_id=1)
+    forum = Forum.find forum_id
+    forum.events.each do |event|
+
+      if event.time_to_begin > 0 && event.time_to_begin > 5.minute && event.time_to_begin < 16.minute
+        Rails.logger.debug '[ОПОВЕЩЕНИЕ] О событии ' + event.name + ', до него осталось ' + (event.time_to_begin/60).to_s + ' минут'
+        text = event.name + ' скоро начнется!', 'Время начала: ' + event.local_time('begin') + ' Время окончания: ' + event.local_time('end') + ' Помещение: ' + event.room.full_name
+        push_all_request(text)
+        post_to_sms_one_number(text, '79141779406')
+      elsif event.time_to_begin > 0
+        Rails.logger.debug '[ОЖИДАНИЕ] До события ' + event.name + ' еще ' + (event.time_to_begin/60).to_s + ' минут'
+      else
+        Rails.logger.debug '[ПРОШЛО] Событие ' + event.name + ' ' + (event.time_to_begin/60).to_s + ' минут назад'
+      end
     end
   end
 end

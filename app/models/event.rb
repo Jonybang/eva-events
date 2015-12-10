@@ -24,7 +24,6 @@ class Event < Post
 
   def duration
     '%g' % ('%.2f' % ((((self.end_date - self.begin_date) / 1.hour)*10).round/10.0))
-
   end
   def local_time(type)
     date = nil
@@ -46,5 +45,8 @@ class Event < Post
   end
   def alias_url
     self.room.alias_url + '/' + (self.alias.blank? ? self.id.to_s : self.alias)
+  end
+  def time_to_begin
+    self.begin_date - DateTime.now
   end
 end
