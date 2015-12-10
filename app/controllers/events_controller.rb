@@ -5,7 +5,8 @@ class EventsController < InheritsController
     object.assign_attributes(event_params)
     changes = object.changes
 
-    update! { get_resource and News.create_by_object(@resource, changes) and render :show and return }
+    #update! { get_resource and News.create_by_object(@resource, changes) and render :show and return }
+    update! { get_resource and render :show and return }
   end
   private
 
