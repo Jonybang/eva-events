@@ -45,6 +45,7 @@ Rails.application.routes.draw do
           resources :likes
           delete 'likes' => 'likes#destroy'
         end
+        resources :telegram_users
       end
     end
     resources :events

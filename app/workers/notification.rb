@@ -9,18 +9,23 @@ class Notification
     #   post_to_sms_one_number('Тестовое сообщение для группы. Рандомное число: ' + Random.rand(999).to_s, phone)
     # end
 
-    check_events_and_send_noty 1
+    #check_events_and_send_noty 1
+    send_to_telegram('Проверка телеграмма. Рандомное число: ' + Random.rand(999).to_s)
   end
 
   private
 
   def push_all_request(title, text='')
-    post_request('https://pushall.ru/api.php', {
+    response = post_request('https://pushall.ru/api.php', {
         type: 'broadcast',
         id: '845',
         key: 'be1acda5e707166d57930063e647cc7a',
         title: title,
         text: text})
+    error = JSON.parse(response.body)[:error]
+    if error == 'not so fast'
+      Timeout::timeout(10.seconds) { push_all_request(title, text) }
+    end
   end
   def post_request(url, data)
     uri = URI(url)
@@ -38,6 +43,7 @@ class Notification
     #Rails.logger.debug data
     Rails.logger.debug response.body
     #Rails.logger.debug '========================='
+    return response
   end
   def get_request(url, data={})
     uri = URI(url)
@@ -109,6 +115,11 @@ class Notification
     end
   end
 
+  def send_to_telegram(text)
+    post_request('https://api.telegram.org/bot158767104:AAGP2dDFWEB6dnIlAuFRJJhIvSaQEsBnTsw/sendMessage',
+                 {chat_id:'138160592', text: text})
+  end
+
   def send_sms_to_robomech_phones(text, type='visitors')
     phones = JSON.parse get_request('http://robomech.ru/get-phones', {type: type})
     phones.push('79141779406')
@@ -123,11 +134,11 @@ class Notification
     forum = Forum.find forum_id
     forum.events.each do |event|
 
-      if event.time_to_begin > 0 && event.time_to_begin > 5.minute && event.time_to_begin < 16.minute
+      if event.time_to_begin > 0 && event.time_to_begin > 6.minute && event.time_to_begin < 16.minute
         Rails.logger.debug '[ОПОВЕЩЕНИЕ] О событии ' + event.name + ', до него осталось ' + (event.time_to_begin/60).to_s + ' минут'
-        text = event.name + ' скоро начнется!', 'Время начала: ' + event.local_time('begin') + ' Время окончания: ' + event.local_time('end') + ' Помещение: ' + event.room.full_name
-        push_all_request(text)
-        post_to_sms_one_number(text, '79141779406')
+        text = 'Время начала: ' + event.local_time('begin') + ' Время окончания: ' + event.local_time('end') + ' Площадка: ' + event.room.full_name
+        push_all_request(event.name + ' скоро начнется!', text)
+        post_to_sms_one_number(event.name + ' скоро начнется! ' + text, '79141779406')
       elsif event.time_to_begin > 0
         Rails.logger.debug '[ОЖИДАНИЕ] До события ' + event.name + ' еще ' + (event.time_to_begin/60).to_s + ' минут'
       else

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151207045655) do
+ActiveRecord::Schema.define(version: 20151210180455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -231,6 +231,15 @@ ActiveRecord::Schema.define(version: 20151207045655) do
 
   add_index "tasks_performers", ["person_id"], name: "index_tasks_performers_on_person_id", using: :btree
   add_index "tasks_performers", ["task_id"], name: "index_tasks_performers_on_task_id", using: :btree
+
+  create_table "telegram_users", force: :cascade do |t|
+    t.string   "chat_id"
+    t.integer  "forum_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "telegram_users", ["forum_id"], name: "index_telegram_users_on_forum_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email"
