@@ -15,7 +15,7 @@ class Notification
     #check_events_and_send_noty 1
     #send_to_telegram('Проверка телеграмма. Рандомное число: ' + Random.rand(999).to_s)
     #RobomechClient.send_sms_to_phones('Спасибо, что вы зарегистрировались на экскурсию, ждем вас завтра в назначенное время :)', 'excursion')
-    check_events_and_send_noty 4
+    check_events_and_send_noty 2
   end
 
   private
@@ -27,12 +27,12 @@ class Notification
         Rails.logger.debug '[ОПОВЕЩЕНИЕ] О событии ' + event.name + ', до него осталось ' + (event.time_to_begin/60).to_s + ' минут'
 
         telegram_thread = Thread.new {
-          TelegramUser.where(test: true).each do |user|
+          TelegramUser.each do |user|
             TelegramClient.send_message(user.chat_id, event.get_ad('telegram'))
           end
         }
         sms_thread = Thread.new {
-          MtsClient.one_number_message('79141779406', event.get_ad)
+          RobomechClient.send_sms_to_phones(event.get_ad, 'all')
         }
 
         telegram_thread.join
