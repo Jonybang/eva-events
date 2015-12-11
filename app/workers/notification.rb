@@ -10,7 +10,8 @@ class Notification
     # end
 
     #check_events_and_send_noty 1
-    send_to_telegram('Проверка телеграмма. Рандомное число: ' + Random.rand(999).to_s)
+    #send_to_telegram('Проверка телеграмма. Рандомное число: ' + Random.rand(999).to_s)
+    #send_sms_to_robomech_phones('Здравствуйте, уважаемые участники фестиваля Робомех 2015. Фестиваль уже скоро и мы спешим вас оповестить о том, что 11 декабря с 15:00 состоится тренировка для всех команд. Кто не сможет прийти 11 декабря, ждем вас 12 декабря с 9:00.', 'competitions')
   end
 
   private
@@ -124,11 +125,11 @@ class Notification
     phones = JSON.parse get_request('http://robomech.ru/get-phones', {type: type})
     phones.push('79141779406')
 
-    post_to_sms_many_numbers(text, phones)
+    #post_to_sms_many_numbers(text, phones)
 
-    # phones.each do |phone|
-    #   post_to_sms_one_number(text, phone)
-    # end
+    phones.each do |phone|
+      post_to_sms_one_number(text, phone)
+    end
   end
   def check_events_and_send_noty(forum_id=1)
     forum = Forum.find forum_id
