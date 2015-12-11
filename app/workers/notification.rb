@@ -38,7 +38,7 @@ class Notification
         title = event.name + ' скоро начнется! '
         text = 'Время начала: ' + event.local_time('begin') + ' Время окончания: ' + event.local_time('end') + ' Площадка: ' + event.room.full_name
         telegram_thread = Thread.new {
-          TelegramUser.all.each do |user|
+          TelegramUser.where(test: true).each do |user|
             TelegramClient.send_message(user.chat_id, title + text)
           end
         }
