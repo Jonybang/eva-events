@@ -14,8 +14,8 @@ class Notification
 
     #check_events_and_send_noty 1
     #send_to_telegram('Проверка телеграмма. Рандомное число: ' + Random.rand(999).to_s)
-    send_sms_to_robomech_phones('Спасибо, что вы зарегистрировались на экскурсию, ждем вас завтра в назначенное время :)', 'excursion')
-    #check_events_and_send_noty 4
+    #send_sms_to_robomech_phones('Спасибо, что вы зарегистрировались на экскурсию, ждем вас завтра в назначенное время :)', 'excursion')
+    check_events_and_send_noty 4
   end
 
   private
