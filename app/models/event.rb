@@ -32,7 +32,7 @@ class Event < Post
     elsif type == 'end'
       date = self.end_date
     end
-    date.in_time_zone(self.forum.time_zone.empty? ? 'Vladivostok' : self.forum.time_zone).strftime('%R')
+    date.in_time_zone(!self.forum.time_zone || self.forum.time_zone.empty? ? 'Vladivostok' : self.forum.time_zone).strftime('%R')
   end
   def humanize_field(field)
     if field == 'end_date'
