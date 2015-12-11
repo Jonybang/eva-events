@@ -132,6 +132,7 @@ Rails.application.routes.draw do
   get 'manager' => 'manager#index'
 
   post '158767104:AAGP2dDFWEB6dnIlAuFRJJhIvSaQEsBnTsw' => 'telegram_users#command_execute'
+  post '/' => 'telegram_users#root_post'
 
   get '/manager/*path' => 'manager#index'
 

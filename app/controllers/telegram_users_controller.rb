@@ -4,4 +4,8 @@ class TelegramUsersController < ApplicationController
     Rails.logger.debug params
     head(200)
   end
+  def root_post
+    Rails.logger.debug params
+    head(200)
+  end
 end
