@@ -131,6 +131,8 @@ Rails.application.routes.draw do
 
   get 'manager' => 'manager#index'
 
+  post '158767104:AAGP2dDFWEB6dnIlAuFRJJhIvSaQEsBnTsw' => 'telegram_users#command_execute'
+
   get '/manager/*path' => 'manager#index'
 
   get '/:alias', to: 'forums#show'
