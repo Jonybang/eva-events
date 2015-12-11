@@ -35,16 +35,16 @@ class Notification
 
       if event.time_to_begin > 0 && event.time_to_begin > 6.minute && event.time_to_begin < 16.minute
         Rails.logger.debug '[ОПОВЕЩЕНИЕ] О событии ' + event.name + ', до него осталось ' + (event.time_to_begin/60).to_s + ' минут'
-        title = event.name + ' скоро начнется! '
-        text = 'Время начала: ' + event.local_time('begin') + ' Время окончания: ' + event.local_time('end') + ' Площадка: ' + event.room.full_name
+
         telegram_thread = Thread.new {
           TelegramUser.where(test: true).each do |user|
-            TelegramClient.send_message(user.chat_id, title + text)
+            TelegramClient.send_message(user.chat_id, event.get_ad('telegram'))
           end
         }
         sms_thread = Thread.new {
-          MtsClient.one_number_message('79141779406',title  + text)
+          MtsClient.one_number_message('79141779406', event.get_ad)
         }
+
         telegram_thread.join
         sms_thread.join
       elsif event.time_to_begin > 0
