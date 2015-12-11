@@ -9,12 +9,12 @@ class Notification
     #   post_to_sms_one_number('Тестовое сообщение для группы. Рандомное число: ' + Random.rand(999).to_s, phone)
     # end
 
-    post_request('https://api.telegram.org/bot158767104:AAGP2dDFWEB6dnIlAuFRJJhIvSaQEsBnTsw/setWebhook',
-                 {url:'https://evaevents.ru/'})
+    # post_request('https://api.telegram.org/bot158767104:AAGP2dDFWEB6dnIlAuFRJJhIvSaQEsBnTsw/setWebhook',
+    #              {url:'https://evaevents.ru/'})
 
     #check_events_and_send_noty 1
     #send_to_telegram('Проверка телеграмма. Рандомное число: ' + Random.rand(999).to_s)
-    #send_sms_to_robomech_phones('Здравствуйте, уважаемые участники фестиваля Робомех 2015. Фестиваль уже скоро и мы спешим вас оповестить о том, что 11 декабря с 15:00 состоится тренировка для всех команд. Кто не сможет прийти 11 декабря, ждем вас 12 декабря с 9:00.', 'competitions')
+    #send_sms_to_robomech_phones('Добрый день посетители фестиваля "Робомех 2015". Мы вас ждем 12 декабря на открытие фестиваля в 11:00. До встречи!', 'visitors')
   end
 
   private
