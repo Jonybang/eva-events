@@ -56,7 +56,7 @@ class Event < Post
         ' Продолжительность: ' + self.duration + ' ч.' +
         ' Площадка: ' + self.room.full_name
     elsif type == 'telegram'
-      '```' + self.name + ' скоро начнется!````' +
+      '``` ' + self.name + ' скоро начнется!```' +
         ' Время начала: *' + self.local_time('begin') + '*' +
         ' Продолжительность: *' + self.duration + ' ч.' + '*' +
         ' Площадка: *' + self.room.full_name + '*'

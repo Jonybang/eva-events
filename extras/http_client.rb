@@ -17,7 +17,7 @@ class HttpClient
     #Rails.logger.debug '========================='
     return response
   end
-  def get_request(url, data={})
+  def self.get_request(url, data={})
     uri = URI(url)
     uri.query = URI.encode_www_form(data)
     Net::HTTP.get_response(uri).body
