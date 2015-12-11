@@ -10,8 +10,8 @@ class TelegramUsersController < ApplicationController
     exist_user = TelegramUser.find_by chat_id: user_id
 
     unless exist_user
-      TelegramUser.create(chat_id: user_id, forum_id: 2)
-      TelegramClient.send_message(user_id, 'Вы успешно подписаны на бота "Робомех 2015"! Совсем скоро вам начнут приходить уведомления о начале событий мероприятия.')
+      TelegramUser.create(chat_id: user_id, forum_id: 2, full_name: params[:message][:chat][:last_name] + ' ' + params[:message][:chat][:first_name])
+      TelegramClient.send_message(user_id.to_s, 'Вы успешно подписаны на бота "Робомех 2015"! Совсем скоро вам начнут приходить уведомления о начале событий мероприятия.')
     end
 
     head(200)
