@@ -1,3 +1,28 @@
-<h1><%=@resource.name%> - Расписание</h1>
-<%= image_tag @qr_code.to_data_url %>
-<h5>Ссылка - <%=@url%></h5>
+<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+<div class="container" style="margin-top: 20px;">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 style="margin-top:5px;"><%=@resource.name%> - Расписание</h1>
+        </div>
+        <div class="panel-body">
+          <table class="table table-stdiped">
+            <tr>
+              <td>Название</td>
+              <td>Время начала</td>
+              <td>Время окончания</td>
+            </tr>
+            <%-@resource.events.each do |event| %>
+                <tr>
+                  <td><%=event.name%> - <%=event.duration%> ч.</td>
+                  <td><%=event.local_time('begin')%></td>
+                  <td><%=event.local_time('end')%></td>
+                </tr>
+            <%end%>
+          </table>
+        </div>
+        <div class="panel-footer">
+          <h5>Ссылка - <%=@url%></h5>
+        </div>
+    </div>
+    <%= image_tag @qr_code.to_data_url, class: 'center-block' %>
+</div>
