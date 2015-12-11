@@ -35,6 +35,7 @@ module EvaEvents
     # Enable the asset pipeline
     config.assets.enabled = true
     #Notification.perform_in(5.minutes, 'bob')
+    config.autoload_paths += %W(#{config.root}/extras)
   end
 end
 
