@@ -15,37 +15,10 @@ class Notification
     #check_events_and_send_noty 1
     #send_to_telegram('Проверка телеграмма. Рандомное число: ' + Random.rand(999).to_s)
     #send_sms_to_robomech_phones('Друзья, пройдя по ссылке https://evaevents.ru/robomech вы можете увидеть расписание мепроприятия и распланироаать свой день.', 'visitors')
-    telegram_thread = Thread.new {
-      #TelegramClient.send_message('138160592', 'Проверка телеграмма. Рандомное число: ' + Random.rand(999).to_s)
-    }
-    sms_thread = Thread.new {
-      #MtsClient.one_number_message('79141779406', 'Проверка телеграмма. Рандомное число: ' + Random.rand(999).to_s)
-    }
-    telegram_thread.join
-    sms_thread.join
+    check_events_and_send_noty 4
   end
 
   private
-
-  def push_all_request(title, text='')
-    response = post_request('https://pushall.ru/api.php', {
-        type: 'broadcast',
-        id: '845',
-        key: 'be1acda5e707166d57930063e647cc7a',
-        title: title,
-        text: text})
-    error = JSON.parse(response.body)[:error]
-    if error == 'not so fast'
-      Timeout::timeout(10.seconds) { push_all_request(title, text) }
-    end
-  end
-
-  def get_request(url, data={})
-    uri = URI(url)
-    uri.query = URI.encode_www_form(data)
-    Net::HTTP.get_response(uri).body
-  end
-
   def send_sms_to_robomech_phones(text, type='visitors')
     phones = JSON.parse get_request('http://robomech.ru/get-phones', {type: type})
     phones.push('79141779406')
@@ -62,9 +35,18 @@ class Notification
 
       if event.time_to_begin > 0 && event.time_to_begin > 6.minute && event.time_to_begin < 16.minute
         Rails.logger.debug '[ОПОВЕЩЕНИЕ] О событии ' + event.name + ', до него осталось ' + (event.time_to_begin/60).to_s + ' минут'
+        title = event.name + ' скоро начнется! '
         text = 'Время начала: ' + event.local_time('begin') + ' Время окончания: ' + event.local_time('end') + ' Площадка: ' + event.room.full_name
-        push_all_request(event.name + ' скоро начнется!', text)
-        MtsClient.one_number_message('79141779406', event.name + ' скоро начнется! ' + text)
+        telegram_thread = Thread.new {
+          TelegramUser.all.each do |user|
+            TelegramClient.send_message(user.chat_id, title + text)
+          end
+        }
+        sms_thread = Thread.new {
+          MtsClient.one_number_message('79141779406',title  + text)
+        }
+        telegram_thread.join
+        sms_thread.join
       elsif event.time_to_begin > 0
         Rails.logger.debug '[ОЖИДАНИЕ] До события ' + event.name + ' еще ' + (event.time_to_begin/60).to_s + ' минут'
       else
