@@ -53,13 +53,13 @@ class Event < Post
     if type == 'basic'
       self.name + ' скоро начнется!' +
         ' Время начала: ' + self.local_time('begin') +
-        ' Продолжительность: ' + event.duration + ' ч.' +
-        ' Площадка: ' + event.room.full_name
+        ' Продолжительность: ' + self.duration + ' ч.' +
+        ' Площадка: ' + self.room.full_name
     elsif type == 'telegram'
       '```' + self.name + ' скоро начнется!````' +
         ' Время начала: *' + self.local_time('begin') + '*' +
-        ' Продолжительность: *' + event.duration + ' ч.' + '*' +
-        ' Площадка: *' + event.room.full_name + '*'
+        ' Продолжительность: *' + self.duration + ' ч.' + '*' +
+        ' Площадка: *' + self.room.full_name + '*'
     end
   end
 end
