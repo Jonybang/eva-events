@@ -14,4 +14,10 @@ RailsAdmin.config do |config|
       include_all_fields
     end
   end
+  config.model 'TelegramUser' do
+    list do
+      fields :id, :full_name, :chat_id, :test, :created_at
+      include_all_fields
+    end
+  end
 end
