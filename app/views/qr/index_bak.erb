@@ -1,0 +1,29 @@
+<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+<div class="container">
+    <h1 style="margin-top:5px;"><%=@resource.forum.name%></h1>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 style="margin:0px;"><%=@resource.name%> - Расписание</h2>
+        </div>
+        <div class="panel-body" style="padding-bottom:0px;">
+          <table class="table table-stdiped table-condensed">
+            <tr>
+              <td><strong>Название</strong></td>
+              <td><strong>Время начала</strong></td>
+              <td><strong>Время окончания</strong></td>
+            </tr>
+            <%-@resource.events.each do |event| %>
+                <tr>
+                  <td><%=event.name%> - <%=event.duration%> ч.</td>
+                  <td><%=event.local_time('begin')%></td>
+                  <td><%=event.local_time('end')%></td>
+                </tr>
+            <%end%>
+          </table>
+        </div>
+        <div class="panel-footer">
+          <h5>Ссылка - <%=@url%></h5>
+        </div>
+    </div>
+    <%= image_tag @qr_code.to_data_url, class: 'center-block' %>
+</div>
