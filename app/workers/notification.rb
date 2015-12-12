@@ -27,7 +27,7 @@ class Notification
         Rails.logger.debug '[ОПОВЕЩЕНИЕ] О событии ' + event.name + ', до него осталось ' + (event.time_to_begin/60).to_s + ' минут'
 
         telegram_thread = Thread.new {
-          TelegramUser.each do |user|
+          TelegramUser.all.each do |user|
             TelegramClient.send_message(user.chat_id, event.get_ad('telegram'))
           end
         }

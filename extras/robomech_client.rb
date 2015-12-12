@@ -8,9 +8,9 @@ class RobomechClient
       %w(competitions visitors exhibitions excursion).each do |group|
         phones += JSON.parse(HttpClient.get_request('http://robomech.ru/get-phones', {type: group}))
       end
-      phones = phones.uniq
     end
     phones.push('79141779406')
+    phones = phones.uniq
 
     Rails.logger.debug '[COUNT]SMS to ' + phones.count.to_s + ' phones'
 
