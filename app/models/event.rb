@@ -54,12 +54,14 @@ class Event < Post
       self.name + ' скоро начнется!' +
         ' Время начала: ' + self.local_time('begin') +
         ' Продолжительность: ' + self.duration + ' ч.' +
-        ' Площадка: ' + self.room.full_name
+        ' Площадка: ' + self.room.full_name +
+        ' Расписание мероприятия: http://evaevents.ru/robomech'
     elsif type == 'telegram'
       '``` ' + self.name + ' скоро начнется!```' +
         ' Время начала: *' + self.local_time('begin') + '*' +
         ' Продолжительность: *' + self.duration + ' ч.' + '*' +
-        ' Площадка: *' + self.room.full_name + '*'
+        ' Площадка: *' + self.room.full_name + '*' +
+        ' Расписание мероприятия: http://evaevents.ru/robomech'
     end
   end
 end
