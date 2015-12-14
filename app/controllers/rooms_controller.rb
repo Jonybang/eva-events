@@ -19,8 +19,8 @@ class RoomsController < InheritsController
     @cur_date = params[:cur_date]
     if params[:room_alias] && !params[:id]
       @forum = Forum.find_by alias: params[:forum_alias]
-      room = Room.where(forum_id: @forum.id).find_by alias: params[:room_alias]
-      unless room
+      room = Room.where(forum_id: @forum.id).find_by alias: params[:room_alias] if @forum
+      unless room && @forum
         room = Room.where(forum_id: @forum.id).find params[:room_alias]
       end
       params[:id] = room.id

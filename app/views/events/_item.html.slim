@@ -1,5 +1,5 @@
 .clearfix
-  .bs-callout.bs-callout-info style="border-left-color: #{item.color.code};"
+  .bs-callout.bs-callout-info style="border-left-color: #{item.color.code};" class="#{item.is_now? ? 'active' : ''}"
     h4
       a' href="#{item.alias_url}" #{item.name}
       |- #{item.duration} час.

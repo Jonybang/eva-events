@@ -357,6 +357,13 @@ table.rooms-events{
   }
 }
 
+.bs-callout.active {
+  background-color: rgb(51, 122, 183);
+  &, a {
+    color: white;
+  }
+}
+
 .bs-callout-warning {
   border-left-color: #AA6708;
 }

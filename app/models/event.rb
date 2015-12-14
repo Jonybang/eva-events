@@ -64,4 +64,7 @@ class Event < Post
         ' Расписание мероприятия: http://evaevents.ru/robomech'
     end
   end
+  def is_now?
+    self.begin_date < DateTime.now && self.end_date > DateTime.now
+  end
 end
