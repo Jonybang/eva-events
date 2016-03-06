@@ -62,6 +62,9 @@ app.controller('EventsCtrl', ['$scope', 'ForumEvent', 'ForumEventEditor', 'Event
         $scope.events.unshift({edit:true, forum_id: forum.id, is_new: true});
     };
     $scope.newOrEditEvent = function(forum, event, resetRooms){
+        if(!event)
+          resetRooms = true;
+
         ForumEventEditor({forum_id: forum.id}, event).then(function(result){
             Helpers.addOrReplace($scope.events, result, result.id, true);
             if(resetRooms){

@@ -10,7 +10,7 @@
     Всего <b>{{events.length}}</b> {{events.length | enducement:['событие', 'события', 'событий']}}
 </div>
 <div class="margin-top" ng-if="events.length">
-    <button class="btn btn-success btn-sm" ng-click="newOrEditEvent(forumsCtrl.cur_forum, event_group)">
+    <button class="btn btn-success btn-sm" ng-click="newOrEditEvent(forumsCtrl.cur_forum, event_group, true)">
         <span class="glyphicon glyphicon-plus"></span> Добавить событие
     </button>
 </div>
