@@ -229,7 +229,7 @@ table.rooms-events{
   [dnd-list] {
     //min-height: 25px;
     min-height: 71px;
-    min-width: 60px;
+    min-width: 200px;
   }
   [dnd-list], [dnd-list] > div{
     position: relative;
@@ -272,7 +272,7 @@ table.rooms-events{
     right: 0;
     background-color: #666;
     cursor: n-resize;
-    z-index: 100;
+    z-index: 3;
   }
   div[resizer="horizontal"].top{
     top:0px;
