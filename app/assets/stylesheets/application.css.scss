@@ -216,6 +216,7 @@ table.rooms-events{
   width: auto;
   tr:not(:first-child) {
     min-width: 50px;
+    height: 72px;
   }
   td:not(:first-child), th:not(:first-child) {
     min-width: 220px;
@@ -242,7 +243,8 @@ table.rooms-events{
   } */
   .event-container {
     overflow-y: visible;
-    position: relative;
+    //position: relative;
+    position: absolute;
     margin-bottom: 0px;
   }
   [dnd-list] > div a{
@@ -283,7 +285,7 @@ table.rooms-events{
     background-color: #AAA;
   }
   td.ng-scope {
-    padding: 0 8px !important;
+    padding: 0 3px !important;
   }
   .list-group-item {
     padding: 5px 15px;

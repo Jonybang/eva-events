@@ -14,7 +14,6 @@
         <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
       </COVERAGE_PATTERN>
     </EXTENSION>
-    <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
     <COMMAND_CONFIG_SETTINGS_ID NAME="GEM_NAME" VALUE="sidekiq" />
     <COMMAND_CONFIG_SETTINGS_ID NAME="EXECUTABLE_NAME" VALUE="sidekiq" />
     <COMMAND_CONFIG_SETTINGS_ID NAME="EXECUTABLE_ARGS" VALUE="" />

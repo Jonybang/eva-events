@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Rails eva-events: development" uuid="bcbb3907-e3ba-4115-959b-b8471b9711e6">
+      <user-name>jonybang</user-name>
+      <user-password>dfe0dfc8df9bdf93df98df92df99df9d</user-password>
+    </data-source>
+    <data-source name="Rails eva-events: production" uuid="62f49542-6869-4ce6-a2b4-a9f6b02ac6bd">
+      <secret-storage>memory</secret-storage>
+    </data-source>
+    <data-source name="PostgreSQL - eva_events_development@localhost" uuid="c91f94a9-f21f-4dc3-85da-89f7ba4cfa20">
+      <user-name>jonybang</user-name>
+      <user-password>dfe0dfc8df9bdf93df98df92df99df9d</user-password>
+    </data-source>
+  </component>
+</project>
